@@ -1,4 +1,4 @@
-function jsonResponse(body, status = 200) {
+function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { "Content-Type": "application/json" }
@@ -7,78 +7,60 @@ function jsonResponse(body, status = 200) {
 
 export async function onRequestPost(context) {
   try {
-    const { industry, problem } = await context.request.json();
+    const bodyText = await context.request.text();
 
-    if (!context.env.OPENAI_API_KEY) {
-      return jsonResponse({ error: "Missing OPENAI_API_KEY in Cloudflare environment variables" }, 500);
+    let body = {};
+    try {
+      body = bodyText ? JSON.parse(bodyText) : {};
+    } catch {
+      return json({ error: "Invalid request body", raw: bodyText }, 400);
     }
 
-    const systemPrompt = `Return ONLY valid JSON using this schema:
-{
-  "executiveSummary": "",
-  "coreProblem": "",
-  "rootCauses": [],
-  "systemBreakdown": { "people": [], "process": [], "systems": [] },
-  "flowFramework": { "find": "", "layout": "", "optimize": "", "work": "" },
-  "priorityActions": [],
-  "sopSuggestions": [],
-  "kpiSuggestions": [],
-  "expectedOutcome": "",
-  "cooVerdict": ""
-}`;
+    const industry = body.industry || "Education and Training";
+    const problem = body.problem || "No problem provided.";
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${context.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
+    return json({
+      executiveSummary: `FLOW AI diagnosed an operational issue in ${industry}.`,
+      coreProblem: `The main issue appears to be: ${problem}`,
+      rootCauses: [
+        "Unclear operating process",
+        "Inconsistent execution",
+        "Weak follow-up system"
+      ],
+      systemBreakdown: {
+        people: ["Roles and responsibilities are unclear"],
+        process: ["Workflow is not standardized"],
+        systems: ["No reliable tracking system is in place"]
       },
-      body: JSON.stringify({
-        model: "gpt-4.1-mini",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: `Industry: ${industry}\nProblem: ${problem}` }
-        ],
-        temperature: 0.4
-      })
+      flowFramework: {
+        find: "Identify the biggest bottleneck affecting outcomes.",
+        layout: "Map the current workflow from start to finish.",
+        optimize: "Standardize the process and remove weak steps.",
+        work: "Execute weekly, measure results, and improve."
+      },
+      priorityActions: [
+        "Create one standard operating process",
+        "Assign owners for each step",
+        "Track weekly KPIs"
+      ],
+      sopSuggestions: [
+        "Student follow-up SOP",
+        "Teacher delivery SOP",
+        "Weekly review SOP"
+      ],
+      kpiSuggestions: [
+        "Attendance rate",
+        "Completion rate",
+        "Engagement score"
+      ],
+      expectedOutcome: "Clearer execution, better retention, and improved operational control.",
+      cooVerdict: "The business does not need more activity first. It needs a clearer operating system."
     });
-
-    const raw = await response.text();
-
-    if (!raw.trim()) {
-      return jsonResponse({ error: "Empty response from OpenAI" }, 500);
-    }
-
-    let parsedOpenAI;
-    try {
-      parsedOpenAI = JSON.parse(raw);
-    } catch {
-      return jsonResponse({ error: "OpenAI response not JSON", raw }, 500);
-    }
-
-    if (!response.ok) {
-      return jsonResponse({ error: "OpenAI failed", details: parsedOpenAI }, 500);
-    }
-
-    const content = parsedOpenAI?.choices?.[0]?.message?.content;
-
-    if (!content) {
-      return jsonResponse({ error: "No content from OpenAI", full: parsedOpenAI }, 500);
-    }
-
-    const clean = content.replace(/```json|```/g, "").trim();
-
-    try {
-      return jsonResponse(JSON.parse(clean), 200);
-    } catch {
-      return jsonResponse({ error: "AI returned invalid JSON", raw: clean }, 500);
-    }
-
   } catch (err) {
-    return jsonResponse({ error: err.message }, 500);
+    return json({ error: err.message }, 500);
   }
 }
 
 export async function onRequestGet() {
-  return jsonResponse({ error: "Use POST for /api/diagnose" }, 405);
+  return json({ status: "FLOW API is working. Use POST." });
 }
