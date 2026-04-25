@@ -1,0 +1,110 @@
+.export async function onRequestPost(context) {
+  try {
+    const { request, env } = context;
+
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return jsonResponse({ error: "Invalid request body." }, 400);
+    }
+
+    const problem = body.problem || "";
+    const industry = body.industry || "General Business";
+
+    if (!problem || problem.length < 20) {
+      return jsonResponse({ error: "Please provide a more detailed operational problem." }, 400);
+    }
+
+    if (!env.OPENAI_API_KEY) {
+      return jsonResponse({
+        error: "Missing OPENAI_API_KEY in Cloudflare environment variables."
+      }, 500);
+    }
+
+    const prompt = `
+You are FLOW, a COO-level AI operations diagnosis assistant.
+
+Industry: ${industry}
+
+Problem:
+${problem}
+
+Return ONLY valid JSON.
+
+{
+  "executiveSummary": "",
+  "coreProblem": "",
+  "rootCauses": [],
+  "systemBreakdown": {
+    "people": [],
+    "process": [],
+    "systems": []
+  },
+  "flowFramework": {
+    "find": "",
+    "layout": "",
+    "optimize": "",
+    "work": ""
+  },
+  "priorityActions": [],
+  "sopSuggestions": [],
+  "kpiSuggestions": [],
+  "expectedOutcome": "",
+  "cooVerdict": ""
+}
+`;
+
+    const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${env.OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "Return JSON only." },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.4,
+        response_format: { type: "json_object" }
+      })
+    });
+
+    const raw = await aiResponse.text();
+
+    if (!aiResponse.ok) {
+      return jsonResponse({ error: raw }, 500);
+    }
+
+    let parsed;
+    try {
+      const openaiData = JSON.parse(raw);
+      parsed = JSON.parse(openaiData.choices[0].message.content);
+    } catch (e) {
+      return jsonResponse({
+        error: "Invalid JSON from AI",
+        details: raw
+      }, 500);
+    }
+
+    return jsonResponse(parsed, 200);
+
+  } catch (err) {
+    return jsonResponse({
+      error: "Server crash",
+      details: err.message
+    }, 500);
+  }
+}
+
+function jsonResponse(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    }
+  });
+}v
