@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "FLOW AI Operations Companion by Clarity Systems",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"
@@ -15,6 +16,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "license": "ISC"
 }
