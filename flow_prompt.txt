@@ -1,0 +1,50 @@
+app.post("/api/diagnose", async (req, res) => {
+  try {
+    const { problem, industry } = req.body;
+
+    const prompt = `
+You are a COO. Return only JSON.
+
+Industry: ${industry}
+
+Problem:
+${problem}
+`;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4.1-mini",
+      messages: [
+        {
+          role: "system",
+          content: "You are a COO. Return only JSON."
+        },
+        {
+          role: "user",
+          content: prompt
+        }
+      ],
+      temperature: 0.3
+    });
+
+    let raw = completion.choices[0].message.content;
+
+    console.log("RAW AI RESPONSE:", raw);
+
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+
+    if (!jsonMatch) {
+      throw new Error("No JSON found in AI response");
+    }
+
+    const data = JSON.parse(jsonMatch[0]);
+
+    res.json(data);
+
+  } catch (err) {
+    console.error("FULL ERROR:", err);
+
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});

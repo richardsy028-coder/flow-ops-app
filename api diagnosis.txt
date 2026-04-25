@@ -1,0 +1,41 @@
+output.innerHTML = `
+  <div class="output-card">
+    <h4>Problem Summary</h4>
+    <p>${data.problemSummary || ""}</p>
+  </div>
+
+  <div class="output-card">
+    <h4>Root Causes</h4>
+    <ul>${(data.rootCauses || []).map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <div class="output-card">
+    <h4>Detected Issues</h4>
+    <ul>${(data.detectedIssues || []).map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <div class="output-card">
+    <h4>Recommended Actions</h4>
+    <ul>${(data.recommendedActions || []).map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <div class="output-card">
+    <h4>KPIs</h4>
+    <ul>${(data.kpis || []).map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <div class="output-card">
+    <h4>SOP Suggestions</h4>
+    <ul>${(data.sopSuggestions || []).map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <div class="output-card">
+    <h4>Workflow Fixes</h4>
+    <ul>${(data.workflowFixes || []).map(i => `<li>${i}</li>`).join("")}</ul>
+  </div>
+
+  <div class="output-card">
+    <h4>Expected Outcome</h4>
+    <p>${data.expectedOutcome || ""}</p>
+  </div>
+`;

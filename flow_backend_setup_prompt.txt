@@ -1,0 +1,30 @@
+content: "You are a senior COO. You think in systems, workflows, KPIs, and execution. Always respond in strict JSON only."
+Your goal is to correctly connect the frontend (index.html) with the backend server.
+
+The system structure is:
+
+- A "public" folder contains the frontend files (index.html, assets, images)
+- The backend uses Express.js
+- The app includes an API endpoint for AI diagnosis (/api/diagnose)
+
+Implement the following behavior:
+
+1. Static File Serving  
+- Configure Express to serve all frontend files from the "public" folder  
+- This allows the browser to access HTML, CSS, JS, and images directly  
+
+2. Root Route Handling ("/")  
+- When a user visits the root URL ("/"), the server should return index.html  
+- This ensures the main website loads properly instead of showing "Cannot GET /"  
+
+3. Purpose  
+- The frontend (index.html) acts as the user interface  
+- The backend handles AI processing and API requests  
+- The two must be connected so users can interact with the AI tool seamlessly  
+
+4. Outcome  
+- Visiting http://localhost:3000 should load the website  
+- The frontend should be able to call backend endpoints like /api/diagnose  
+- The system should behave like a complete AI SaaS application  
+
+Use clean, production-ready Express.js structure and avoid unnecessary complexity.

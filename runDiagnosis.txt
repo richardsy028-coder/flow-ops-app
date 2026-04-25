@@ -1,0 +1,94 @@
+<script>
+async function runDiagnosis(){
+  const problem = document.getElementById("problem").value.trim();
+  const industry = document.getElementById("industry").value;
+  const output = document.getElementById("output");
+
+  if(problem.length < 20){
+    alert("Describe the operational issue in more detail (at least 20+ characters).");
+    return;
+  }
+
+  console.log("🚀 Sending request:", { problem, industry });
+
+  // Premium loading UI
+  output.innerHTML = `
+    <div class="output-card">
+      <p class="loading">⚡ FLOW is analyzing your operations...</p>
+      <p style="color:var(--muted)">Diagnosing bottlenecks, workflows, KPIs, and execution gaps...</p>
+    </div>
+  `;
+
+  try{
+    const response = await fetch("/api/diagnose", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ problem, industry })
+    });
+
+    console.log("🌐 Response status:", response.status);
+
+    const data = await response.json();
+    console.log("📦 Response data:", data);
+
+    if(!response.ok || data.error){
+      throw new Error(data.error || "Unknown server error");
+    }
+
+    // Premium structured output
+    output.innerHTML = `
+      <div class="output-card">
+        <h4>Executive Summary</h4>
+        <p>${data.executiveSummary}</p>
+      </div>
+
+      <div class="output-card">
+        <h4>Core Problem</h4>
+        <p>${data.coreProblem}</p>
+      </div>
+
+      <div class="output-card">
+        <h4>Root Causes</h4>
+        <ul>${(data.rootCauses || []).map(i => `<li>${i}</li>`).join("")}</ul>
+      </div>
+
+      <div class="output-card">
+        <h4>System Breakdown</h4>
+        <p><strong>People:</strong> ${(data.systemBreakdown?.people || []).join(", ")}</p>
+        <p><strong>Process:</strong> ${(data.systemBreakdown?.process || []).join(", ")}</p>
+        <p><strong>Systems:</strong> ${(data.systemBreakdown?.systems || []).join(", ")}</p>
+      </div>
+
+      <div class="output-card">
+        <h4>Priority Actions</h4>
+        <ul>${(data.priorityActions || []).map(i => `<li>${i}</li>`).join("")}</ul>
+      </div>
+
+      <div class="output-card">
+        <h4>KPI Suggestions</h4>
+        <ul>${(data.kpis || []).map(i => `<li>${i}</li>`).join("")}</ul>
+      </div>
+
+      <div class="output-card">
+        <h4>Expected Outcome</h4>
+        <p>${data.expectedOutcome}</p>
+      </div>
+
+      <div class="output-card">
+        <h4>COO Verdict</h4>
+        <p>${data.cooVerdict}</p>
+      </div>
+    `;
+
+  } catch(error){
+    console.error("❌ Frontend error:", error);
+
+    output.innerHTML = `
+      <div class="output-card">
+        <h4>Connection Error</h4>
+        <p>${error.message}</p>
+      </div>
+    `;
+  }
+}
+</script>
