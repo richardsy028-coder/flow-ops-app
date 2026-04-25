@@ -1,199 +1,464 @@
+cat > public/index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>FLOW Operations Diagnosis</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clarity Systems | FLOW AI Operations Companion</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: #e6c883;
-    }
-
-    header, section, footer {
-      padding: 60px 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    h1, h2, h3 {
-      color: #e6c883;
-    }
-
-    button {
-      background: #e6c883;
-      color: #000;
-      padding: 12px 20px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      opacity: 0.85;
-    }
-
-    textarea, input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      background: #111;
-      color: #e6c883;
-      border: 1px solid #444;
-    }
-
-    #output {
-      white-space: pre-wrap;
-      background: #111;
-      border: 1px solid #444;
-      padding: 20px;
-      margin-top: 20px;
-      min-height: 150px;
-    }
-
-    .founder-box {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .founder-box img {
-      width: 160px;
-      height: auto;
-      border-radius: 6px;
-      border: 2px solid #e6c883;
-    }
-  </style>
+<style>
+:root{
+  --bg:#050505;
+  --card:#12100b;
+  --text:#fff8e7;
+  --muted:#b9aa78;
+  --gold:#d4af37;
+  --gold2:#f7d774;
+  --border:rgba(212,175,55,.28);
+  --radius:24px;
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:linear-gradient(180deg,#050505,#090806);
+  color:var(--text);
+  line-height:1.6;
+}
+.container{width:min(1180px,92%);margin:auto}
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(0,0,0,.86);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px)
+}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:900;color:var(--text)}
+.logo small{display:block;color:var(--muted);font-size:12px}
+nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+a{color:inherit;text-decoration:none}
+section{padding:82px 0}
+.grid{display:grid;gap:26px}
+.two{grid-template-columns:1fr 1fr}
+.three{grid-template-columns:repeat(3,1fr)}
+.four{grid-template-columns:repeat(4,1fr)}
+.badge{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(212,175,55,.11);
+  border:1px solid var(--border);
+  color:var(--gold2);
+  font-weight:800;
+  font-size:13px;
+  margin-bottom:18px
+}
+h1,h2,h3{margin:0;line-height:1.05;letter-spacing:-.05em}
+h1{font-size:clamp(44px,7vw,84px)}
+h2{font-size:clamp(32px,5vw,54px);margin-bottom:16px}
+h3{font-size:24px;margin-bottom:10px}
+p{color:var(--muted);margin:0}
+.lead{font-size:20px;margin:24px 0 32px;max-width:720px}
+.card,.output-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(212,175,55,.035));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:0 24px 70px rgba(0,0,0,.45)
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:13px 22px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  color:var(--text);
+  font-weight:850;
+  cursor:pointer
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#050505;
+  border:0
+}
+.stats{grid-template-columns:repeat(4,1fr);margin-top:32px}
+.stat strong{font-size:28px;color:var(--text)}
+.preview{display:grid;gap:14px}
+.preview-box{
+  background:rgba(0,0,0,.5);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px
+}
+.preview-box strong{color:var(--gold2)}
+.icon,.big-letter{color:var(--gold2);font-weight:950}
+.icon{
+  width:44px;height:44px;border-radius:14px;
+  display:grid;place-items:center;
+  background:rgba(212,175,55,.12);
+  margin-bottom:18px
+}
+.big-letter{font-size:56px;line-height:1}
+.framework-step{min-height:260px;display:flex;flex-direction:column;justify-content:space-between}
+select,textarea{
+  width:100%;
+  background:#070604;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px;
+  font:inherit;
+  outline:none
+}
+select{margin-bottom:14px}
+textarea{min-height:230px;resize:vertical}
+.output{display:grid;gap:16px}
+.output-card h4{margin:0 0 8px;color:var(--gold2)}
+.loading{color:var(--gold2);font-weight:850}
+.price{font-size:42px;font-weight:950;margin:18px 0 6px}
+.featured{border-color:rgba(247,215,116,.7)}
+ul{color:var(--muted);padding-left:20px}
+.founder-photo{
+  min-height:470px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:
+    linear-gradient(180deg,rgba(212,175,55,.10),rgba(0,0,0,.22)),
+    url("./richard-founder.jpg");
+  background-size:cover;
+  background-position:center top;
+  box-shadow:0 24px 70px rgba(0,0,0,.45)
+}
+.cta{
+  text-align:center;
+  padding:60px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:linear-gradient(135deg,rgba(212,175,55,.15),rgba(247,215,116,.06))
+}
+footer{
+  border-top:1px solid var(--border);
+  padding:34px 0;
+  color:var(--muted);
+  font-size:14px
+}
+@media(max-width:900px){
+  .two,.three,.four,.stats{grid-template-columns:1fr}
+  nav{display:none}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Hero section -->
-  <header>
-    <h1>FLOW: Executive Operations Diagnosis</h1>
-    <p>Your COO-level clarity engine.</p>
-  </header>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#">
+      Clarity Systems
+      <small>FLOW AI Operations Companion</small>
+    </a>
+    <nav>
+      <a href="#why">Why FLOW</a>
+      <a href="#framework">Framework</a>
+      <a href="#industries">Industries</a>
+      <a href="#app">AI App</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#founder">Founder</a>
+    </nav>
+    <a class="btn btn-primary" href="#app">Run Diagnosis</a>
+  </div>
+</header>
 
-  <!-- Why FLOW section -->
-  <section>
-    <h2>Why FLOW</h2>
-    <p>Elite diagnosis for modern operators.</p>
-  </section>
+<main>
 
-  <!-- Framework section -->
-  <section>
-    <h2>The FLOW Framework</h2>
-    <p>Find → Layout → Optimize → Work</p>
-  </section>
-
-  <!-- Industries section -->
-  <section id="industry">
-    <h2>Industries</h2>
-    <input id="industryInput" placeholder="e.g. Coaching, SaaS, Agency">
-  </section>
-
-  <!-- AI diagnosis app -->
-  <section>
-    <h2>AI Operations Diagnosis</h2>
-
-    <textarea id="problem" placeholder="Describe your operations issue..."></textarea>
-
-    <button onclick="runDiagnosis()">Run Diagnosis</button>
-    <button onclick="clearOutput()">Clear</button>
-
-    <div id="output"></div>
-  </section>
-
-  <!-- Pricing section -->
-  <section>
-    <h2>Pricing</h2>
-    <p>Transparent and simple.</p>
-  </section>
-
-  <!-- Founder section -->
-  <section>
-    <h2>Founder</h2>
-    <div class="founder-box">
-      <img src="./richard-founder.jpg" alt="Founder">
-      <p>Richard — Creator of FLOW.</p>
+<section class="hero">
+  <div class="container grid two">
+    <div>
+      <div class="badge">AI-Powered COO Operations Platform</div>
+      <h1>COO-level operational clarity for teams ready to scale.</h1>
+      <p class="lead">FLOW helps teams diagnose messy operations, uncover bottlenecks, design SOPs, define KPIs, and turn scattered work into clear execution systems.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#app" class="btn btn-primary">Analyze with FLOW AI</a>
+        <a href="#framework" class="btn">See the Framework</a>
+      </div>
+      <div class="grid stats">
+        <div class="card stat"><strong>5 min</strong><p>Initial operational diagnosis</p></div>
+        <div class="card stat"><strong>3–5</strong><p>Bottlenecks identified</p></div>
+        <div class="card stat"><strong>SOP</strong><p>System recommendations</p></div>
+        <div class="card stat"><strong>KPI</strong><p>Execution metrics</p></div>
+      </div>
     </div>
-  </section>
 
-  <!-- CTA section -->
-  <section>
-    <h2>Ready for clarity?</h2>
-    <button>Start Now</button>
-  </section>
+    <div class="card">
+      <div class="badge">COO-style output</div>
+      <div class="preview">
+        <div class="preview-box"><strong>Executive Summary</strong><p>Your operations rely too much on memory and informal follow-up.</p></div>
+        <div class="preview-box"><strong>Core Bottleneck</strong><p>Unclear ownership and weak handoffs are slowing execution.</p></div>
+        <div class="preview-box"><strong>Recommended System</strong><p>Build SOPs, KPI checkpoints, process owners, and weekly operating rhythm.</p></div>
+        <div class="preview-box"><strong>Business Impact</strong><p>Less chasing, cleaner accountability, faster onboarding, and stronger execution quality.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© FLOW Systems</p>
-  </footer>
+<section id="why">
+  <div class="container">
+    <div class="badge">Why use FLOW</div>
+    <h2>Your team may not be the problem. Your operating system may be broken.</h2>
+    <p class="lead">Most growing teams struggle because the work is not clearly designed. Tasks live in chat. Decisions depend on memory. Handoffs are unclear. KPIs are missing.</p>
+    <div class="grid three">
+      <div class="card"><div class="icon">01</div><h3>Find the real bottleneck</h3><p>FLOW separates symptoms from root operational problems.</p></div>
+      <div class="card"><div class="icon">02</div><h3>Turn chaos into structure</h3><p>Convert messy descriptions into SOPs, workflows, owners, checkpoints, and KPIs.</p></div>
+      <div class="card"><div class="icon">03</div><h3>Think like a COO</h3><p>Review problems through ownership, accountability, visibility, process, and results.</p></div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    async function runDiagnosis() {
-      const industry = document.getElementById("industryInput")?.value || "";
-      const problem = document.getElementById("problem")?.value || "";
-      const outputBox = document.getElementById("output");
+<section id="framework">
+  <div class="container">
+    <div class="badge">The FLOW System Framework</div>
+    <h2>FLOW is not just an AI prompt. It is an operations thinking system.</h2>
+    <p class="lead">FLOW stands for Find, Layout, Optimize, and Work.</p>
+    <div class="grid four">
+      <div class="card framework-step"><div><div class="big-letter">F</div><h3>Find Problems</h3><p>Identify delays, rework, confusion, handoff issues, owner gaps, and hidden friction.</p></div><p><strong>Output:</strong> issue map + root cause clues.</p></div>
+      <div class="card framework-step"><div><div class="big-letter">L</div><h3>Layout Process</h3><p>Map how work moves from request to completion, including roles and checkpoints.</p></div><p><strong>Output:</strong> workflow map + ownership structure.</p></div>
+      <div class="card framework-step"><div><div class="big-letter">O</div><h3>Optimize with AI</h3><p>Generate SOP ideas, KPI suggestions, risk points, and improvement recommendations.</p></div><p><strong>Output:</strong> COO-style diagnosis.</p></div>
+      <div class="card framework-step"><div><div class="big-letter">W</div><h3>Work the System</h3><p>Turn the diagnosis into habits, reviews, accountability, and ongoing improvement.</p></div><p><strong>Output:</strong> operating rhythm.</p></div>
+    </div>
+  </div>
+</section>
 
-      outputBox.textContent = "Processing...";
+<section id="industries">
+  <div class="container">
+    <div class="badge">Industries</div>
+    <h2>FLOW is useful anywhere execution quality matters.</h2>
+    <div class="grid three" style="margin-top:34px">
+      <div class="card"><h3>Education & Training</h3><p>Standardize onboarding, lesson delivery, tracking, and quality.</p></div>
+      <div class="card"><h3>Agencies & Service Teams</h3><p>Improve onboarding, approvals, project delivery, revisions, and reporting.</p></div>
+      <div class="card"><h3>Healthcare Administration</h3><p>Support patient flow, appointment coordination, documentation, and handoffs.</p></div>
+      <div class="card"><h3>E-commerce & Fulfillment</h3><p>Clarify inventory, orders, returns, dispatch, support, and fulfillment bottlenecks.</p></div>
+      <div class="card"><h3>Field Operations</h3><p>Improve dispatch, route coordination, site checklists, and mobile reporting.</p></div>
+      <div class="card"><h3>Growing Startups</h3><p>Help teams move from informal habits to scalable operations.</p></div>
+    </div>
+  </div>
+</section>
 
-      try {
-        const res = await fetch("/api/diagnose", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ industry, problem })
-        });
+<section id="app">
+  <div class="container">
+    <div class="badge">FLOW AI Companion App</div>
+    <h2>Describe the operational mess. FLOW returns a structured COO-style diagnosis.</h2>
+    <p class="lead">Choose an industry, describe the issue, and FLOW will analyze root causes, SOP ideas, KPI recommendations, action priorities, and expected outcomes.</p>
 
-        const text = await res.text();
+    <div class="grid two">
+      <div class="card">
+        <h3>Operational Analysis</h3>
 
-        if (!text || text.trim() === "") {
-          outputBox.textContent = "Backend returned empty response.";
-          return;
-        }
+        <select id="industry">
+          <option value="General Business">General Business</option>
+          <option value="Education and Training">Education and Training</option>
+          <option value="Agency or Service Business">Agency or Service Business</option>
+          <option value="Healthcare Administration">Healthcare Administration</option>
+          <option value="E-commerce and Fulfillment">E-commerce and Fulfillment</option>
+          <option value="Field Operations">Field Operations</option>
+          <option value="Startup Operations">Startup Operations</option>
+        </select>
 
-        let data;
-        try {
-          data = JSON.parse(text);
-        } catch (e) {
-          outputBox.textContent = "Invalid JSON from backend:\n\n" + text;
-          return;
-        }
+        <textarea id="problem" placeholder="Example: We run an online training business. Student onboarding is inconsistent, instructors teach differently, and we lack SOPs and KPIs."></textarea>
 
-        const safe = (v) => v ?? "";
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px">
+          <button class="btn btn-primary" onclick="runDiagnosis()">Analyze with FLOW AI</button>
+          <button class="btn" onclick="clearOutput()">Clear</button>
+        </div>
+      </div>
 
-        let formatted =
-          "Executive Summary:\n" + safe(data.executiveSummary) + "\n\n" +
-          "Core Problem:\n" + safe(data.coreProblem) + "\n\n" +
-          "Root Causes:\n" + (Array.isArray(data.rootCauses) ? data.rootCauses.join("\n") : "") + "\n\n" +
-          "System Breakdown:\n" +
-            "People:\n" + (Array.isArray(data.systemBreakdown?.people) ? data.systemBreakdown.people.join("\n") : "") + "\n\n" +
-            "Process:\n" + (Array.isArray(data.systemBreakdown?.process) ? data.systemBreakdown.process.join("\n") : "") + "\n\n" +
-            "Systems:\n" + (Array.isArray(data.systemBreakdown?.systems) ? data.systemBreakdown.systems.join("\n") : "") + "\n\n" +
-          "FLOW Framework:\n" +
-            "Find:\n" + safe(data.flowFramework?.find) + "\n\n" +
-            "Layout:\n" + safe(data.flowFramework?.layout) + "\n\n" +
-            "Optimize:\n" + safe(data.flowFramework?.optimize) + "\n\n" +
-            "Work:\n" + safe(data.flowFramework?.work) + "\n\n" +
-          "Priority / Recommended Actions:\n" + (Array.isArray(data.priorityActions) ? data.priorityActions.join("\n") : "") + "\n\n" +
-          "SOP Suggestions:\n" + (Array.isArray(data.sopSuggestions) ? data.sopSuggestions.join("\n") : "") + "\n\n" +
-          "KPI Suggestions:\n" + (Array.isArray(data.kpiSuggestions) ? data.kpiSuggestions.join("\n") : "") + "\n\n" +
-          "Expected Outcome:\n" + safe(data.expectedOutcome) + "\n\n" +
-          "COO Verdict:\n" + safe(data.cooVerdict);
+      <div class="card">
+        <h3>FLOW Output</h3>
+        <div id="output" class="output">
+          <div class="output-card">
+            <h4>Your diagnosis will appear here.</h4>
+            <p>Expected output: executive summary, root causes, SOP ideas, KPI suggestions, action plan, and outcomes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        outputBox.textContent = formatted;
-      } catch (err) {
-        outputBox.textContent = "Frontend error:\n" + err.message;
-      }
+<section id="pricing">
+  <div class="container">
+    <div class="badge">Pricing</div>
+    <h2>Start with diagnosis. Upgrade when you need implementation.</h2>
+    <div class="grid three" style="margin-top:34px">
+      <div class="card"><h3>Free Diagnosis</h3><div class="price">$0</div><p>For getting initial clarity.</p><ul><li>Basic AI diagnosis</li><li>Bottleneck summary</li><li>Starter SOP/KPI ideas</li></ul></div>
+      <div class="card featured"><h3>Operations Audit</h3><div class="price">$99+</div><p>For teams that need deeper review.</p><ul><li>Workflow breakdown</li><li>Root cause analysis</li><li>SOP + KPI recommendations</li><li>30-day action roadmap</li></ul></div>
+      <div class="card"><h3>System Build</h3><div class="price">Custom</div><p>For teams ready to implement.</p><ul><li>SOP creation</li><li>Workflow redesign</li><li>KPI planning</li><li>Operating rhythm setup</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="founder">
+  <div class="container grid two">
+    <div class="founder-photo"></div>
+    <div class="card">
+      <div class="badge">Founder</div>
+      <h2>Hello, I’m Richard Sy.</h2>
+      <p>Founder of Clarity Systems. Lifelong learner, systems thinker, AI enthusiast, and operations builder.</p>
+      <br>
+      <h3>My mission</h3>
+      <p>I help growing teams turn operational chaos into clear execution using AI-powered diagnosis, practical SOPs, KPI thinking, workflows, and simple systems people can actually follow.</p>
+      <br>
+      <h3>My vision</h3>
+      <p>FLOW is being built as an AI operations companion for founders, leaders, and teams who want clarity.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta">
+      <div class="badge">Get started</div>
+      <h2>Stop guessing what is wrong. Diagnose it.</h2>
+      <p style="max-width:720px;margin:0 auto 28px">Bring your messy workflow, unclear handoffs, inconsistent execution, or scaling problem.</p>
+      <a href="mailto:richardsy.028@gmail.com" class="btn btn-primary">Email Richard</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <div>© 2026 Clarity Systems · FLOW AI Operations Companion</div>
+    <div>Contact: richardsy.028@gmail.com</div>
+  </div>
+</footer>
+
+<script>
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function safeArray(value){
+  if(Array.isArray(value)) return value;
+  if(typeof value === "string" && value.trim()) return [value];
+  return [];
+}
+
+function safeObj(value){
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function renderList(items){
+  const arr = safeArray(items);
+  if(!arr.length) return "<li>No data returned.</li>";
+  return arr.map(item => {
+    if(typeof item === "string") return `<li>${escapeHTML(item)}</li>`;
+    if(item && typeof item === "object"){
+      return `<li>${escapeHTML(item.issue || item.cause || item.action || item.sop || item.kpi || item.details || item.recommendation || JSON.stringify(item))}</li>`;
+    }
+    return `<li>${escapeHTML(item)}</li>`;
+  }).join("");
+}
+
+function renderText(value,fallback){
+  if(value === undefined || value === null || value === "") return escapeHTML(fallback || "No data returned.");
+  if(Array.isArray(value)) return escapeHTML(value.join(", "));
+  if(typeof value === "object") return escapeHTML(JSON.stringify(value));
+  return escapeHTML(value);
+}
+
+async function runDiagnosis(){
+  const problem = document.getElementById("problem").value.trim();
+  const industry = document.getElementById("industry").value;
+  const output = document.getElementById("output");
+
+  if(problem.length < 20){
+    alert("Please describe the operational issue in more detail.");
+    return;
+  }
+
+  output.innerHTML = `<div class="output-card"><p class="loading">FLOW is analyzing your operations...</p></div>`;
+
+  try{
+    const response = await fetch("/api/diagnose", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ problem, industry })
+    });
+
+    const text = await response.text();
+
+    if(!text || text.trim() === ""){
+      throw new Error("Backend returned empty response. Check functions/api/diagnose.js and Cloudflare OPENAI_API_KEY.");
     }
 
-    function clearOutput() {
-      document.getElementById("output").textContent = "";
+    let data;
+    try{
+      data = JSON.parse(text);
+    }catch(e){
+      console.error("Raw backend response:", text);
+      throw new Error(text);
     }
-  </script>
+
+    if(!response.ok || data.error){
+      throw new Error(data.error || data.details || text || "Backend error");
+    }
+
+    const system = safeObj(data.systemBreakdown || data.system_breakdown);
+    const flow = safeObj(data.flowFramework || data.flow_framework);
+
+    output.innerHTML = `
+      <div class="output-card"><h4>Executive Summary</h4><p>${renderText(data.executiveSummary || data.executive_summary, "No summary returned.")}</p></div>
+      <div class="output-card"><h4>Core Problem</h4><p>${renderText(data.coreProblem || data.core_problem, "No core problem returned.")}</p></div>
+      <div class="output-card"><h4>Root Causes</h4><ul>${renderList(data.rootCauses || data.root_causes)}</ul></div>
+      <div class="output-card">
+        <h4>System Breakdown</h4>
+        <p><strong>People:</strong> ${renderText(safeArray(system.people).join(", "), "—")}</p>
+        <p><strong>Process:</strong> ${renderText(safeArray(system.process).join(", "), "—")}</p>
+        <p><strong>Systems:</strong> ${renderText(safeArray(system.systems).join(", "), "—")}</p>
+      </div>
+      <div class="output-card">
+        <h4>FLOW Framework</h4>
+        <p><strong>Find:</strong> ${renderText(flow.find, "—")}</p>
+        <p><strong>Layout:</strong> ${renderText(flow.layout, "—")}</p>
+        <p><strong>Optimize:</strong> ${renderText(flow.optimize, "—")}</p>
+        <p><strong>Work:</strong> ${renderText(flow.work, "—")}</p>
+      </div>
+      <div class="output-card"><h4>Priority / Recommended Actions</h4><ul>${renderList(data.priorityActions || data.recommendedActions || data.priority_actions)}</ul></div>
+      <div class="output-card"><h4>SOP Suggestions</h4><ul>${renderList(data.sopSuggestions || data.sop_suggestions)}</ul></div>
+      <div class="output-card"><h4>KPI Suggestions</h4><ul>${renderList(data.kpiSuggestions || data.kpis || data.kpi_suggestions)}</ul></div>
+      <div class="output-card"><h4>Expected Outcome</h4><p>${renderText(data.expectedOutcome || data.expected_outcome, "No outcome returned.")}</p></div>
+      <div class="output-card"><h4>COO Verdict</h4><p>${renderText(data.cooVerdict || data.coo_verdict, "No verdict returned.")}</p></div>
+    `;
+  }catch(error){
+    console.error("REAL ERROR:", error);
+    output.innerHTML = `
+      <div class="output-card">
+        <h4>Backend Error</h4>
+        <p>${escapeHTML(error.message || "Something went wrong.")}</p>
+      </div>
+    `;
+  }
+}
+
+function clearOutput(){
+  document.getElementById("problem").value = "";
+  document.getElementById("output").innerHTML = `
+    <div class="output-card">
+      <h4>Your diagnosis will appear here.</h4>
+      <p>Expected output: executive summary, root causes, SOP ideas, KPI suggestions, action plan, and outcomes.</p>
+    </div>
+  `;
+}
+</script>
 
 </body>
 </html>
+EOF
