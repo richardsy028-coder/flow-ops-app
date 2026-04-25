@@ -2,7 +2,37 @@ export async function onRequestPost(context) {
   try {
     const { industry, problem } = await context.request.json();
 
-    const systemPrompt = `...your prompt...`;
+    const systemPrompt = `
+You are a COO-level operations strategist.
+
+Return ONLY valid JSON.
+Do NOT wrap in markdown.
+Do NOT add extra text.
+
+Use this schema:
+
+{
+  "executiveSummary": "...",
+  "coreProblem": "...",
+  "rootCauses": ["..."],
+  "systemBreakdown": {
+    "people": ["..."],
+    "process": ["..."],
+    "systems": ["..."]
+  },
+  "flowFramework": {
+    "find": "...",
+    "layout": "...",
+    "optimize": "...",
+    "work": "..."
+  },
+  "priorityActions": ["..."],
+  "sopSuggestions": ["..."],
+  "kpiSuggestions": ["..."],
+  "expectedOutcome": "...",
+  "cooVerdict": "..."
+}
+`;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -20,35 +50,55 @@ export async function onRequestPost(context) {
       })
     });
 
-    const data = await response.json();
-    let content = data.choices[0].message.content;
+    const raw = await response.text();
 
-    // 🔥 CLEAN JSON FIX
-    content = content.trim();
-
-    // Remove markdown if AI adds it
-    if (content.startsWith("```")) {
-      content = content.replace(/```json|```/g, "").trim();
-    }
-
-    // Try parsing
-    let parsed;
-    try {
-      parsed = JSON.parse(content);
-    } catch (e) {
+    if (!raw || raw.trim() === "") {
       return new Response(JSON.stringify({
-        error: "Invalid JSON from AI",
-        raw: content
+        error: "Empty response from OpenAI"
       }), { status: 500 });
     }
 
-    return new Response(JSON.stringify(parsed), {
+    let parsedOpenAI;
+    try {
+      parsedOpenAI = JSON.parse(raw);
+    } catch {
+      return new Response(JSON.stringify({
+        error: "OpenAI response not JSON",
+        raw
+      }), { status: 500 });
+    }
+
+    const content = parsedOpenAI?.choices?.[0]?.message?.content;
+
+    if (!content) {
+      return new Response(JSON.stringify({
+        error: "No content from OpenAI",
+        full: parsedOpenAI
+      }), { status: 500 });
+    }
+
+    let clean = content.trim();
+
+    // Remove markdown if exists
+    clean = clean.replace(/```json|```/g, "").trim();
+
+    let finalJSON;
+    try {
+      finalJSON = JSON.parse(clean);
+    } catch {
+      return new Response(JSON.stringify({
+        error: "AI returned invalid JSON",
+        raw: clean
+      }), { status: 500 });
+    }
+
+    return new Response(JSON.stringify(finalJSON), {
       headers: { "Content-Type": "application/json" }
     });
 
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500
-    });
+    return new Response(JSON.stringify({
+      error: err.message
+    }), { status: 500 });
   }
 }
