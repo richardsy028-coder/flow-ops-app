@@ -1,130 +1,62 @@
-export async function onRequestPost(context) {
-  try {
-    const { request, env } = context;
 
-    let body;
-    try {
-      body = await request.json();
-    } catch {
-      return jsonResponse({ error: "Invalid request body." }, 400);
-    }
+const prompt = `
+You are FLOW — a high-level COO operations strategist specializing in Education and Training systems.
 
-    const problem = body.problem || "";
-    const industry = body.industry || "General Business";
-
-    if (!problem || problem.length < 20) {
-      return jsonResponse({ error: "Please provide a more detailed operational problem." }, 400);
-    }
-
-    if (!env.OPENAI_API_KEY) {
-      return jsonResponse({ error: "Missing OPENAI_API_KEY in Cloudflare environment variables." }, 500);
-    }
-
-    const prompt = `
-You are FLOW, a premium COO-level AI operations diagnosis assistant.
+You diagnose operational problems with precision, structure, and executive clarity.
 
 Industry: ${industry}
 
-Operational Problem:
+Operational Situation:
 ${problem}
 
-Return ONLY valid JSON. No markdown. No explanations outside JSON.
+Your job is to analyze this like a COO scaling a training organization.
 
-Use this exact JSON structure:
+Focus on:
+- Instructor consistency
+- Student experience quality
+- Operational scalability
+- SOP structure
+- KPI visibility
+- Ownership and accountability
+- System dependency vs human dependency
+
+Return ONLY valid JSON.
+
+Use this EXACT structure:
+
 {
-  "executiveSummary": "",
-  "coreProblem": "",
-  "rootCauses": [],
+  "executiveSummary": "Clear high-level diagnosis of what is happening operationally.",
+  "coreProblem": "The single most critical operational failure.",
+  "rootCauses": [
+    "Specific operational causes (not symptoms)"
+  ],
   "systemBreakdown": {
-    "people": [],
-    "process": [],
-    "systems": []
+    "people": [
+      "Skill gaps, ownership gaps, accountability issues"
+    ],
+    "process": [
+      "Missing SOPs, unclear workflows, poor handoffs"
+    ],
+    "systems": [
+      "Lack of tools, dashboards, tracking, automation"
+    ]
   },
   "flowFramework": {
-    "find": "",
-    "layout": "",
-    "optimize": "",
-    "work": ""
+    "find": "Where the friction and breakdowns are.",
+    "layout": "How the process should be structured.",
+    "optimize": "What systems, SOPs, and KPIs should be added.",
+    "work": "How to operationalize consistently."
   },
-  "priorityActions": [],
-  "sopSuggestions": [],
-  "kpiSuggestions": [],
-  "expectedOutcome": "",
-  "cooVerdict": ""
+  "priorityActions": [
+    "Top actions ranked by impact"
+  ],
+  "sopSuggestions": [
+    "Specific SOPs to build (onboarding, lesson delivery, tracking, reporting)"
+  ],
+  "kpiSuggestions": [
+    "Clear measurable KPIs (student progress, retention, instructor performance)"
+  ],
+  "expectedOutcome": "What improves after implementation.",
+  "cooVerdict": "Direct, executive-level conclusion."
 }
 `;
-
-    const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are a COO-level operations consultant. Always return valid JSON only." },
-          { role: "user", content: prompt }
-        ],
-        temperature: 0.4,
-        response_format: { type: "json_object" }
-      })
-    });
-
-    const raw = await aiResponse.text();
-
-    if (!aiResponse.ok) {
-      return jsonResponse({
-        error: "OpenAI API error",
-        details: raw
-      }, aiResponse.status);
-    }
-
-    let openaiData;
-    try {
-      openaiData = JSON.parse(raw);
-    } catch {
-      return jsonResponse({
-        error: "OpenAI returned invalid JSON",
-        details: raw
-      }, 500);
-    }
-
-    const content = openaiData?.choices?.[0]?.message?.content;
-
-    if (!content) {
-      return jsonResponse({
-        error: "OpenAI returned no content.",
-        details: openaiData
-      }, 500);
-    }
-
-    let diagnosis;
-    try {
-      diagnosis = JSON.parse(content);
-    } catch {
-      return jsonResponse({
-        error: "AI content was not valid JSON.",
-        details: content
-      }, 500);
-    }
-
-    return jsonResponse(diagnosis, 200);
-
-  } catch (error) {
-    return jsonResponse({
-      error: "Server crash",
-      details: error.message
-    }, 500);
-  }
-}
-
-function jsonResponse(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*"
-    }
-  });
-}
