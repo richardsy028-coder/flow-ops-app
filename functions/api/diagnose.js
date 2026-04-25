@@ -1,4 +1,3 @@
-cat > functions/api/diagnose.js <<'EOF'
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
@@ -129,4 +128,3 @@ function jsonResponse(data, status = 200) {
     }
   });
 }
-EOF
