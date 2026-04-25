@@ -1,9 +1,199 @@
-const text = await response.text();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FLOW Operations Diagnosis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-let data;
-try {
-  data = JSON.parse(text);
-} catch (e) {
-  console.error("Raw response:", text);
-  throw new Error(text || "Invalid JSON from backend");
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #e6c883;
+    }
+
+    header, section, footer {
+      padding: 60px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1, h2, h3 {
+      color: #e6c883;
+    }
+
+    button {
+      background: #e6c883;
+      color: #000;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #111;
+      color: #e6c883;
+      border: 1px solid #444;
+    }
+
+    #output {
+      white-space: pre-wrap;
+      background: #111;
+      border: 1px solid #444;
+      padding: 20px;
+      margin-top: 20px;
+      min-height: 150px;
+    }
+
+    .founder-box {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .founder-box img {
+      width: 160px;
+      height: auto;
+      border-radius: 6px;
+      border: 2px solid #e6c883;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero section -->
+  <header>
+    <h1>FLOW: Executive Operations Diagnosis</h1>
+    <p>Your COO-level clarity engine.</p>
+  </header>
+
+  <!-- Why FLOW section -->
+  <section>
+    <h2>Why FLOW</h2>
+    <p>Elite diagnosis for modern operators.</p>
+  </section>
+
+  <!-- Framework section -->
+  <section>
+    <h2>The FLOW Framework</h2>
+    <p>Find → Layout → Optimize → Work</p>
+  </section>
+
+  <!-- Industries section -->
+  <section id="industry">
+    <h2>Industries</h2>
+    <input id="industryInput" placeholder="e.g. Coaching, SaaS, Agency">
+  </section>
+
+  <!-- AI diagnosis app -->
+  <section>
+    <h2>AI Operations Diagnosis</h2>
+
+    <textarea id="problem" placeholder="Describe your operations issue..."></textarea>
+
+    <button onclick="runDiagnosis()">Run Diagnosis</button>
+    <button onclick="clearOutput()">Clear</button>
+
+    <div id="output"></div>
+  </section>
+
+  <!-- Pricing section -->
+  <section>
+    <h2>Pricing</h2>
+    <p>Transparent and simple.</p>
+  </section>
+
+  <!-- Founder section -->
+  <section>
+    <h2>Founder</h2>
+    <div class="founder-box">
+      <img src="./richard-founder.jpg" alt="Founder">
+      <p>Richard — Creator of FLOW.</p>
+    </div>
+  </section>
+
+  <!-- CTA section -->
+  <section>
+    <h2>Ready for clarity?</h2>
+    <button>Start Now</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© FLOW Systems</p>
+  </footer>
+
+  <script>
+    async function runDiagnosis() {
+      const industry = document.getElementById("industryInput")?.value || "";
+      const problem = document.getElementById("problem")?.value || "";
+      const outputBox = document.getElementById("output");
+
+      outputBox.textContent = "Processing...";
+
+      try {
+        const res = await fetch("/api/diagnose", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ industry, problem })
+        });
+
+        const text = await res.text();
+
+        if (!text || text.trim() === "") {
+          outputBox.textContent = "Backend returned empty response.";
+          return;
+        }
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          outputBox.textContent = "Invalid JSON from backend:\n\n" + text;
+          return;
+        }
+
+        const safe = (v) => v ?? "";
+
+        let formatted =
+          "Executive Summary:\n" + safe(data.executiveSummary) + "\n\n" +
+          "Core Problem:\n" + safe(data.coreProblem) + "\n\n" +
+          "Root Causes:\n" + (Array.isArray(data.rootCauses) ? data.rootCauses.join("\n") : "") + "\n\n" +
+          "System Breakdown:\n" +
+            "People:\n" + (Array.isArray(data.systemBreakdown?.people) ? data.systemBreakdown.people.join("\n") : "") + "\n\n" +
+            "Process:\n" + (Array.isArray(data.systemBreakdown?.process) ? data.systemBreakdown.process.join("\n") : "") + "\n\n" +
+            "Systems:\n" + (Array.isArray(data.systemBreakdown?.systems) ? data.systemBreakdown.systems.join("\n") : "") + "\n\n" +
+          "FLOW Framework:\n" +
+            "Find:\n" + safe(data.flowFramework?.find) + "\n\n" +
+            "Layout:\n" + safe(data.flowFramework?.layout) + "\n\n" +
+            "Optimize:\n" + safe(data.flowFramework?.optimize) + "\n\n" +
+            "Work:\n" + safe(data.flowFramework?.work) + "\n\n" +
+          "Priority / Recommended Actions:\n" + (Array.isArray(data.priorityActions) ? data.priorityActions.join("\n") : "") + "\n\n" +
+          "SOP Suggestions:\n" + (Array.isArray(data.sopSuggestions) ? data.sopSuggestions.join("\n") : "") + "\n\n" +
+          "KPI Suggestions:\n" + (Array.isArray(data.kpiSuggestions) ? data.kpiSuggestions.join("\n") : "") + "\n\n" +
+          "Expected Outcome:\n" + safe(data.expectedOutcome) + "\n\n" +
+          "COO Verdict:\n" + safe(data.cooVerdict);
+
+        outputBox.textContent = formatted;
+      } catch (err) {
+        outputBox.textContent = "Frontend error:\n" + err.message;
+      }
+    }
+
+    function clearOutput() {
+      document.getElementById("output").textContent = "";
+    }
+  </script>
+
+</body>
+</html>

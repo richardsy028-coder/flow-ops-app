@@ -1,4 +1,4 @@
-.export async function onRequestPost(context) {
+export async function onRequestPost(context) {
   try {
     const { request, env } = context;
 
@@ -23,69 +23,48 @@
     }
 
     const prompt = `
-You are FLOW, a COO-level AI operations diagnosis assistant.
+You are FLOW — a high-level COO operations strategist specializing in Education and Training systems.
 
 Industry: ${industry}
 
-Problem:
+Operational Situation:
 ${problem}
 
 Return ONLY valid JSON.
-
-{
-  "executiveSummary": "",
-  "coreProblem": "",
-  "rootCauses": [],
-  "systemBreakdown": {
-    "people": [],
-    "process": [],
-    "systems": []
-  },
-  "flowFramework": {
-    "find": "",
-    "layout": "",
-    "optimize": "",
-    "work": ""
-  },
-  "priorityActions": [],
-  "sopSuggestions": [],
-  "kpiSuggestions": [],
-  "expectedOutcome": "",
-  "cooVerdict": ""
-}
 `;
 
-    const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "Return JSON only." },
-          { role: "user", content: prompt }
-        ],
-        temperature: 0.4,
-        response_format: { type: "json_object" }
-      })
-    });
+    // 🔥 THIS WAS MISSING IN YOUR FILE                    
 
-    const raw = await aiResponse.text();
 
-    if (!aiResponse.ok) {
-      return jsonResponse({ error: raw }, 500);
+
+
+
+  let openaiData;
+    try {
+      openaiData = JSON.parse(raw);
+    } catch (e) {
+      return jsonResponse({
+        error: "OpenAI response is not JSON",
+        raw: raw
+      }, 500);
+    }
+
+    const content = openaiData?.choices?.[0]?.message?.content;
+
+    if (!content) {
+      return jsonResponse({
+        error: "No content returned from OpenAI",
+        debug: openaiData
+      }, 500);
     }
 
     let parsed;
     try {
-      const openaiData = JSON.parse(raw);
-      parsed = JSON.parse(openaiData.choices[0].message.content);
+      parsed = JSON.parse(content);
     } catch (e) {
       return jsonResponse({
-        error: "Invalid JSON from AI",
-        details: raw
+        error: "AI returned invalid JSON format",
+        raw: content
       }, 500);
     }
 
@@ -107,4 +86,4 @@ function jsonResponse(data, status = 200) {
       "Access-Control-Allow-Origin": "*"
     }
   });
-}v
+}

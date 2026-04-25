@@ -1,91 +1,63 @@
-async function runDiagnosis(){
-  const problem = document.getElementById("problem").value.trim();
-  const industry = document.getElementById("industry").value;
-  const output = document.getElementById("output");
+async function runDiagnosis() {
+  const industry = document.getElementById("industryInput")?.value || "";
+  const problem = document.getElementById("problem")?.value || "";
+  const outputBox = document.getElementById("output");
 
-  if(problem.length < 20){
-    alert("Please describe the operational issue in more detail.");
-    return;
-  }
+  outputBox.textContent = "Processing...";
 
-  output.innerHTML = `
-    <div class="output-card">
-      <p class="loading">FLOW is analyzing your operations...</p>
-    </div>
-  `;
-
-  try{
-    const response = await fetch("/api/diagnose", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify({ problem, industry })
+  try {
+    const res = await fetch("/api/diagnose", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ industry, problem })
     });
 
-    // ✅ SAFE PARSING (NO MORE CRASH)
-    const text = await response.text();
+    const text = await res.text();
+
+    // ✅ CRITICAL FIX
+    if (!text || text.trim() === "") {
+      outputBox.textContent = "Backend returned empty response.";
+      return;
+    }
 
     let data;
-    try{
+    try {
       data = JSON.parse(text);
-    }catch(e){
-      console.error("Raw response:", text);
-      throw new Error(text || "Invalid JSON from backend");
+    } catch (e) {
+      outputBox.textContent = "Invalid JSON from backend:\n\n" + text;
+      return;
     }
 
-    if(!response.ok || data.error){
-      throw new Error(data.error || text || "Backend error");
+    // ✅ SHOW BACKEND ERROR CLEANLY
+    if (!res.ok || data.error) {
+      outputBox.textContent = "Backend Error:\n\n" + (data.error || text);
+      return;
     }
 
-    // ✅ SAFE DATA HANDLING
-    const safeArray = (v) => Array.isArray(v) ? v : [];
-    const safeObj = (v) => v && typeof v === "object" ? v : {};
+    const safe = (v) => v ?? "";
 
-    const renderList = (arr) => {
-      const items = safeArray(arr);
-      if(!items.length) return "<li>No data returned.</li>";
-      return items.map(i => `<li>${typeof i === "string" ? i : (i.issue || i.cause || i.action || i.sop || i.kpi || i.details || JSON.stringify(i))}</li>`).join("");
-    };
+    let formatted =
+      "Executive Summary:\n" + safe(data.executiveSummary) + "\n\n" +
+      "Core Problem:\n" + safe(data.coreProblem) + "\n\n" +
+      "Root Causes:\n" + (Array.isArray(data.rootCauses) ? data.rootCauses.join("\n") : "") + "\n\n" +
+      "System Breakdown:\n" +
+        "People:\n" + (Array.isArray(data.systemBreakdown?.people) ? data.systemBreakdown.people.join("\n") : "") + "\n\n" +
+        "Process:\n" + (Array.isArray(data.systemBreakdown?.process) ? data.systemBreakdown.process.join("\n") : "") + "\n\n" +
+        "Systems:\n" + (Array.isArray(data.systemBreakdown?.systems) ? data.systemBreakdown.systems.join("\n") : "") + "\n\n" +
+      "FLOW Framework:\n" +
+        "Find:\n" + safe(data.flowFramework?.find) + "\n\n" +
+        "Layout:\n" + safe(data.flowFramework?.layout) + "\n\n" +
+        "Optimize:\n" + safe(data.flowFramework?.optimize) + "\n\n" +
+        "Work:\n" + safe(data.flowFramework?.work) + "\n\n" +
+      "Priority / Recommended Actions:\n" + (Array.isArray(data.priorityActions) ? data.priorityActions.join("\n") : "") + "\n\n" +
+      "SOP Suggestions:\n" + (Array.isArray(data.sopSuggestions) ? data.sopSuggestions.join("\n") : "") + "\n\n" +
+      "KPI Suggestions:\n" + (Array.isArray(data.kpiSuggestions) ? data.kpiSuggestions.join("\n") : "") + "\n\n" +
+      "Expected Outcome:\n" + safe(data.expectedOutcome) + "\n\n" +
+      "COO Verdict:\n" + safe(data.cooVerdict);
 
-    const system = safeObj(data.systemBreakdown);
-    const flow = safeObj(data.flowFramework);
+    outputBox.textContent = formatted;
 
-    // ✅ OUTPUT RENDER
-    output.innerHTML = `
-      <div class="output-card"><h4>Executive Summary</h4><p>${data.executiveSummary || "No summary returned."}</p></div>
-      <div class="output-card"><h4>Core Problem</h4><p>${data.coreProblem || "No core problem returned."}</p></div>
-
-      <div class="output-card"><h4>Root Causes</h4><ul>${renderList(data.rootCauses)}</ul></div>
-
-      <div class="output-card">
-        <h4>System Breakdown</h4>
-        <p><strong>People:</strong> ${safeArray(system.people).join(", ") || "—"}</p>
-        <p><strong>Process:</strong> ${safeArray(system.process).join(", ") || "—"}</p>
-        <p><strong>Systems:</strong> ${safeArray(system.systems).join(", ") || "—"}</p>
-      </div>
-
-      <div class="output-card">
-        <h4>FLOW Framework</h4>
-        <p><strong>Find:</strong> ${flow.find || "—"}</p>
-        <p><strong>Layout:</strong> ${flow.layout || "—"}</p>
-        <p><strong>Optimize:</strong> ${flow.optimize || "—"}</p>
-        <p><strong>Work:</strong> ${flow.work || "—"}</p>
-      </div>
-
-      <div class="output-card"><h4>Priority / Recommended Actions</h4><ul>${renderList(data.priorityActions || data.recommendedActions)}</ul></div>
-      <div class="output-card"><h4>SOP Suggestions</h4><ul>${renderList(data.sopSuggestions)}</ul></div>
-      <div class="output-card"><h4>KPI Suggestions</h4><ul>${renderList(data.kpis || data.kpiSuggestions)}</ul></div>
-      <div class="output-card"><h4>Expected Outcome</h4><p>${data.expectedOutcome || "No outcome returned."}</p></div>
-      <div class="output-card"><h4>COO Verdict</h4><p>${data.cooVerdict || "No verdict returned."}</p></div>
-    `;
-
-  }catch(error){
-    console.error("REAL ERROR:", error);
-
-    output.innerHTML = `
-      <div class="output-card">
-        <h4>Backend Error</h4>
-        <p>${error.message}</p>
-      </div>
-    `;
+  } catch (err) {
+    outputBox.textContent = "Frontend error:\n" + err.message;
   }
 }
