@@ -13,16 +13,12 @@ export async function onRequestPost(context) {
     const industry = body.industry || "Education and Training";
     const problem = body.problem || "No problem provided.";
 
-    if (!context.env.OPENAI_API_KEY) {
-      return json({ error: "Missing OPENAI_API_KEY" }, 500);
-    }
-
-    const systemPrompt = `
+    const prompt = `
 You are FLOW AI, a COO-level operations diagnosis engine.
 
 Return ONLY valid JSON. No markdown. No backticks.
 
-Use this exact schema:
+Schema:
 {
   "executiveSummary": "",
   "coreProblem": "",
@@ -45,58 +41,27 @@ Use this exact schema:
   "cooVerdict": ""
 }
 
-For Education and Training, focus on:
-student engagement, learner retention, curriculum flow, teacher consistency, assessment, follow-up, and measurable learning outcomes.
+Industry: ${industry}
+Problem: ${problem}
+
+For Education and Training, focus on student engagement, retention, curriculum flow, teacher consistency, follow-up systems, and measurable outcomes.
 `;
 
-    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${context.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "gpt-4.1-mini",
-        messages: [
-          { role: "system", content: systemPrompt },
-          {
-            role: "user",
-            content: `Industry: ${industry}\nProblem: ${problem}\nDiagnose this using the FLOW framework.`
-          }
-        ],
-        temperature: 0.3
-      })
+    const aiResponse = await context.env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+      prompt
     });
 
-    const raw = await openaiRes.text();
-
-    if (!raw || !raw.trim()) {
-      return json({ error: "Empty response from OpenAI" }, 500);
-    }
-
-    let openaiData;
-    try {
-      openaiData = JSON.parse(raw);
-    } catch {
-      return json({ error: "OpenAI returned invalid JSON", raw }, 500);
-    }
-
-    if (!openaiRes.ok) {
-      return json({ error: "OpenAI API failed", details: openaiData }, 500);
-    }
-
-    let content = openaiData?.choices?.[0]?.message?.content;
-
-    if (!content) {
-      return json({ error: "No AI content returned", details: openaiData }, 500);
-    }
+    let content = aiResponse.response || aiResponse.result || "";
 
     content = content.replace(/```json|```/g, "").trim();
 
     try {
       return json(JSON.parse(content));
     } catch {
-      return json({ error: "AI returned invalid JSON", raw: content }, 500);
+      return json({
+        error: "Cloudflare AI returned invalid JSON",
+        raw: content
+      }, 500);
     }
 
   } catch (err) {
@@ -105,5 +70,5 @@ student engagement, learner retention, curriculum flow, teacher consistency, ass
 }
 
 export async function onRequestGet() {
-  return json({ status: "FLOW API is working. Use POST." });
+  return json({ status: "FLOW Cloudflare AI API is working. Use POST." });
 }
