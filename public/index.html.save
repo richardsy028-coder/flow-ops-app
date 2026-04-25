@@ -152,7 +152,6 @@
   <h2>The FLOW Framework</h2>
   <p>Find → Layout → Optimize → Work</p>
 </section>
-
 <section class="section">
   <h2>Industries We Support</h2>
 
@@ -175,7 +174,43 @@
 
 <section class="section">
   <h2>Select or Type Your Industry (Combobox)</h2>
-f<script>
+
+  <div class="combo-container">
+    <input id="industryInput" placeholder="Start typing or select industry...">
+
+    <div id="comboList" class="combo-list"></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Describe Your Operational Issue</h2>
+  <textarea id="problem" placeholder="Describe your bottleneck, KPI breakdown, SOP gap, hiring problem, or workflow issue..."></textarea>
+  <br><br>
+  <button onclick="runDiagnosis()">Run Diagnosis</button>
+  <button onclick="clearOutput()">Clear</button>
+
+  <div id="output"></div>
+</section>
+
+<section class="section">
+  <h2>Founder</h2>
+  <div class="founder-box">
+    <img src="./richard-founder.jpg">
+    <p>Richard — Creator of FLOW. Helping founders achieve executive operational clarity with structured diagnosis and scalable systems.</p>
+  </div>
+</section>
+
+<section class="section" style="text-align:center;">
+  <h2>Ready for Executive Clarity?</h2>
+  <button onclick="location.href='[learnwithrichardsy-site.pages.dev](https://learnwithrichardsy-site.pages.dev/)'">Visit Main Site</button>
+</section>
+
+<footer>
+  © FLOW Systems — COO‑Level Operational Intelligence
+</footer>
+
+<script>
+<script>
 const industries = [
   "SaaS & Technology",
   "Agencies & Services",
@@ -193,6 +228,7 @@ const industries = [
   "Other"
 ];
 
+// ✅ FIX: define input properly
 const input = document.getElementById("industryInput");
 
 async function runDiagnosis() {
@@ -222,7 +258,7 @@ async function runDiagnosis() {
 
     try {
       data = JSON.parse(text);
-    } catch {
+    } catch (e) {
       output.textContent = "Invalid JSON from backend:\n\n" + text;
       return;
     }
@@ -265,12 +301,3 @@ function clearOutput() {
   document.getElementById("output").textContent = "";
 }
 </script>
-  <div class="combo-container">
-    <input id="industryInput" placeholder="Start typing or select industry...">
-
-    <div id="comboList" class="combo-list"></div>
-  </div>
-</section>
-
-<section class="section">
-  <h2>Describe Your Operational Issue</h2>
