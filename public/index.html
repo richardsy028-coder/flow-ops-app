@@ -211,11 +211,12 @@
 </footer>
 
 <script>
+<script>
 const industries = [
   "SaaS & Technology",
   "Agencies & Services",
   "Coaching & Education",
-  "E‑commerce",
+  "E-commerce",
   "Consulting Firms",
   "Healthcare",
   "Agriculture",
@@ -228,31 +229,8 @@ const industries = [
   "Other"
 ];
 
+// ✅ FIX: define input properly
 const input = document.getElementById("industryInput");
-const list = document.getElementById("comboList");
-
-input.addEventListener("input", () => {
-  const val = input.value.toLowerCase();
-  list.innerHTML = "";
-  list.style.display = "block";
-
-  industries
-    .filter(i => i.toLowerCase().includes(val))
-    .forEach(ind => {
-      const div = document.createElement("div");
-      div.className = "combo-item";
-      div.textContent = ind;
-      div.onclick = () => {
-        input.value = ind;
-        list.style.display = "none";
-      };
-      list.appendChild(div);
-    });
-});
-
-input.addEventListener("blur", () => {
-  setTimeout(() => list.style.display = "none", 200);
-});
 
 async function runDiagnosis() {
   const industry = input.value || "";
@@ -264,42 +242,59 @@ async function runDiagnosis() {
   try {
     const res = await fetch("/api/diagnose", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ industry, problem })
     });
 
     const text = await res.text();
-    if (!text.trim()) {
+
+    if (!text || !text.trim()) {
       output.textContent = "Backend returned empty response.";
       return;
     }
 
     let data;
-    try { data = JSON.parse(text); }
-    catch { output.textContent = "Invalid JSON:\n\n" + text; return; }
+
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      output.textContent = "Invalid JSON from backend:\n\n" + text;
+      return;
+    }
+
+    if (!res.ok || data.error) {
+      output.textContent =
+        "Backend Error:\n\n" +
+        (data.error || JSON.stringify(data, null, 2));
+      return;
+    }
 
     const safe = v => v ?? "";
+    const list = v => Array.isArray(v) ? v.join("\n") : "";
 
     output.textContent =
       "Executive Summary:\n" + safe(data.executiveSummary) + "\n\n" +
       "Core Problem:\n" + safe(data.coreProblem) + "\n\n" +
-      "Root Causes:\n" + (data.rootCauses || []).join("\n") + "\n\n" +
+      "Root Causes:\n" + list(data.rootCauses) + "\n\n" +
       "System Breakdown:\n" +
-      "People:\n" + (data.systemBreakdown?.people || []).join("\n") + "\n\n" +
-      "Process:\n" + (data.systemBreakdown?.process || []).join("\n") + "\n\n" +
-      "Systems:\n" + (data.systemBreakdown?.systems || []).join("\n") + "\n\n" +
+      "People:\n" + list(data.systemBreakdown?.people) + "\n\n" +
+      "Process:\n" + list(data.systemBreakdown?.process) + "\n\n" +
+      "Systems:\n" + list(data.systemBreakdown?.systems) + "\n\n" +
       "FLOW Framework:\n" +
       "Find:\n" + safe(data.flowFramework?.find) + "\n\n" +
       "Layout:\n" + safe(data.flowFramework?.layout) + "\n\n" +
       "Optimize:\n" + safe(data.flowFramework?.optimize) + "\n\n" +
       "Work:\n" + safe(data.flowFramework?.work) + "\n\n" +
-      "Priority Actions:\n" + (data.priorityActions || []).join("\n") + "\n\n" +
-      "SOP Suggestions:\n" + (data.sopSuggestions || []).join("\n") + "\n\n" +
-      "KPI Suggestions:\n" + (data.kpiSuggestions || []).join("\n") + "\n\n" +
+      "Priority Actions:\n" + list(data.priorityActions) + "\n\n" +
+      "SOP Suggestions:\n" + list(data.sopSuggestions) + "\n\n" +
+      "KPI Suggestions:\n" + list(data.kpiSuggestions) + "\n\n" +
       "Expected Outcome:\n" + safe(data.expectedOutcome) + "\n\n" +
       "COO Verdict:\n" + safe(data.cooVerdict);
+
   } catch (err) {
-    output.textContent = "Frontend error:\n" + err.message;
+    output.textContent = "Frontend Error:\n\n" + err.message;
   }
 }
 
@@ -307,6 +302,3 @@ function clearOutput() {
   document.getElementById("output").textContent = "";
 }
 </script>
-
-</body>
-</html>
