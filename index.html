@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FLOW AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#080806; color:#f5e7c3; }
+    main { max-width:1000px; margin:auto; padding:60px 20px; }
+    h1 { font-size:48px; color:#fff4d6; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+    .card { background:#15130d; border:1px solid #7a6425; border-radius:18px; padding:28px; }
+    select, textarea { width:100%; box-sizing:border-box; padding:16px; background:#050505; color:#fff; border:1px solid #7a6425; border-radius:14px; margin-bottom:18px; }
+    textarea { min-height:220px; }
+    button { background:#f4cf57; color:#000; border:0; padding:14px 24px; border-radius:999px; font-weight:bold; cursor:pointer; }
+    #output { white-space:pre-wrap; line-height:1.6; }
+    img { max-width:220px; border-radius:18px; border:1px solid #7a6425; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>FLOW AI Operations Companion</h1>
+    <p>COO-level operational clarity for teams ready to scale.</p>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Operational Analysis</h2>
+
+        <select id="industryInput">
+          <option>Education and Training</option>
+          <option>SaaS and Technology</option>
+          <option>Agencies and Services</option>
+          <option>E-commerce</option>
+          <option>Healthcare</option>
+          <option>Operations</option>
+        </select>
+
+        <textarea id="problem">Low student engagement and unclear curriculum flow. Students stop attending after two weeks. Teachers are inconsistent and there is no structured follow-up system.</textarea>
+
+        <button onclick="runDiagnosis()">Run Diagnosis</button>
+        <button onclick="clearOutput()">Clear</button>
+      </section>
+
+      <section class="card">
+        <h2>FLOW Output</h2>
+        <div id="output">Your diagnosis will appear here.</div>
+      </section>
+    </div>
+
+    <section class="card" style="margin-top:40px;">
+      <h2>Founder</h2>
+      <img src="/richard-founder.jpg" alt="Founder Richard" />
+      <p>Richard Sy — Founder of FLOW AI Operations Companion.</p>
+    </section>
+  </main>
+
+  <script>
+    async function runDiagnosis() {
+      const industry = document.getElementById("industryInput").value;
+      const problem = document.getElementById("problem").value;
+      const output = document.getElementById("output");
+
+      output.textContent = "Processing...";
+
+      try {
+        const res = await fetch("/api/diagnose", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ industry, problem })
+        });
+
+        const text = await res.text();
+
+        if (!text || !text.trim()) {
+          output.textContent = "Backend returned empty response.";
+          return;
+        }
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          output.textContent = "Invalid JSON from backend:\n\n" + text;
+          return;
+        }
+
+        if (!res.ok || data.error) {
+          output.textContent = "Backend Error:\n\n" + JSON.stringify(data, null, 2);
+          return;
+        }
+
+        const list = v => Array.isArray(v) ? v.join("\n") : "";
+        const safe = v => v || "";
+
+        output.textContent =
+          "Executive Summary:\n" + safe(data.executiveSummary) + "\n\n" +
+          "Core Problem:\n" + safe(data.coreProblem) + "\n\n" +
+          "Root Causes:\n" + list(data.rootCauses) + "\n\n" +
+          "People:\n" + list(data.systemBreakdown?.people) + "\n\n" +
+          "Process:\n" + list(data.systemBreakdown?.process) + "\n\n" +
+          "Systems:\n" + list(data.systemBreakdown?.systems) + "\n\n" +
+          "Find:\n" + safe(data.flowFramework?.find) + "\n\n" +
+          "Layout:\n" + safe(data.flowFramework?.layout) + "\n\n" +
+          "Optimize:\n" + safe(data.flowFramework?.optimize) + "\n\n" +
+          "Work:\n" + safe(data.flowFramework?.work) + "\n\n" +
+          "Priority Actions:\n" + list(data.priorityActions) + "\n\n" +
+          "SOP Suggestions:\n" + list(data.sopSuggestions) + "\n\n" +
+          "KPI Suggestions:\n" + list(data.kpiSuggestions) + "\n\n" +
+          "Expected Outcome:\n" + safe(data.expectedOutcome) + "\n\n" +
+          "COO Verdict:\n" + safe(data.cooVerdict);
+
+      } catch (err) {
+        output.textContent = "Frontend Error:\n\n" + err.message;
+      }
+    }
+
+    function clearOutput() {
+      document.getElementById("output").textContent = "";
+    }
+  </script>
+</body>
+</html>
