@@ -6,3 +6,5 @@ command = ""
 
 [site]
 bucket = "."
+[ai]
+binding = "AI"
