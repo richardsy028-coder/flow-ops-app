@@ -1,3 +1,5 @@
+git add functions/api/diagnose.js
+git status
 export async function onRequestPost() {
   return Response.json({
     executiveSummary: "Your system is working.",
