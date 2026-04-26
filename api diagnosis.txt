@@ -1,41 +1,92 @@
-output.innerHTML = `
-  <div class="output-card">
-    <h4>Problem Summary</h4>
-    <p>${data.problemSummary || ""}</p>
-  </div>
+export async function onRequestPost(context) {
+  try {
+    let body;
 
-  <div class="output-card">
-    <h4>Root Causes</h4>
-    <ul>${(data.rootCauses || []).map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+    try {
+      body = await context.request.json();
+    } catch {
+      return Response.json(
+        { error: "Invalid or empty request body." },
+        { status: 400 }
+      );
+    }
 
-  <div class="output-card">
-    <h4>Detected Issues</h4>
-    <ul>${(data.detectedIssues || []).map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+    const industry = body.industry || "General Business";
+    const problem = body.problem || "";
 
-  <div class="output-card">
-    <h4>Recommended Actions</h4>
-    <ul>${(data.recommendedActions || []).map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+    if (!problem.trim()) {
+      return Response.json(
+        { error: "Please describe the operational problem." },
+        { status: 400 }
+      );
+    }
 
-  <div class="output-card">
-    <h4>KPIs</h4>
-    <ul>${(data.kpis || []).map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+    return Response.json({
+      executiveSummary:
+        `This ${industry} operation is experiencing execution friction because the workflow lacks clear ownership, follow-up, and visibility.`,
 
-  <div class="output-card">
-    <h4>SOP Suggestions</h4>
-    <ul>${(data.sopSuggestions || []).map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+      coreProblem:
+        "The business is relying too much on memory, manual reminders, and inconsistent execution instead of a simple operating system.",
 
-  <div class="output-card">
-    <h4>Workflow Fixes</h4>
-    <ul>${(data.workflowFixes || []).map(i => `<li>${i}</li>`).join("")}</ul>
-  </div>
+      rootCauses: [
+        "Responsibilities are unclear.",
+        "The workflow is not documented.",
+        "Follow-up depends too much on one person.",
+        "There is no simple KPI rhythm to track progress."
+      ],
 
-  <div class="output-card">
-    <h4>Expected Outcome</h4>
-    <p>${data.expectedOutcome || ""}</p>
-  </div>
-`;
+      systemBreakdown: {
+        people: [
+          "Team members may not know exactly who owns each step.",
+          "Accountability is reactive instead of built into the workflow."
+        ],
+        process: [
+          "The current process has unclear handoffs.",
+          "Repeated problems are being solved manually instead of systemized."
+        ],
+        systems: [
+          "There is no central tracker or dashboard.",
+          "KPIs are missing, ignored, or not reviewed consistently."
+        ]
+      },
+
+      flowFramework: {
+        find: "Find the single biggest bottleneck causing delay, confusion, or rework.",
+        layout: "Map the real workflow from start to finish, including who owns each step.",
+        optimize: "Remove unnecessary steps, clarify approvals, and simplify communication.",
+        work: "Install SOPs, task ownership, weekly review cadence, and KPI tracking."
+      },
+
+      priorityActions: [
+        "Map the current workflow in 7 steps or fewer.",
+        "Assign one clear owner to every recurring task.",
+        "Create a weekly operations review.",
+        "Track only 1-3 KPIs at first."
+      ],
+
+      sopSuggestions: [
+        "Task Handoff SOP",
+        "Weekly Operations Review SOP",
+        "Follow-Up and Escalation SOP"
+      ],
+
+      kpiSuggestions: [
+        "On-time completion rate",
+        "Average turnaround time",
+        "Follow-up completion rate"
+      ],
+
+      expectedOutcome:
+        "The team should gain clearer execution, fewer repeated mistakes, faster follow-up, and better visibility into what is actually happening.",
+
+      cooVerdict:
+        "The problem is not effort. The system is leaking. Fix ownership, workflow, and follow-up before blaming people."
+    });
+
+  } catch (err) {
+    return Response.json(
+      { error: err.message || "Server error." },
+      { status: 500 }
+    );
+  }
+}

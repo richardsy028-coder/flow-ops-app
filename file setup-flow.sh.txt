@@ -1,0 +1,96 @@
+# file: setup-flow.sh
+
+#!/bin/bash
+
+echo "Setting up FLOW AI project..."
+
+mkdir -p api
+
+cat > api/diagnose.js <<'EOF'
+export async function onRequestPost(context) {
+  try {
+    const { industry, problem } = await context.request.json();
+
+    if (!industry || !problem) {
+      return Response.json(
+        { error: "Missing industry or problem." },
+        { status: 400 }
+      );
+    }
+
+    const prompt = `
+You are a COO-level operations strategist.
+
+Your job is NOT to give generic advice.
+Your job is to diagnose messy operations and turn them into clear, executable systems.
+
+The business may be in ANY industry. Do not assume scaling, funding, or large teams.
+Focus on practical execution for the current stage.
+
+INPUT:
+Industry: ${industry}
+Problem: ${problem}
+
+Return STRICT JSON with:
+executiveSummary, coreProblem, rootCauses, systemBreakdown, flowFramework, priorityActions, sopSuggestions, kpiSuggestions, expectedOutcome, cooVerdict.
+`;
+
+    return Response.json({
+      executiveSummary: "This operation has friction because the current workflow lacks clear ownership, follow-up, and visibility.",
+      coreProblem: "The business is relying on memory, manual follow-up, and inconsistent execution instead of a simple operating system.",
+      rootCauses: [
+        "No clear owner for key tasks",
+        "No standard follow-up rhythm",
+        "No visible system for tracking progress"
+      ],
+      systemBreakdown: {
+        people: [
+          "Roles and responsibilities are unclear",
+          "Accountability depends too much on the founder or manager"
+        ],
+        process: [
+          "Workflow steps are not documented",
+          "Handoffs are inconsistent"
+        ],
+        systems: [
+          "No central dashboard or tracker",
+          "KPIs are either missing or not reviewed consistently"
+        ]
+      },
+      flowFramework: {
+        find: "Find the single biggest bottleneck causing delays or confusion.",
+        layout: "Map the current workflow from request to completion.",
+        optimize: "Remove unnecessary steps, clarify owners, and simplify approvals.",
+        work: "Install weekly reviews, SOPs, task ownership, and KPI tracking."
+      },
+      priorityActions: [
+        "Create a simple workflow map",
+        "Assign one owner per recurring task",
+        "Set one weekly operations review",
+        "Track 1-3 KPIs only"
+      ],
+      sopSuggestions: [
+        "Task handoff SOP",
+        "Weekly review SOP",
+        "Follow-up and escalation SOP"
+      ],
+      kpiSuggestions: [
+        "On-time completion rate",
+        "Average turnaround time",
+        "Follow-up completion rate"
+      ],
+      expectedOutcome: "The team should experience less confusion, faster execution, clearer ownership, and fewer repeated problems.",
+      cooVerdict: "The problem is not effort. The problem is operational leakage. Fix the system before blaming the people."
+    });
+
+  } catch (err) {
+    return Response.json(
+      { error: err.message || "Server error." },
+      { status: 500 }
+    );
+  }
+}
+EOF
+
+echo "Done. Created api/diagnose.js"
+echo "Deploy to Cloudflare Pages."
