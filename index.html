@@ -404,16 +404,21 @@ cat > index.html <<'HTML'
 
 <script>
 async function runDiagnosis() {
-  const industry = document.getElementById("industryInput").value;
-  const problem = document.getElementById("problem").value.trim();
+  const industry = document.getElementById("industryInput")?.value || "General Business";
+  const problem = document.getElementById("problem")?.value.trim() || "";
   const output = document.getElementById("output");
+
+  if (!output) {
+    alert("Missing output div.");
+    return;
+  }
 
   if (!problem) {
     output.textContent = "Please describe the operational problem first.";
     return;
   }
 
-  output.textContent = "FLOW AI is diagnosing your operations...";
+  output.textContent = "FLOW AI is analyzing...";
 
   try {
     const res = await fetch("/api/diagnose", {
@@ -427,14 +432,14 @@ async function runDiagnosis() {
     const text = await res.text();
 
     if (!text || !text.trim()) {
-      output.textContent = "Backend returned empty response. Check Cloudflare Pages Functions and AI binding.";
+      output.textContent = "Backend returned empty response.";
       return;
     }
 
     let data;
     try {
       data = JSON.parse(text);
-    } catch (e) {
+    } catch (err) {
       output.textContent = "Invalid JSON from backend:\n\n" + text;
       return;
     }
@@ -444,25 +449,22 @@ async function runDiagnosis() {
       return;
     }
 
-    const list = arr => Array.isArray(arr) ? arr.map(x => "- " + x).join("\n") : "- Not provided";
+    const list = arr => Array.isArray(arr)
+      ? arr.map(item => "- " + item).join("\n")
+      : "- Not provided";
 
     output.textContent =
-      "EXECUTIVE SUMMARY\n" + (data.executiveSummary || "") + "\n\n" +
-      "CORE PROBLEM\n" + (data.coreProblem || "") + "\n\n" +
+      "EXECUTIVE SUMMARY\n" + (data.executiveSummary || "Not provided") + "\n\n" +
+      "CORE PROBLEM\n" + (data.coreProblem || "Not provided") + "\n\n" +
       "ROOT CAUSES\n" + list(data.rootCauses) + "\n\n" +
       "PEOPLE\n" + list(data.systemBreakdown?.people) + "\n\n" +
       "PROCESS\n" + list(data.systemBreakdown?.process) + "\n\n" +
       "SYSTEMS\n" + list(data.systemBreakdown?.systems) + "\n\n" +
-      "FLOW FRAMEWORK\n" +
-      "Find: " + (data.flowFramework?.find || "") + "\n" +
-      "Layout: " + (data.flowFramework?.layout || "") + "\n" +
-      "Optimize: " + (data.flowFramework?.optimize || "") + "\n" +
-      "Work: " + (data.flowFramework?.work || "") + "\n\n" +
       "PRIORITY ACTIONS\n" + list(data.priorityActions) + "\n\n" +
       "SOP SUGGESTIONS\n" + list(data.sopSuggestions) + "\n\n" +
       "KPI SUGGESTIONS\n" + list(data.kpiSuggestions) + "\n\n" +
-      "EXPECTED OUTCOME\n" + (data.expectedOutcome || "") + "\n\n" +
-      "COO VERDICT\n" + (data.cooVerdict || "");
+      "EXPECTED OUTCOME\n" + (data.expectedOutcome || "Not provided") + "\n\n" +
+      "COO VERDICT\n" + (data.cooVerdict || "Not provided");
 
   } catch (err) {
     output.textContent = "Frontend Error:\n\n" + err.message;
@@ -470,8 +472,11 @@ async function runDiagnosis() {
 }
 
 function clearOutput() {
-  document.getElementById("problem").value = "";
-  document.getElementById("output").textContent = "Your diagnosis will appear here.";
+  const problem = document.getElementById("problem");
+  const output = document.getElementById("output");
+
+  if (problem) problem.value = "";
+  if (output) output.textContent = "Your diagnosis will appear here.";
 }
 </script>
 </body>
