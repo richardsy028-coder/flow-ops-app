@@ -7,7 +7,6 @@ export async function onRequestGet() {
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json().catch(() => ({}));
-
     const industry = body.industry || "General Business";
     const problem = body.problem || "";
 
@@ -19,43 +18,44 @@ export async function onRequestPost(context) {
     }
 
     return Response.json({
-      executiveSummary: `Your ${industry} operation has execution friction that needs clearer structure, ownership, and follow-up.`,
-      coreProblem: "The business is relying too much on memory, manual reminders, and unclear workflows.",
+      executiveSummary: `Your ${industry} operation is showing execution friction. The issue is not effort — it is unclear ownership, weak workflow visibility, and inconsistent follow-up.`,
+      coreProblem: "The business is relying too much on memory, manual reminders, and unclear workflows instead of a visible operating system.",
       rootCauses: [
         "Tasks are not clearly owned",
-        "The workflow is not fully documented",
+        "Workflow steps are not documented",
         "Follow-up is reactive instead of systematic",
-        "There are no simple KPIs tracking execution quality"
+        "KPIs are missing or not reviewed consistently"
       ],
       systemBreakdown: {
         people: [
           "Team members may not know who owns each step",
-          "The founder or manager becomes the default problem-solver"
+          "The founder or manager becomes the default problem solver"
         ],
         process: [
-          "Workflows are unclear or inconsistent",
-          "Handoffs are not standardized"
+          "Handoffs are inconsistent",
+          "Repeated problems are solved manually instead of systemized"
         ],
         systems: [
-          "No visible tracker for progress",
-          "No weekly review rhythm for accountability"
+          "No central tracker",
+          "No weekly review rhythm",
+          "No simple KPI dashboard"
         ]
       },
       flowFramework: {
-        find: "Find the biggest bottleneck causing repeated delay or confusion.",
-        layout: "Map the workflow from request to completion.",
-        optimize: "Remove unnecessary steps and clarify ownership.",
-        work: "Install SOPs, KPIs, and a weekly operating rhythm."
+        find: "Find the single biggest bottleneck causing delays or repeated confusion.",
+        layout: "Map the real workflow from start to finish with owner, trigger, deadline, and output.",
+        optimize: "Remove unnecessary steps, clarify handoffs, and simplify approvals.",
+        work: "Install SOPs, KPIs, ownership rules, and a weekly operating rhythm."
       },
       priorityActions: [
-        "Create a 7-step workflow map",
+        "Map the workflow in 7 steps or fewer",
         "Assign one owner per recurring task",
-        "Create a weekly operations review",
-        "Track 3 KPIs only at first"
+        "Create one weekly operations review",
+        "Track only 3 KPIs first"
       ],
       sopSuggestions: [
         "Task handoff SOP",
-        "Follow-up SOP",
+        "Follow-up and escalation SOP",
         "Weekly operations review SOP"
       ],
       kpiSuggestions: [
@@ -63,8 +63,8 @@ export async function onRequestPost(context) {
         "Average turnaround time",
         "Follow-up completion rate"
       ],
-      expectedOutcome: "Clearer execution, fewer repeated problems, faster follow-up, and stronger accountability.",
-      cooVerdict: "Your business does not need more effort first. It needs a cleaner operating system."
+      expectedOutcome: "Clearer execution, fewer repeated mistakes, faster follow-up, and stronger accountability.",
+      cooVerdict: "Your business does not need more chaos management. It needs a cleaner operating system."
     });
 
   } catch (err) {
