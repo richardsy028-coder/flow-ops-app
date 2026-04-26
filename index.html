@@ -39,55 +39,26 @@ async function runDiagnosis() {
 
   output.textContent = "Processing...";
 
-  try {
-    const res = await fetch("/api/diagnose", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ industry, problem })
-    });
+  try {const res = await fetch("/api/diagnose", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ industry, problem })
+});
 
-    const text = await res.text();
+const text = await res.text();
 
-    if (!text || !text.trim()) {
-      output.textContent = "Backend returned empty response.";
-      return;
-    }
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      output.textContent = "Invalid JSON from backend:\n\n" + text;
-      return;
-    }
-
-    if (!res.ok || data.error) {
-      output.textContent = "Backend Error:\n\n" + JSON.stringify(data, null, 2);
-      return;
-    }
-
-    const list = arr => Array.isArray(arr) ? arr.map(x => "- " + x).join("\\n") : "";
-
-    output.textContent =
-      "Executive Summary:\\n" + data.executiveSummary + "\\n\\n" +
-      "Core Problem:\\n" + data.coreProblem + "\\n\\n" +
-      "Root Causes:\\n" + list(data.rootCauses) + "\\n\\n" +
-      "People:\\n" + list(data.systemBreakdown.people) + "\\n\\n" +
-      "Process:\\n" + list(data.systemBreakdown.process) + "\\n\\n" +
-      "Systems:\\n" + list(data.systemBreakdown.systems) + "\\n\\n" +
-      "COO Verdict:\\n" + data.cooVerdict;
-
-  } catch (err) {
-    output.textContent = "Frontend Error:\\n\\n" + err.message;
-  }
+if (!text.trim()) {
+  output.textContent = "Empty response from server.";
+  return;
 }
 
-function clearOutput() {
-  document.getElementById("output").textContent = "Your diagnosis will appear here.";
+let data;
+try {
+  data = JSON.parse(text);
+} catch {
+  output.textContent = "Invalid JSON:\n\n" + text;
+  return;
 }
-</script>
-
-</body>
-</html>
+    
