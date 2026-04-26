@@ -1,3 +1,8 @@
+#!/bin/bash
+
+echo "Fixing frontend JS placement..."
+
+cat > index.html <<'HTML'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,3 +96,12 @@ function clearOutput() {
 
 </body>
 </html>
+HTML
+
+echo "Frontend fixed."
+
+echo ""
+echo "Now run:"
+echo "git add ."
+echo "git commit -m 'fix frontend js placement'"
+echo "git push"

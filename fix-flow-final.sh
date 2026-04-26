@@ -1,3 +1,11 @@
+#!/bin/bash
+
+echo "Fixing AI reply + founder image..."
+
+mkdir -p functions/api
+mkdir -p assets
+
+cat > functions/api/diagnose.js <<'JS'
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json().catch(() => ({}));
@@ -65,3 +73,14 @@ export async function onRequestPost(context) {
     }, { status: 500 });
   }
 }
+JS
+
+# Fix broken founder image reference in index.html
+if [ -f index.html ]; then
+  sed -i.bak 's|src="/richard-founder.jpg"|src="https://placehold.co/600x700/15130d/f4cf57?text=Richard+Sy"|g' index.html
+  sed -i.bak 's|src="richard-founder.jpg"|src="https://placehold.co/600x700/15130d/f4cf57?text=Richard+Sy"|g' index.html
+fi
+
+echo "Done."
+echo "Now run:"
+echo "git add . && git commit -m 'fix ai response and founder image' && git push"
