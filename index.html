@@ -1,12 +1,9 @@
-cat > build-flow-complete.sh <<'EOF'
+cat > rebuild-flow-elegant.sh <<'EOF'
 #!/bin/bash
 
-echo "Building complete FLOW site..."
+mkdir -p functions/api assets
 
-mkdir -p functions/api
-mkdir -p assets
-
-# Keep your real founder image
+# Use your image if founder.jpg exists
 if [ -f founder.jpg ]; then
   cp founder.jpg assets/founder.jpg
 fi
@@ -16,59 +13,65 @@ cat > index.html <<'HTML'
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Clarity Systems | FLOW AI Operations Companion</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FLOW AI | Operations Companion</title>
 
   <style>
     :root {
-      --bg:#070703;
-      --panel:#15130d;
-      --panel2:#1c190f;
-      --gold:#f4cf57;
-      --text:#fff4d6;
-      --muted:#c7b98a;
-      --border:#4f4219;
+      --black:#050505;
+      --black2:#0d0b07;
+      --card:#14110a;
+      --gold:#d6b253;
+      --gold2:#f7d978;
+      --text:#fff7df;
+      --muted:#b9a875;
+      --border:rgba(214,178,83,.35);
     }
 
     * { box-sizing:border-box; }
 
     body {
       margin:0;
-      font-family:Arial, sans-serif;
-      background:radial-gradient(circle at top,#2a2208,#070703 45%);
+      font-family:Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(214,178,83,.18), transparent 35%),
+        linear-gradient(180deg, #080705, #020202);
       color:var(--text);
     }
+
+    a { color:inherit; text-decoration:none; }
 
     header {
       position:sticky;
       top:0;
-      z-index:50;
-      background:#050503;
+      z-index:20;
+      background:rgba(5,5,5,.86);
+      backdrop-filter:blur(12px);
       border-bottom:1px solid var(--border);
     }
 
     .nav {
-      max-width:1100px;
+      max-width:1180px;
       margin:auto;
-      padding:14px 22px;
+      padding:18px 24px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:20px;
     }
 
     .brand {
       display:flex;
-      gap:10px;
       align-items:center;
+      gap:12px;
       font-weight:900;
     }
 
     .logo {
-      width:34px;
-      height:34px;
+      width:42px;
+      height:42px;
       border-radius:50%;
-      background:var(--gold);
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
       color:#000;
       display:grid;
       place-items:center;
@@ -77,80 +80,89 @@ cat > index.html <<'HTML'
 
     nav {
       display:flex;
-      gap:18px;
-      font-size:13px;
+      gap:22px;
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
     }
 
-    a { color:inherit; text-decoration:none; }
-
-    .btn {
-      display:inline-block;
-      background:var(--gold);
-      color:#000;
-      border:0;
-      border-radius:999px;
-      padding:12px 18px;
-      font-weight:900;
-      cursor:pointer;
-    }
-
-    .btn.secondary {
-      background:transparent;
-      color:var(--text);
-      border:1px solid var(--border);
-    }
+    nav a:hover { color:var(--gold2); }
 
     main {
-      max-width:1100px;
+      max-width:1180px;
       margin:auto;
-      padding:55px 22px;
+      padding:70px 24px;
     }
 
-    section { margin-bottom:95px; }
+    section { margin-bottom:110px; }
+
+    .hero {
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:46px;
+      align-items:center;
+    }
+
+    .tag {
+      display:inline-block;
+      color:var(--gold2);
+      border:1px solid var(--border);
+      background:rgba(214,178,83,.08);
+      padding:8px 13px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
 
     h1 {
-      font-size:clamp(44px,7vw,78px);
-      line-height:.92;
-      margin:0 0 18px;
+      font-size:clamp(44px,7vw,82px);
+      line-height:.9;
+      margin:0 0 22px;
       letter-spacing:-3px;
     }
 
     h2 {
-      font-size:clamp(34px,5vw,54px);
+      font-size:clamp(34px,5vw,56px);
       line-height:.95;
-      margin:0 0 16px;
+      margin:0 0 18px;
       letter-spacing:-2px;
     }
 
     h3 { margin:0 0 10px; }
 
-    p { color:var(--muted); line-height:1.6; }
-
-    .tag {
-      display:inline-block;
-      background:#2b250b;
-      border:1px solid var(--border);
-      color:var(--gold);
-      border-radius:999px;
-      padding:7px 12px;
-      font-weight:900;
-      font-size:12px;
-      margin-bottom:16px;
+    p {
+      color:var(--muted);
+      line-height:1.7;
+      font-size:16px;
     }
 
-    .hero {
-      display:grid;
-      grid-template-columns:1.1fr .9fr;
-      gap:48px;
-      align-items:center;
+    .btn {
+      display:inline-block;
+      border:0;
+      border-radius:999px;
+      padding:13px 20px;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      color:#000;
+      font-weight:900;
+      cursor:pointer;
+      margin:6px 8px 6px 0;
+    }
+
+    .btn.secondary {
+      background:transparent;
+      color:var(--gold2);
+      border:1px solid var(--border);
     }
 
     .card {
-      background:linear-gradient(180deg,var(--panel),#100f09);
+      background:linear-gradient(180deg,rgba(20,17,10,.96),rgba(8,7,4,.96));
       border:1px solid var(--border);
-      border-radius:18px;
-      padding:25px;
-      box-shadow:0 25px 70px rgba(0,0,0,.35);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:0 30px 80px rgba(0,0,0,.38);
     }
 
     .grid {
@@ -160,77 +172,90 @@ cat > index.html <<'HTML'
       margin-top:28px;
     }
 
-    .grid4 {
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-      margin-top:28px;
-    }
-
     .diagnosis {
       display:grid;
-      grid-template-columns:1fr 1.1fr;
+      grid-template-columns:.9fr 1.1fr;
       gap:24px;
+      align-items:start;
     }
 
     select, textarea {
       width:100%;
-      background:#050503;
-      color:#fff;
+      background:#030303;
+      color:var(--text);
       border:1px solid var(--border);
-      border-radius:12px;
-      padding:14px;
-      margin-bottom:14px;
+      border-radius:16px;
+      padding:15px;
       font:inherit;
+      margin-bottom:14px;
+      outline:none;
     }
 
-    textarea { min-height:210px; resize:vertical; }
+    textarea {
+      min-height:230px;
+      resize:vertical;
+    }
+
+    select:focus, textarea:focus {
+      border-color:var(--gold2);
+      box-shadow:0 0 0 3px rgba(214,178,83,.12);
+    }
 
     #output {
+      background:#030303;
+      border:1px solid var(--border);
+      border-radius:18px;
+      min-height:430px;
+      padding:22px;
       white-space:pre-wrap;
       line-height:1.65;
-      background:#080806;
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:18px;
-      min-height:380px;
-      color:#fff4d6;
+      color:#fff9e8;
+      overflow:auto;
     }
 
     .founder {
       display:grid;
-      grid-template-columns:.9fr 1.1fr;
-      gap:24px;
+      grid-template-columns:.85fr 1.15fr;
+      gap:26px;
       align-items:stretch;
     }
 
-    .founder img {
+    .founder-photo {
       width:100%;
       height:100%;
-      min-height:440px;
+      min-height:470px;
       object-fit:cover;
-      border-radius:18px;
+      border-radius:24px;
       border:1px solid var(--border);
-      background:#15130d;
+      background:#111;
+      display:block;
+    }
+
+    .fallback-founder {
+      min-height:470px;
+      border-radius:24px;
+      border:1px solid var(--border);
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at top, rgba(214,178,83,.28), transparent 45%),
+        #090805;
+      color:var(--gold2);
+      font-size:72px;
+      font-weight:900;
     }
 
     footer {
-      max-width:1100px;
-      margin:auto;
-      padding:35px 22px;
-      color:var(--muted);
       border-top:1px solid var(--border);
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      flex-wrap:wrap;
+      padding:36px 24px;
+      color:var(--muted);
+      text-align:center;
     }
 
     @media(max-width:850px) {
       .hero,.diagnosis,.founder { grid-template-columns:1fr; }
-      .grid,.grid4 { grid-template-columns:1fr; }
+      .grid { grid-template-columns:1fr; }
       nav { display:none; }
-      h1 { font-size:46px; }
     }
   </style>
 </head>
@@ -239,19 +264,17 @@ cat > index.html <<'HTML'
 <header>
   <div class="nav">
     <a class="brand" href="#">
-      <div class="logo">CS</div>
+      <div class="logo">F</div>
       <div>
-        <div>Clarity Systems</div>
-        <small style="color:var(--muted);">FLOW AI Operations Companion</small>
+        <div>FLOW AI</div>
+        <small style="color:var(--muted);">Operations Companion</small>
       </div>
     </a>
 
     <nav>
-      <a href="#why">Why FLOW</a>
       <a href="#framework">Framework</a>
       <a href="#industries">Industries</a>
-      <a href="#ai">AI App</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#ai">AI Diagnosis</a>
       <a href="#founder">Founder</a>
     </nav>
 
@@ -262,74 +285,59 @@ cat > index.html <<'HTML'
 <main>
   <section class="hero">
     <div>
-      <span class="tag">AI-Powered COO Operations Platform</span>
-      <h1>COO-level operational clarity for teams ready to execute.</h1>
+      <span class="tag">Black & Gold Operations Intelligence</span>
+      <h1>Turn operational chaos into clear execution.</h1>
       <p>
-        FLOW helps teams diagnose messy operations, uncover bottlenecks,
-        design SOPs, define KPIs, and turn scattered work into clear execution systems.
+        FLOW AI diagnoses messy workflows, unclear ownership, weak follow-up,
+        missing KPIs, and broken handoffs — then gives you practical COO-style actions.
       </p>
-      <a class="btn" href="#ai">Analyze with FLOW AI</a>
-      <a class="btn secondary" href="#framework">See the Framework</a>
+      <a class="btn" href="#ai">Analyze My Operations</a>
+      <a class="btn secondary" href="#framework">View Framework</a>
     </div>
 
     <div class="card">
-      <span class="tag">COO-style output</span>
-      <h3>Executive Summary</h3>
-      <p>Your operation may rely too much on memory and manual follow-up.</p>
-      <h3>Core Bottleneck</h3>
-      <p>Unclear ownership and weak handoffs are slowing execution.</p>
-      <h3>Recommended System</h3>
-      <p>Build SOPs, KPI checkpoints, process owners, and weekly operating rhythm.</p>
-    </div>
-  </section>
-
-  <section id="why">
-    <span class="tag">Why use FLOW</span>
-    <h2>Your team may not be the problem. Your operating system may be broken.</h2>
-    <p>
-      Most teams do not fail because people are lazy. They struggle because the work is not clearly designed.
-    </p>
-
-    <div class="grid">
-      <div class="card"><h3>Find the real bottleneck</h3><p>FLOW separates symptoms from root operational problems.</p></div>
-      <div class="card"><h3>Turn chaos into structure</h3><p>Convert messy descriptions into SOPs, owners, workflows, and KPIs.</p></div>
-      <div class="card"><h3>Think like a COO</h3><p>Review problems through ownership, accountability, visibility, process, and results.</p></div>
+      <span class="tag">What FLOW finds</span>
+      <h3>Hidden bottlenecks</h3>
+      <p>Where work slows down, gets repeated, or depends too much on one person.</p>
+      <h3>Execution leaks</h3>
+      <p>Where unclear roles, missing SOPs, and weak tracking create daily friction.</p>
+      <h3>Practical next actions</h3>
+      <p>Clear steps, SOP ideas, KPI suggestions, and an operating rhythm.</p>
     </div>
   </section>
 
   <section id="framework">
-    <span class="tag">The FLOW System Framework</span>
-    <h2>FLOW is not just an AI prompt. It is an operations thinking system.</h2>
+    <span class="tag">FLOW Framework</span>
+    <h2>A practical system for operational clarity.</h2>
 
-    <div class="grid4">
-      <div class="card"><h3>F — Find</h3><p>Identify delays, rework, confusion, missed follow-ups, and hidden friction.</p></div>
-      <div class="card"><h3>L — Layout</h3><p>Map how work actually moves from request to completion.</p></div>
-      <div class="card"><h3>O — Optimize</h3><p>Generate SOP ideas, KPI suggestions, and process improvements.</p></div>
-      <div class="card"><h3>W — Work</h3><p>Turn the diagnosis into habits, reviews, accountability, and ongoing improvement.</p></div>
+    <div class="grid">
+      <div class="card"><h3>Find</h3><p>Identify the real bottleneck behind the symptoms.</p></div>
+      <div class="card"><h3>Layout</h3><p>Map the actual workflow, owners, handoffs, and delays.</p></div>
+      <div class="card"><h3>Optimize</h3><p>Remove friction, simplify decisions, and clarify accountability.</p></div>
     </div>
   </section>
 
   <section id="industries">
     <span class="tag">Industries</span>
-    <h2>FLOW is useful anywhere execution quality matters.</h2>
+    <h2>Useful for any business where execution matters.</h2>
 
     <div class="grid">
-      <div class="card"><h3>Education & Training</h3><p>Student engagement, curriculum flow, teacher consistency, and follow-up.</p></div>
-      <div class="card"><h3>Agencies & Services</h3><p>Delivery, client handoffs, approvals, deadlines, revisions, and reporting.</p></div>
-      <div class="card"><h3>Healthcare Admin</h3><p>Appointments, patient follow-up, admin flow, documentation, and handoffs.</p></div>
-      <div class="card"><h3>E-commerce</h3><p>Orders, returns, dispatch, support, inventory, and fulfillment bottlenecks.</p></div>
-      <div class="card"><h3>Field Operations</h3><p>Dispatch, coordination, site checklists, scheduling, and service reporting.</p></div>
-      <div class="card"><h3>Local Business</h3><p>Daily operations, staff routines, customer handling, and consistency.</p></div>
+      <div class="card"><h3>Education</h3><p>Student engagement, curriculum flow, teacher consistency, follow-up.</p></div>
+      <div class="card"><h3>Agencies</h3><p>Client delivery, revisions, approvals, deadlines, reporting.</p></div>
+      <div class="card"><h3>E-commerce</h3><p>Orders, inventory, support, fulfillment, returns.</p></div>
+      <div class="card"><h3>Healthcare Admin</h3><p>Scheduling, patient flow, documentation, admin handoffs.</p></div>
+      <div class="card"><h3>Real Estate</h3><p>Lead follow-up, transaction flow, client communication.</p></div>
+      <div class="card"><h3>Local Business</h3><p>Daily routines, staff accountability, customer experience.</p></div>
     </div>
   </section>
 
   <section id="ai">
-    <span class="tag">FLOW AI Companion App</span>
-    <h2>Describe the operational mess. FLOW returns a structured COO-style diagnosis.</h2>
+    <span class="tag">AI Diagnosis</span>
+    <h2>Describe the mess. FLOW gives you the operational diagnosis.</h2>
 
     <div class="diagnosis">
       <div class="card">
-        <h3>Operational Analysis</h3>
+        <h3>Business Context</h3>
 
         <select id="industryInput">
           <option>General Business</option>
@@ -341,11 +349,10 @@ cat > index.html <<'HTML'
           <option>Restaurants and Hospitality</option>
           <option>Construction and Trades</option>
           <option>Real Estate</option>
-          <option>Field Operations</option>
           <option>Local Business</option>
         </select>
 
-        <textarea id="problem" placeholder="Example: My team keeps missing deadlines, approvals are slow, and I always need to follow up."></textarea>
+        <textarea id="problem" placeholder="Example: My team keeps missing deadlines, approvals are slow, and I always have to follow up."></textarea>
 
         <button class="btn" onclick="runDiagnosis()">Analyze with FLOW AI</button>
         <button class="btn secondary" onclick="clearOutput()">Clear</button>
@@ -353,79 +360,63 @@ cat > index.html <<'HTML'
 
       <div class="card">
         <h3>FLOW Output</h3>
-        <div id="output">Your diagnosis will appear here.</div>
+        <div id="output">Your custom diagnosis will appear here.</div>
       </div>
-    </div>
-  </section>
-
-  <section id="pricing">
-    <span class="tag">Pricing</span>
-    <h2>Start with diagnosis. Upgrade when you need implementation.</h2>
-
-    <div class="grid">
-      <div class="card"><h3>Free Diagnosis</h3><h2>$0</h2><p>Basic AI diagnosis, bottleneck summary, and SOP/KPI ideas.</p></div>
-      <div class="card"><h3>Operations Audit</h3><h2>$99+</h2><p>Workflow breakdown, root-cause analysis, SOP/KPI recommendations, and action roadmap.</p></div>
-      <div class="card"><h3>System Build</h3><h2>Custom</h2><p>SOP creation, workflow redesign, KPI setup, and operating rhythm implementation.</p></div>
     </div>
   </section>
 
   <section id="founder" class="founder">
     <div class="card" style="padding:0; overflow:hidden;">
-      <img src="assets/founder.jpg" alt="Richard Sy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;padding:60px;text-align:center;color:#f4cf57;&quot;>Founder image missing. Add founder.jpg to your project root.</div>';">
+      <img
+        class="founder-photo"
+        src="assets/founder.jpg"
+        alt="Richard Sy"
+        onerror="this.outerHTML='<div class=&quot;fallback-founder&quot;>RS</div>';"
+      />
     </div>
 
     <div class="card">
       <span class="tag">Founder</span>
-      <h2>Hello, I’m Richard Sy.</h2>
-      <p>Founder of Clarity Systems. Lifelong learner, systems thinker, AI enthusiast, and operations builder.</p>
+      <h2>Richard Sy</h2>
+      <p>
+        Founder of FLOW AI Operations Companion. I build systems that help teams move
+        from confusion to clarity, from manual follow-up to structured execution.
+      </p>
 
-      <h3>My mission</h3>
-      <p>I help growing teams turn operational chaos into clear execution using AI-powered diagnosis, practical SOPs, KPI thinking, workflows, and simple systems people can actually follow.</p>
+      <h3>Mission</h3>
+      <p>
+        Help founders and teams diagnose operational friction, install simple SOPs,
+        define useful KPIs, and create workflows people can actually follow.
+      </p>
 
-      <h3>My vision</h3>
-      <p>FLOW is being built as an AI operations companion for founders, leaders, and teams who want clarity.</p>
-
-      <a class="btn" href="https://www.linkedin.com/in/richard-sy-9b57b8242/" target="_blank" rel="noopener noreferrer">View LinkedIn</a>
+      <a class="btn" href="https://www.linkedin.com/in/richard-sy-9b57b8242/" target="_blank" rel="noopener noreferrer">
+        View LinkedIn
+      </a>
     </div>
-  </section>
-
-  <section class="card" style="text-align:center;">
-    <span class="tag">Get started</span>
-    <h2>Stop guessing what is wrong. Diagnose it.</h2>
-    <p>Bring your messy workflow, unclear handoffs, inconsistent execution, or scaling problem.</p>
-    <a class="btn" href="#ai">Run Diagnosis</a>
   </section>
 </main>
 
 <footer>
-  <div>© 2026 Clarity Systems — FLOW AI Operations Companion</div>
-  <div>Contact: richardsy218@gmail.com</div>
+  © 2026 FLOW AI — Built by Richard Sy
 </footer>
 
 <script>
 async function runDiagnosis() {
-  const industry = document.getElementById("industryInput")?.value || "General Business";
-  const problem = document.getElementById("problem")?.value.trim() || "";
+  const industry = document.getElementById("industryInput").value;
+  const problem = document.getElementById("problem").value.trim();
   const output = document.getElementById("output");
-
-  if (!output) {
-    alert("Missing output div.");
-    return;
-  }
 
   if (!problem) {
     output.textContent = "Please describe the operational problem first.";
     return;
   }
 
-  output.textContent = "FLOW AI is analyzing...";
+  output.textContent = "FLOW AI is analyzing your operation...";
 
   try {
     const res = await fetch("/api/diagnose", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ industry, problem })
     });
 
@@ -439,7 +430,7 @@ async function runDiagnosis() {
     let data;
     try {
       data = JSON.parse(text);
-    } catch (err) {
+    } catch (e) {
       output.textContent = "Invalid JSON from backend:\n\n" + text;
       return;
     }
@@ -449,9 +440,7 @@ async function runDiagnosis() {
       return;
     }
 
-    const list = arr => Array.isArray(arr)
-      ? arr.map(item => "- " + item).join("\n")
-      : "- Not provided";
+    const list = arr => Array.isArray(arr) ? arr.map(x => "• " + x).join("\n") : "• Not provided";
 
     output.textContent =
       "EXECUTIVE SUMMARY\n" + (data.executiveSummary || "Not provided") + "\n\n" +
@@ -460,6 +449,11 @@ async function runDiagnosis() {
       "PEOPLE\n" + list(data.systemBreakdown?.people) + "\n\n" +
       "PROCESS\n" + list(data.systemBreakdown?.process) + "\n\n" +
       "SYSTEMS\n" + list(data.systemBreakdown?.systems) + "\n\n" +
+      "FLOW FRAMEWORK\n" +
+      "Find: " + (data.flowFramework?.find || "Not provided") + "\n" +
+      "Layout: " + (data.flowFramework?.layout || "Not provided") + "\n" +
+      "Optimize: " + (data.flowFramework?.optimize || "Not provided") + "\n" +
+      "Work: " + (data.flowFramework?.work || "Not provided") + "\n\n" +
       "PRIORITY ACTIONS\n" + list(data.priorityActions) + "\n\n" +
       "SOP SUGGESTIONS\n" + list(data.sopSuggestions) + "\n\n" +
       "KPI SUGGESTIONS\n" + list(data.kpiSuggestions) + "\n\n" +
@@ -472,11 +466,8 @@ async function runDiagnosis() {
 }
 
 function clearOutput() {
-  const problem = document.getElementById("problem");
-  const output = document.getElementById("output");
-
-  if (problem) problem.value = "";
-  if (output) output.textContent = "Your diagnosis will appear here.";
+  document.getElementById("problem").value = "";
+  document.getElementById("output").textContent = "Your custom diagnosis will appear here.";
 }
 </script>
 </body>
@@ -484,6 +475,10 @@ function clearOutput() {
 HTML
 
 cat > functions/api/diagnose.js <<'JS'
+export async function onRequestGet() {
+  return Response.json({ status: "FLOW API is live. Use POST." });
+}
+
 export async function onRequestPost(context) {
   try {
     const { request, env } = context;
@@ -493,47 +488,29 @@ export async function onRequestPost(context) {
     const problem = body.problem || "";
 
     if (!problem.trim()) {
-      return Response.json(
-        { error: "Please describe the operational problem first." },
-        { status: 400 }
-      );
+      return Response.json({ error: "Problem is required." }, { status: 400 });
     }
 
     if (!env.AI) {
-      return Response.json(
-        { error: "Cloudflare Workers AI binding missing. Add AI binding named AI." },
-        { status: 500 }
-      );
+      return Response.json({
+        error: "Cloudflare AI binding missing. Add an AI binding named AI in Cloudflare Pages settings."
+      }, { status: 500 });
     }
 
     const prompt = `
-You are FLOW, a senior COO-level operations strategist.
+You are FLOW AI, a senior COO-level operations strategist.
 
-The user gives an industry and an operational problem.
-Your job is to produce a specific, practical operations diagnosis.
-
-Do not assume the company needs scaling.
-Do not give generic advice.
-Prioritize:
-1. execution clarity
-2. bottleneck diagnosis
-3. ownership
-4. workflow design
-5. SOP suggestions
-6. KPI suggestions
-7. immediate next actions
+Analyze this operational problem. Give a specific answer based on the user's exact input.
+Do NOT give the same generic answer every time.
+Do NOT assume the business needs scaling.
+Focus on operations, workflow, ownership, SOPs, KPIs, follow-up, handoffs, and practical execution.
 
 Industry: ${industry}
+Problem: ${problem}
 
-Problem:
-${problem}
+Return ONLY valid JSON. No markdown. No code fences.
 
-Return ONLY valid JSON.
-No markdown.
-No code fences.
-No explanation outside JSON.
-
-Use this exact structure:
+Use this exact JSON structure:
 {
   "executiveSummary": "",
   "coreProblem": "",
@@ -561,57 +538,42 @@ Use this exact structure:
       messages: [
         {
           role: "system",
-          content: "You are FLOW, a practical COO operations strategist. Always return only strict valid JSON."
+          content: "You are a precise COO operations strategist. Always return only valid JSON."
         },
         {
           role: "user",
           content: prompt
         }
       ],
-      max_tokens: 1200
+      max_tokens: 1400
     });
 
     let text = ai.response || "";
-
     text = text.replace(/```json/g, "").replace(/```/g, "").trim();
 
-    const first = text.indexOf("{");
-    const last = text.lastIndexOf("}");
-
-    if (first !== -1 && last !== -1 && last > first) {
-      text = text.slice(first, last + 1);
+    const start = text.indexOf("{");
+    const end = text.lastIndexOf("}");
+    if (start !== -1 && end !== -1 && end > start) {
+      text = text.slice(start, end + 1);
     }
 
     let data;
-
     try {
       data = JSON.parse(text);
-    } catch (e) {
-      return Response.json(
-        {
-          error: "AI returned invalid JSON.",
-          raw: text
-        },
-        { status: 500 }
-      );
+    } catch {
+      return Response.json({
+        error: "AI returned invalid JSON.",
+        raw: text
+      }, { status: 500 });
     }
 
     return Response.json(data);
 
   } catch (err) {
-    return Response.json(
-      {
-        error: err.message || "Server error."
-      },
-      { status: 500 }
-    );
+    return Response.json({
+      error: err.message || "Server error."
+    }, { status: 500 });
   }
-}
-
-export async function onRequestGet() {
-  return Response.json({
-    status: "FLOW API is live. Use POST with industry and problem."
-  });
 }
 JS
 
@@ -623,10 +585,9 @@ compatibility_date = "2024-01-01"
 binding = "AI"
 TOML
 
-echo "Done."
-echo "Now run:"
-echo "git add . && git commit -m 'complete flow frontend backend ai image' && git push"
+echo "Done. Now deploy:"
+echo "git add . && git commit -m 'rebuild elegant flow ai site' && git push"
 EOF
 
-chmod +x build-flow-complete.sh
-./build-flow-complete.sh
+chmod +x rebuild-flow-elegant.sh
+./rebuild-flow-elegant.sh
