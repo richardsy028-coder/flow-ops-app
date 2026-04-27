@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clarity FLOW | Operating Companion & System</title>
+  <meta name="description" content="Clarity FLOW helps businesses diagnose bottlenecks, build KPI dashboards, create SOPs, improve onboarding, and turn chaos into operational execution." />
+
+  <style>
+    :root{
+      --bg:#05070d;--bg2:#0b1020;--card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.13);--text:#f8fafc;--muted:#9ca3af;
+      --gold:#d8b45c;--cyan:#31e6ff;--green:#75f0b0;--red:#ff7676;
+      --radius:26px;--shadow:0 30px 100px rgba(0,0,0,.45)
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);line-height:1.6;background:
+      radial-gradient(circle at 15% 5%,rgba(49,230,255,.18),transparent 28%),
+      radial-gradient(circle at 85% 8%,rgba(216,180,92,.16),transparent 30%),
+      linear-gradient(180deg,var(--bg),var(--bg2));
+    }
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1180px,calc(100% - 40px));margin:auto}
+    header{position:sticky;top:0;z-index:20;background:rgba(5,7,13,.76);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    .mark{width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--gold),var(--cyan));display:grid;place-items:center;color:#05070d}
+    .links{display:flex;gap:24px;color:var(--muted);font-weight:750;font-size:14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:15px;border:1px solid var(--line);font-weight:900;transition:.2s}
+    .btn:hover{transform:translateY(-2px)}
+    .primary{background:linear-gradient(135deg,var(--gold),var(--cyan));color:#05070d;border:none;box-shadow:0 18px 55px rgba(49,230,255,.18)}
+    section{padding:86px 0}
+    .hero{padding:110px 0 86px}
+    .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+    .eyebrow{display:inline-flex;margin-bottom:18px;padding:8px 13px;border-radius:999px;color:var(--gold);background:rgba(216,180,92,.11);border:1px solid rgba(216,180,92,.24);font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+    h1{font-size:clamp(44px,7vw,84px);line-height:.94;letter-spacing:-.06em;margin-bottom:24px}
+    h2{font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.045em;margin-bottom:18px}
+    h3{font-size:22px;letter-spacing:-.025em;margin-bottom:10px}
+    p{color:var(--muted)}
+    .hero p{font-size:19px;max-width:680px;margin-bottom:30px}
+    .actions{display:flex;gap:14px;flex-wrap:wrap}
+    .card,.dash,.industry,.founder,.price{border:1px solid var(--line);background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .dash{padding:24px}
+    .dashTop{display:flex;justify-content:space-between;margin-bottom:20px}
+    .status{color:var(--green);padding:6px 10px;border-radius:999px;border:1px solid rgba(117,240,176,.25);background:rgba(117,240,176,.08);font-size:12px;font-weight:950}
+    .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .metric{padding:18px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line)}
+    .metric span{color:var(--muted);font-size:12px;text-transform:uppercase;font-weight:850}
+    .metric strong{display:block;color:var(--gold);font-size:34px;line-height:1;margin-top:8px}
+    .bar{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin:12px 0}
+    .bar div{height:100%;background:linear-gradient(90deg,var(--gold),var(--cyan))}
+    .sectionHead{max-width:780px;margin-bottom:38px}
+    .cards,.industries,.prices{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .card,.industry,.price{padding:26px}
+    .num{color:var(--gold);font-weight:950;margin-bottom:15px;letter-spacing:.08em}
+    ul{list-style:none;display:grid;gap:10px;margin-top:16px;color:var(--muted);font-size:15px}
+    li:before{content:"•";color:var(--cyan);margin-right:8px}
+    .diagnosis{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px}
+    textarea,input{width:100%;border-radius:18px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--text);padding:15px;font:inherit;outline:none}
+    textarea{min-height:190px;resize:vertical}
+    .output{display:grid;gap:14px}
+    .chartGrid{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px;align-items:center}
+    .pie{width:230px;height:230px;border-radius:50%;background:conic-gradient(var(--gold) 0 36%,var(--cyan) 36% 66%,var(--green) 66% 86%,var(--red) 86% 100%);margin:auto;position:relative}
+    .pie:after{content:"FLOW";position:absolute;inset:48px;border-radius:50%;background:#090d18;display:grid;place-items:center;font-weight:950}
+    .founder{display:grid;grid-template-columns:280px 1fr;gap:32px;align-items:center;padding:32px}
+    .founderImg{width:100%;aspect-ratio:1/1;border-radius:28px;background:linear-gradient(135deg,rgba(216,180,92,.3),rgba(49,230,255,.2)),url("founder.jpg") center/cover;border:1px solid var(--line)}
+    .cta{text-align:center;padding:60px 30px;border-radius:32px;border:1px solid rgba(216,180,92,.25);background:linear-gradient(135deg,rgba(216,180,92,.13),rgba(49,230,255,.08));box-shadow:var(--shadow)}
+    footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+    @media(max-width:980px){.grid,.diagnosis,.chartGrid,.founder{grid-template-columns:1fr}.cards,.industries,.prices,.metrics{grid-template-columns:1fr}.links{display:none}}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#"><span class="mark">F</span><span>Clarity FLOW</span></a>
+    <nav class="links">
+      <a href="#system">System</a><a href="#industries">Industries</a><a href="#diagnosis">Diagnosis</a><a href="#founder">Founder</a>
+    </nav>
+    <a class="btn primary" href="mailto:richardsy.028@gmail.com?subject=Clarity FLOW Diagnosis">Start Diagnosis</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container grid">
+    <div>
+      <div class="eyebrow">Operating Companion & System</div>
+      <h1>Turning chaos into operational execution.</h1>
+      <p>Clarity FLOW helps businesses diagnose bottlenecks, build KPI dashboards, create SOP systems, improve onboarding, and execute with COO-level clarity.</p>
+      <div class="actions">
+        <a class="btn primary" href="sample-flow-diagnosis.pdf" download>Download Free Sample PDF</a>
+        <a class="btn" href="mailto:richardsy.028@gmail.com?subject=Paid FLOW Report Request">Request Paid COO-Level Report</a>
+      </div>
+    </div>
+
+    <div class="dash">
+      <div class="dashTop">
+        <div><h3>FLOW Diagnosis Dashboard</h3><p>AI-assisted operating review</p></div>
+        <span class="status">ACTIVE</span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><span>Execution Score</span><strong>76%</strong></div>
+        <div class="metric"><span>KPI Clarity</span><strong>42%</strong></div>
+        <div class="metric"><span>SOP Coverage</span><strong>51%</strong></div>
+        <div class="metric"><span>Bottleneck Risk</span><strong>High</strong></div>
+      </div>
+      <br>
+      <div class="metric">
+        <span>Onboarding Readiness</span>
+        <div class="bar"><div style="width:62%"></div></div>
+        <p>Recommended: paid report + execution sprint.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="system">
+  <div class="container">
+    <div class="sectionHead">
+      <div class="eyebrow">Why FLOW</div>
+      <h2>Most businesses do not fail from lack of effort. They fail from lack of system.</h2>
+      <p>FLOW brings process, system, order, and execution thinking to businesses that want to grow without confusion.</p>
+    </div>
+    <div class="cards">
+      <div class="card"><div class="num">F</div><h3>Find Bottlenecks</h3><p>Identify what slows people, workflows, revenue, production, training, and administration.</p></div>
+      <div class="card"><div class="num">L</div><h3>Link KPIs</h3><p>Connect daily work to measurable performance through dashboards, charts, and metrics.</p></div>
+      <div class="card"><div class="num">O</div><h3>Organize SOPs</h3><p>Turn repeated work into SOPs, video playbooks, onboarding flows, and approval systems.</p></div>
+      <div class="card"><div class="num">W</div><h3>Work the Plan</h3><p>Move from advice into execution with priorities, accountability, and implementation guidance.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="industries">
+  <div class="container">
+    <div class="sectionHead">
+      <div class="eyebrow">Industry-Specific Systems</div>
+      <h2>One operating companion. Four high-impact environments.</h2>
+    </div>
+
+    <div class="industries">
+      <div class="industry">
+        <div class="num">#1 Core</div>
+        <h3>Operation & Production</h3>
+        <p>Build the operating system behind your business.</p>
+        <ul><li>Production workflow clarity</li><li>Task ownership</li><li>KPI dashboards</li><li>SOP documentation</li><li>Execution control</li></ul>
+      </div>
+
+      <div class="industry">
+        <div class="num">#2 Fastest ROI</div>
+        <h3>Sales & Marketing</h3>
+        <p>With a focus on real estate teams, lead flow, campaigns, CRM workflows, and sales execution.</p>
+        <ul><li>Lead response time</li><li>Conversion rate</li><li>Pipeline value</li><li>Campaign ROI</li><li>Follow-up SOPs</li></ul>
+      </div>
+
+      <div class="industry">
+        <div class="num">#3 High Trust</div>
+        <h3>Healthcare Admin & Pharmacy</h3>
+        <p>Bring clarity and control to complex healthcare and pharmacy operations.</p>
+        <ul><li>Staff onboarding</li><li>Patient/admin flow</li><li>Pharmacy coordination</li><li>Compliance SOPs</li><li>Documentation workflows</li></ul>
+      </div>
+
+      <div class="industry">
+        <div class="num">#4 Training</div>
+        <h3>Education, Training & Onboarding</h3>
+        <p>Turn training into scalable systems with tracking, SOP videos, and repeatable delivery.</p>
+        <ul><li>Training dashboards</li><li>Learner progress</li><li>Onboarding completion</li><li>SOP video libraries</li><li>Time-to-productivity</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diagnosis">
+  <div class="container">
+    <div class="sectionHead">
+      <div class="eyebrow">Free Sample → Paid Advice → Execution</div>
+      <h2>Start free. Upgrade when you want specific COO-level advice.</h2>
+      <p>The free sample shows the framework. The paid report gives specific strategy for your business.</p>
+    </div>
+
+    <div class="diagnosis">
+      <div class="card">
+        <h3>AI Diagnosis Prompt</h3>
+        <p>Describe your business problem, workflow, onboarding issue, KPI gap, or execution bottleneck.</p>
+        <br>
+        <textarea id="problemInput" placeholder="Example: Our real estate team loses leads, has inconsistent follow-up, and no clear sales dashboard..."></textarea>
+        <br><br>
+        <button class="btn primary" onclick="generateSample()">Generate Sample Insight</button>
+      </div>
+
+      <div class="output">
+        <div class="card"><h3>Sample Insight</h3><p id="sampleOutput">Your sample insight will appear here.</p></div>
+        <div class="card"><h3>Paid FLOW Report Includes</h3><ul><li>Custom diagnosis</li><li>KPI and chart recommendations</li><li>SOP priorities</li><li>Onboarding gaps</li><li>COO-level advice</li><li>Execution roadmap</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="metrics">
+  <div class="container">
+    <div class="sectionHead">
+      <div class="eyebrow">KPI, Charts & Metrics Calculator</div>
+      <h2>Measure what matters before scaling what is broken.</h2>
+    </div>
+
+    <div class="chartGrid">
+      <div class="card"><div class="pie"></div></div>
+      <div class="card">
+        <h3>Execution Risk Calculator</h3>
+        <p>Enter quick numbers to estimate operational friction.</p>
+        <br>
+        <input id="teamSize" type="number" placeholder="Team size" />
+        <br><br>
+        <input id="undocumented" type="number" placeholder="Undocumented processes" />
+        <br><br>
+        <input id="delay" type="number" placeholder="Average delay time in days" />
+        <br><br>
+        <button class="btn primary" onclick="calculateRisk()">Calculate Risk</button>
+        <br><br>
+        <div class="metric"><span>Estimated Risk</span><strong id="riskResult">--</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reports">
+  <div class="container">
+    <div class="sectionHead">
+      <div class="eyebrow">Reports & Services</div>
+      <h2>Convert insight into implementation.</h2>
+    </div>
+
+    <div class="prices">
+      <div class="price"><h3>Free Sample PDF</h3><p>$0</p><ul><li>Sample diagnosis</li><li>Example KPI review</li><li>Example SOP plan</li></ul><br><a class="btn" href="sample-flow-diagnosis.pdf" download>Download</a></div>
+      <div class="price"><h3>Paid FLOW Report</h3><p>Custom</p><ul><li>Business-specific advice</li><li>Charts and metrics</li><li>Execution roadmap</li></ul><br><a class="btn primary" href="mailto:richardsy.028@gmail.com?subject=Paid FLOW Report">Request</a></div>
+      <div class="price"><h3>Consultation</h3><p>Custom</p><ul><li>COO-level review</li><li>Approval guidance</li><li>Strategy session</li></ul><br><a class="btn" href="mailto:richardsy.028@gmail.com?subject=FLOW Consultation">Book</a></div>
+      <div class="price"><h3>Execution Sprint</h3><p>Custom</p><ul><li>KPI dashboard</li><li>SOP videos</li><li>Onboarding system</li></ul><br><a class="btn" href="mailto:richardsy.028@gmail.com?subject=FLOW Execution Sprint">Start</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="founder">
+  <div class="container founder">
+    <div class="founderImg"></div>
+    <div>
+      <div class="eyebrow">Founder</div>
+      <h2>Built by Richard Sy.</h2>
+      <p>I created Clarity FLOW to help businesses move from confusion to execution. My vision is to help different industries scale through clarity, process, system, order, onboarding, KPI visibility, SOPs, and COO-level strategy.</p>
+      <br>
+      <p>Mission: help leaders stop carrying chaos in their heads and start building systems their teams can actually run.</p>
+      <br>
+      <div class="actions">
+        <a class="btn primary" href="mailto:richardsy.028@gmail.com">Email Richard</a>
+        <a class="btn" target="_blank" href="https://www.linkedin.com/in/richard-sy-9b57b8242/?locale=tl">LinkedIn Profile</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container cta">
+    <div class="eyebrow">Ready to Build Order?</div>
+    <h2>Stop guessing what is broken. Diagnose it.</h2>
+    <p>Download the free sample diagnosis or request a paid COO-level FLOW report for your business.</p>
+    <br>
+    <div class="actions" style="justify-content:center">
+      <a class="btn primary" href="sample-flow-diagnosis.pdf" download>Download Free Sample</a>
+      <a class="btn" href="mailto:richardsy.028@gmail.com?subject=FLOW Paid Diagnosis">Request Paid Diagnosis</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    © 2026 Clarity FLOW by Richard Sy · Turning chaos into operational execution · richardsy.028@gmail.com
+  </div>
+</footer>
+
+<script>
+function generateSample(){
+  const text = document.getElementById("problemInput").value.trim();
+  const output = document.getElementById("sampleOutput");
+
+  if(!text){
+    output.innerText = "Enter your business problem first. FLOW will create a sample bottleneck, KPI, SOP, and execution insight.";
+    return;
+  }
+
+  output.innerText =
+    "Sample FLOW Insight: Your business likely has an execution gap caused by unclear ownership, weak KPI visibility, and undocumented workflows. Recommended next steps: define 3 core KPIs, document the highest-risk process, create one onboarding SOP, and review execution weekly.";
+}
+
+function calculateRisk(){
+  const team = Number(document.getElementById("teamSize").value || 0);
+  const docs = Number(document.getElementById("undocumented").value || 0);
+  const delay = Number(document.getElementById("delay").value || 0);
+  const score = Math.min(100, Math.round((team * 2) + (docs * 6) + (delay * 8)));
+  const result = document.getElementById("riskResult");
+
+  if(score < 35) result.innerText = "Low";
+  else if(score < 70) result.innerText = "Moderate";
+  else result.innerText = "High";
+}
+</script>
+</body>
+</html>
