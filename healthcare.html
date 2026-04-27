@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Healthcare & Pharmacy Admin | Clarity Flow</title>
+<style>
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#071014;color:#f8fafc}
+main{padding:60px;max-width:1100px;margin:auto}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+img{width:100%;border-radius:28px;max-height:520px;object-fit:cover}
+h1{font-size:clamp(3rem,7vw,6rem);line-height:.95;letter-spacing:-.07em}
+p{color:#a6bdc8;font-size:1.1rem;line-height:1.7}
+.card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:28px;padding:28px;margin-top:24px}
+input,textarea{width:100%;padding:15px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:#0d171b;color:white;margin:8px 0 14px}
+textarea{min-height:130px}
+button,a.btn{display:inline-block;padding:15px 22px;border-radius:16px;border:0;background:linear-gradient(135deg,#d9bf63,#43dce6);color:#071014;font-weight:900;text-decoration:none;cursor:pointer}
+pre{white-space:pre-wrap;color:#cbd5e1;line-height:1.6}
+@media(max-width:800px){main{padding:28px}.hero{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<section class="hero">
+<div>
+<p><strong>Clarity Flow Industry System</strong></p>
+<h1>Healthcare & Pharmacy Admin</h1>
+<p>Admin workflows, documentation, pharmacy processes, patient-side coordination</p>
+<a class="btn" href="#diagnostic">Run AI Diagnostic</a>
+</div>
+<img src="assets/founder.jpg" alt="Richard Sy, Founder">
+</section>
+
+<section class="card" id="diagnostic">
+<h2>AI Diagnostic for Healthcare & Pharmacy Admin</h2>
+<p>Get a useful free diagnosis. Unlock the paid COO-level report for the full system.</p>
+<textarea id="situation" placeholder="Describe your current operational problem..."></textarea>
+<button onclick="runAI()">Generate Free AI Diagnosis</button>
+<div class="card">
+<h3>Free AI Answer</h3>
+<pre id="answer">Your AI diagnosis will appear here.</pre>
+</div>
+<div class="card">
+<h3>Locked Paid System</h3>
+<p>The paid report includes: full workflow map, SOP structure, KPI dashboard, automation ideas, custom prompts, and a 30-day execution roadmap.</p>
+<button onclick="checkout()">Unlock Paid COO-Level Report</button>
+</div>
+</section>
+</main>
+
+<script>
+async function runAI(){
+ const situation=document.getElementById('situation').value;
+ document.getElementById('answer').textContent='Generating AI diagnosis...';
+ try{
+  const res=await fetch('/api/diagnose',{
+   method:'POST',
+   headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({
+    type:'Healthcare & Pharmacy Admin',
+    pain:'Admin workflows, documentation, pharmacy processes, patient-side coordination',
+    situation
+   })
+  });
+  const data=await res.json();
+  document.getElementById('answer').textContent =
+   `Score: ${data.score || '--'}\n\n${data.diagnosis || ''}\n\nSample Prompt:\n${data.prompt || ''}`;
+ }catch(e){
+  document.getElementById('answer').textContent =
+`Demo Mode Diagnosis:
+
+Your main issue is not effort. It is missing operating structure.
+
+For Healthcare & Pharmacy Admin, your next step is to:
+1. Map the current workflow
+2. Identify where tasks slow down
+3. Create clear ownership
+4. Build SOPs
+5. Track KPIs weekly
+
+To get the full workflow, automation plan, and execution roadmap, unlock the paid COO-level report.`;
+ }
+}
+
+async function checkout(){
+ try{
+  const res=await fetch('/api/create-checkout',{method:'POST'});
+  const data=await res.json();
+  if(data.url) location.href=data.url;
+  else alert('Checkout not connected yet. Email richardsy.028@gmail.com');
+ }catch(e){
+  alert('Payment backend not connected yet. Email richardsy.028@gmail.com');
+ }
+}
+</script>
+</body>
+</html>

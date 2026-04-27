@@ -23,10 +23,6 @@ pre{white-space:pre-wrap;color:#cbd5e1;line-height:1.65}.founder img{width:100%;
 @media print{body{background:white;color:#111}.nav,.hero,.section:not(#premium-report){display:none}.section#premium-report{display:block;padding:0}.report-box{box-shadow:none;border:0}}
 @media(max-width:900px){.hero,.diag,.pricing,.founder,.timeline-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.grid{grid-template-columns:1fr}.hero,.section{padding:45px 24px}}
 </style>
-<style id="FLOW_OPERATION_COMPANION_CSS">
-.flow-saas-box{margin:60px auto;padding:36px;max-width:1180px;border-radius:30px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 60px rgba(0,0,0,.28)}
-.flow-saas-header h2{font-size:clamp(28px,4vw,48px);margin:8px 0 12px}.flow-kicker{font-weight:800;color:#78e8c7;letter-spacing:.06em;text-transform:uppercase}.flow-saas-header p{color:#cbd5d1;max-width:850px;line-height:1.7}.flow-saas-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:28px}.flow-card{padding:28px;border-radius:24px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.14)}.flow-card h3{font-size:24px;margin-bottom:12px}.flow-card p{color:#cbd5d1;line-height:1.65}.flow-card button,.flow-pay-btn,.flow-feedback-btn{display:inline-block;margin:12px 10px 0 0;padding:15px 22px;border-radius:999px;border:0;font-weight:900;text-decoration:none;cursor:pointer;background:linear-gradient(135deg,#e8dc74,#45dce7);color:#061313}.flow-premium{background:linear-gradient(135deg,rgba(232,220,116,.10),rgba(69,220,231,.08));border:1px solid rgba(232,220,116,.30)}.flow-price{font-size:14px;margin-top:14px}.flow-report-output{margin-top:28px;padding:28px;border-radius:24px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.12);line-height:1.7}.flow-report-output h3{margin-top:0}.flow-report-output ul{padding-left:22px}.flow-feedback{margin-top:24px;padding:24px;border-radius:22px;background:rgba(255,255,255,.045)}.flow-feedback textarea{width:100%;min-height:130px;padding:16px;border-radius:18px;background:#061313;color:#fff;border:1px solid rgba(255,255,255,.35)}@media(max-width:800px){.flow-saas-grid{grid-template-columns:1fr}.flow-saas-box{padding:24px}}
-</style>
 </head>
 <body>
 <nav class="nav">
@@ -251,124 +247,6 @@ async function checkout(plan='deep_report'){
 }
 
 updateTimeline();
-</script>
-
-<section id="report-downloads" style="padding:80px 6vw;">
-  <div style="opacity:.7; margin-bottom:10px;">REPORT DOWNLOADS</div>
-
-  <h2>Download your FLOW diagnosis.</h2>
-  <p>Start free. Upgrade only if you want the full clarity.</p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:30px;">
-
-    <div style="padding:24px;border-radius:16px;background:rgba(255,255,255,0.06);">
-      <h3>Free Summary</h3>
-      <div style="font-size:28px;font-weight:800;">₱0 / $0</div>
-      <p>Quick diagnosis, main issue, and first action step.</p>
-      <a href="flow-summary.pdf" download class="btn">Download PDF</a>
-    </div>
-
-    <div style="padding:24px;border-radius:16px;border:1px solid #d8ff7a;">
-      <h3>Full Report</h3>
-      <div style="font-size:28px;font-weight:800;">₱1,499 / $27</div>
-      <p>Deeper analysis, bottlenecks, KPI fixes, and execution roadmap.</p>
-      <a href="#contact" class="btn">Unlock Full Report</a>
-    </div>
-
-    <div style="padding:24px;border-radius:16px;background:rgba(255,255,255,0.06);">
-      <h3>Execution Help</h3>
-      <div style="font-size:28px;font-weight:800;">₱7,500–₱15,000</div>
-      <p>Hands-on help to implement your system.</p>
-      <a href="#contact" class="btn">Work With Me</a>
-    </div>
-
-  </div>
-</section>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- FLOW_OPERATION_COMPANION_SAAS_START -->
-<section id="flow-operation-companion" class="flow-saas-box">
-  <div class="flow-saas-header">
-    <p class="flow-kicker">Clarity System · FLOW Operation Companion</p>
-    <h2>AI-Generated Operations Report</h2>
-    <p>Generate a free business clarity summary, download the PDF, and request a full COO-style analysis for deeper execution guidance.</p>
-  </div>
-
-  <div class="flow-saas-grid">
-    <div class="flow-card">
-      <h3>Free Summary Report</h3>
-      <p>Includes bottleneck diagnosis, likely root cause, first-level recommendation, and immediate action direction.</p>
-      <button type="button" onclick="flowGenerateReport()">Generate AI Summary</button>
-      <button type="button" onclick="flowDownloadPDF()">Download Free PDF</button>
-    </div>
-
-    <div class="flow-card flow-premium">
-      <h3>Full COO-Style Report</h3>
-      <p>Includes KPI gaps, SOP priorities, ownership map, workflow risks, department-level recommendations, and execution roadmap.</p>
-      <a href="mailto:learnwithrichardsy@gmail.com?subject=Full COO Report Request&body=Hello Richard,%0D%0A%0D%0AI would like to request the full COO-style FLOW Operations Report.%0D%0A%0D%0AMy business/industry:%0D%0AMy main problem:%0D%0AMy preferred payment method:%0D%0A%0D%0AThank you." class="flow-pay-btn">Contact to Unlock Full Report</a>
-      <p class="flow-price">Suggested starting price: ₱499 / $9. Custom pricing available for deeper analysis.</p>
-    </div>
-  </div>
-
-  <div id="flowReportOutput" class="flow-report-output">
-    <h3>FLOW AI Summary Output</h3>
-    <p>Your generated report will appear here.</p>
-  </div>
-
-  <div class="flow-feedback">
-    <h3>Feedback</h3>
-    <textarea id="flowFeedbackText" placeholder="Was this diagnosis helpful? What should be improved?"></textarea>
-    <a onclick="flowSendFeedback()" class="flow-feedback-btn">Send Feedback</a>
-  </div>
-</section>
-<!-- FLOW_OPERATION_COMPANION_SAAS_END -->
-<script id="FLOW_OPERATION_COMPANION_JS">
-function flowGetValue(id){return document.querySelector(id)?.value || document.querySelector(id)?.innerText || "Not provided"}
-function flowGenerateReport(){
-  const industry=flowGetValue("#industry");
-  const problem=flowGetValue("#problem");
-  const complexity=flowGetValue("#complexity");
-  const situation=flowGetValue("#situation");
-  const report=`
-  <h3>Executive Operations Summary</h3>
-  <p><b>Industry:</b> ${industry}</p>
-  <p><b>Primary Problem:</b> ${problem}</p>
-  <p><b>Business Complexity:</b> ${complexity}</p>
-  <p><b>Situation:</b> ${situation}</p>
-  <hr>
-  <h3>COO-Level Diagnosis</h3>
-  <p>The current issue appears to be an operations clarity gap. The business may not be lacking effort; it may be lacking ownership, workflow visibility, KPI discipline, and repeatable execution structure.</p>
-  <h3>Likely Bottleneck</h3>
-  <ul>
-    <li>Unclear role ownership across key tasks</li>
-    <li>Weak handoff between planning and execution</li>
-    <li>No simple operating rhythm for tracking progress</li>
-    <li>Decisions may depend too heavily on one person</li>
-  </ul>
-  <h3>Immediate Recommendation</h3>
-  <p>Start with a 7-day clarity reset: define one owner per workflow, list the top three recurring delays, create a simple KPI tracker, and document the most repeated process as a basic SOP.</p>
-  <h3>Locked Full Report Preview</h3>
-  <p><b>The full COO-style report includes:</b> KPI gap analysis, SOP priority map, workflow redesign, execution roadmap, accountability structure, risk areas, and recommended next steps.</p>
-  <p><b>To unlock:</b> Contact Richard for pricing and payment instructions.</p>`;
-  document.getElementById("flowReportOutput").innerHTML=report;
-}
-async function flowDownloadPDF(){
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF();
-  const text=document.getElementById("flowReportOutput").innerText || "Please generate your FLOW AI Summary first.";
-  doc.setFontSize(18);
-  doc.text("Clarity System - FLOW Operation Companion",20,20);
-  doc.setFontSize(11);
-  doc.text(doc.splitTextToSize(text,170),20,38);
-  doc.text("Full COO-Style Report: Contact Richard to unlock.",20,280);
-  doc.save("FLOW-Free-Operations-Summary.pdf");
-}
-function flowSendFeedback(){
-  const feedback=document.getElementById("flowFeedbackText").value || "";
-  const subject="FLOW Diagnosis Feedback";
-  const body=encodeURIComponent("Hello Richard,\n\nHere is my feedback on the FLOW diagnosis:\n\n"+feedback);
-  window.location.href=`mailto:learnwithrichardsy@gmail.com?subject=${subject}&body=${body}`;
-}
 </script>
 </body>
 </html>

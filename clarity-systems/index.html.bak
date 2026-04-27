@@ -1,0 +1,297 @@
+Create a complete one-file `index.html` website for:
+
+**Clarity Systems — FLOW Operations Companion**
+
+Build it as a premium SaaS-style landing page and prototype. The design should feel clean, warm, elegant, sophisticated, LinkedIn-safe, and inspired by Apple, Notion, Stripe, and Linear.
+
+Use a dark theme with teal/blue accents, soft glow, rounded cards, glassmorphism, smooth spacing, and subtle scroll animations. Everything must be inside one `index.html` file: HTML, CSS, and JavaScript. No frameworks.
+
+## Brand / Product
+
+Company: **Clarity Systems**
+Product: **FLOW**
+Category: **AI Operations Companion**
+Email: **[richardsy.028@gmail.com](mailto:richardsy.028@gmail.com)**
+LinkedIn: **https://www.linkedin.com/in/richard-sy-9b57b8242/**
+Founder image file: **founder.jpg**
+
+## Core Message
+
+FLOW is not just an AI prompt.
+It is an operations thinking system.
+
+FLOW stands for:
+
+* **F — Find Problems**
+* **L — Layout Process**
+* **O — Optimize with AI**
+* **W — Work the System**
+
+Use this warm pain-based tagline:
+
+**“You’re not overwhelmed. You’re operating without a system.”**
+
+Also include softer supporting lines:
+
+* “Clarity for how work actually flows.”
+* “Where busy teams turn scattered effort into visible progress.”
+* “The future of work is not just smarter tools. It is better thinking made easier to practice.”
+
+## Website Sections
+
+### 1. Header / Navigation
+
+Sticky dark navbar with:
+
+* Clarity Systems logo text
+* links: Framework, Industries, AI App, Case Studies, Founder
+* CTA button: Run Diagnosis
+
+### 2. Hero Section
+
+Headline:
+**FLOW is not just an AI prompt. It is an operations thinking system.**
+
+Subtext:
+Explain that FLOW transforms vague operational problems into structured execution systems teams can actually follow.
+
+Add the tagline:
+**You’re not overwhelmed. You’re operating without a system.**
+
+CTA buttons:
+
+* Run Diagnosis
+* View Case Studies
+
+Add a polished SaaS dashboard preview card on the right with:
+
+* Clarity Score
+* Workflow Gaps
+* SOP Actions
+* KPI Priorities
+
+### 3. FLOW Framework Section
+
+Create four premium cards:
+
+* F — Find Problems
+  Description: Identify delays, rework, confusion, handoff issues, owner gaps, and hidden friction.
+  Output: Issue map + root cause clues.
+
+* L — Layout Process
+  Description: Map how work moves from request to completion, including roles, approvals, checkpoints, and responsibilities.
+  Output: Workflow map + ownership structure.
+
+* O — Optimize with AI
+  Description: Generate SOP ideas, KPI suggestions, risk points, and improvement recommendations using structured AI thinking.
+  Output: COO-style diagnosis.
+
+* W — Work the System
+  Description: Turn the diagnosis into habits, reviews, accountability, and ongoing improvement.
+  Output: Operating rhythm.
+
+### 4. AI Prompt Diagnostic System
+
+Create an interactive ChatGPT-style diagnostic area.
+
+Left side:
+
+* Industry dropdown:
+
+  * Marketing & Advertising
+  * Healthcare Administration
+  * Education & Learning
+  * Real Estate Operations
+* Textarea placeholder:
+  “Describe your workflow problem, bottleneck, or operational chaos...”
+* Button: Generate System
+
+Right side:
+
+* Output box titled: COO-Style FLOW Diagnosis
+
+Use JavaScript to simulate output based on selected industry. The output should include:
+
+* Observed Problem
+* Root Cause
+* Workflow Solution
+* KPI Suggestions
+* SOP Suggestions
+* Next Step
+
+This should feel like a real SaaS AI app, even if it is simulated.
+
+### 5. KPI Metrics Dashboard
+
+Add SaaS-style metric cards:
+
+* Clarity Score
+* Cycle Time
+* Completion Rate
+* Workflow Gaps
+
+Add an interactive chart using plain JavaScript, no external chart libraries. Use animated bars. Include a dropdown for:
+
+* Clarity Score
+* Cycle Time Improvement
+* Completion Rate
+
+### 6. Workflow Map Section
+
+Create a visual workflow map with connected stages.
+
+For example:
+Input → Diagnosis → Workflow Map → SOP → KPI Review → Execution Rhythm
+
+Use elegant connected boxes or arrows.
+
+### 7. SOP System Section
+
+Create a code-style SOP preview block.
+
+Example SOP:
+
+1. Receive request
+2. Assign owner
+3. Confirm required information
+4. Move to next workflow stage
+5. Track KPI
+6. Review weekly
+
+Add CTA:
+**Request SOP Video Walkthrough**
+
+### 8. SOP Video Section
+
+Create a video-style card with:
+
+* play button icon
+* title: “SOP Walkthrough Preview”
+* description: “A short guided walkthrough explaining the workflow, owners, review rhythm, and KPI dashboard.”
+* CTA mailto link to [richardsy.028@gmail.com](mailto:richardsy.028@gmail.com)
+
+Make clear this is a request or preview, not a guaranteed instant video generator.
+
+### 9. Industries Section With Images
+
+Create four elegant image cards using online Unsplash image URLs:
+
+1. Marketing & Advertising
+   Description: Campaign workflows, approvals, creative handoffs, reporting rhythm, and delivery systems.
+
+2. Healthcare Administration
+   Description: Scheduling, patient flow, documentation routines, internal coordination, and service consistency.
+
+3. Education & Learning
+   Description: Program structure, lesson operations, student tracking, training delivery, and learning systems.
+
+4. Real Estate Operations
+   Description: Lead pipelines, listing workflows, follow-up systems, viewing coordination, and deal flow clarity.
+
+Each card must include:
+
+* image
+* title
+* description
+* hover effect
+
+### 10. Four Industry Case Studies
+
+Create a premium storytelling case study section, Apple/Notion style.
+
+Each industry case study should include:
+
+* KPI Snapshot
+* Observed Problem
+* FLOW Solution
+* Workflow Solution
+* SOP Suggestion
+* COO-Approved Insight
+* Summary
+
+Case Study 1: Marketing & Advertising
+Problem: Campaign execution slowed by scattered briefs, unclear approvals, and repeated revisions.
+Solution: Define campaign workflow from brief → creation → review → approval → launch → reporting.
+COO insight: Protect the creative team by making approvals visible before deadlines become urgent.
+
+Case Study 2: Healthcare Administration
+Problem: Scheduling, reminders, documentation, and follow-ups rely too much on manual coordination.
+Solution: Map patient journey from booking → confirmation → visit prep → visit → follow-up.
+COO insight: Reduce admin stress by designing the day before the day begins.
+
+Case Study 3: Education & Learning
+Problem: Lesson delivery varies too much by instructor style, making progress difficult to track.
+Solution: Define lesson flow from planning → delivery → practice → feedback → progress review.
+COO insight: A good teaching system protects creativity by giving it a reliable frame.
+
+Case Study 4: Real Estate Operations
+Problem: Leads and deals can be lost when follow-ups are not visible and next actions depend on memory.
+Solution: Structure pipeline from lead → qualification → viewing → offer → close → nurture.
+COO insight: Revenue becomes more predictable when the process is visible before the result appears.
+
+### 11. Three-Stage Process
+
+Create three elegant cards:
+
+1. Diagnosis
+   “We listen to the operational pain, identify patterns, and name the real friction without blame.”
+
+2. Counseling
+   “We translate confusion into shared language: roles, expectations, rhythm, and decisions.”
+
+3. Execution
+   “We turn clarity into workflows, SOPs, KPI reviews, and repeatable action.”
+
+### 12. Founder Section
+
+Use founder image:
+`founder.jpg`
+
+Founder: **Richard Sy**
+
+Tone:
+Teacher of wisdom and explorer of future tech.
+
+Copy:
+“I teach people how to think clearly about work — and explore how AI can support that thinking. FLOW is built to help teams move from confusion to structured execution. The goal is not more tools for the sake of tools, but better thinking, clearer systems, and work that feels easier to understand.”
+
+Add:
+
+* Contact button: mailto [richardsy.028@gmail.com](mailto:richardsy.028@gmail.com)
+* LinkedIn button: https://www.linkedin.com/in/richard-sy-9b57b8242/
+
+### 13. Footer
+
+Include:
+© 2026 Clarity Systems — FLOW Operations Companion
+Contact: [richardsy.028@gmail.com](mailto:richardsy.028@gmail.com)
+LinkedIn link
+
+## JavaScript Requirements
+
+Add JavaScript for:
+
+* scroll reveal animations
+* simulated AI diagnostic output
+* interactive chart update
+* industry-specific content updates
+
+## Design Requirements
+
+* responsive layout
+* mobile-friendly
+* premium dark SaaS aesthetic
+* teal/blue accent colors
+* rounded cards
+* soft shadows
+* elegant typography
+* no broken layout
+* no external frameworks
+* no spammy language
+* no fake logos or fake testimonials
+* no exaggerated claims
+
+## Final Instruction
+
+Return the full complete code only, inside one `index.html` file. Make sure the code is clean, polished, and ready to save and open in a browser.
+

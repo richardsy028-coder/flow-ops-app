@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "npx wrangler pages dev .",
+    "deploy": "npx wrangler pages deploy . --project-name=learnwithrichardsy-site"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}
