@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clarity System | FLOW Operating Companion</title>
+  <meta name="description" content="FLOW helps diagnose business bottlenecks, KPI gaps, SOP priorities, and execution problems." />
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#0f172a; color:#f8fafc; line-height:1.6; }
+    section { max-width:960px; margin:auto; padding:64px 24px; }
+    h1 { font-size:48px; line-height:1.1; }
+    h2 { font-size:32px; }
+    .hero { text-align:center; }
+    .btn { display:inline-block; margin:10px; padding:14px 22px; border-radius:999px; background:#38bdf8; color:#020617; text-decoration:none; font-weight:700; }
+    .btn.secondary { background:#f8fafc; }
+    .card { background:#1e293b; padding:24px; border-radius:20px; margin:16px 0; }
+    footer { text-align:center; padding:32px; color:#cbd5e1; }
+    a { color:#38bdf8; }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <p>Clarity System × FLOW</p>
+    <h1>Diagnose bottlenecks. Clarify KPIs. Organize execution.</h1>
+    <p>FLOW is the AI operating companion inside Clarity System — built to help teams move from confusion to clear operational action.</p>
+    <a class="btn" href="#diagnosis">Run FLOW Diagnosis</a>
+    <a class="btn secondary" href="#pricing">View Pricing</a>
+  </section>
+
+  <section id="diagnosis">
+    <h2>FLOW Free Diagnosis</h2>
+    <div class="card">
+      <p>The free diagnosis helps identify your business problem, operational gaps, and possible next steps.</p>
+      <a class="btn" href="mailto:richardsy.028@gmail.com?subject=FLOW%20Free%20Diagnosis">Start Free Diagnosis</a>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <h2>Pricing</h2>
+    <div class="card">
+      <h3>FLOW Free Diagnosis</h3>
+      <p>₱0 / $0 — Basic AI diagnosis and bottleneck teaser.</p>
+    </div>
+    <div class="card">
+      <h3>FLOW Deep Diagnosis Report</h3>
+      <p>₱4,999 / $89 — KPI map, SOP priorities, case scenario, and execution roadmap.</p>
+      <a class="btn" href="mailto:richardsy.028@gmail.com?subject=FLOW%20Deep%20Diagnosis%20Report">Unlock Deep Report</a>
+    </div>
+    <div class="card">
+      <h3>Premium Execution Sprint</h3>
+      <p>₱15K–₱30K / $299–$599 — Consultation and implementation planning.</p>
+      <a class="btn" href="mailto:richardsy.028@gmail.com?subject=Premium%20Execution%20Sprint">Book Sprint</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Built by Richard Sy</h2>
+    <p>Clarity System helps businesses turn scattered work into clear systems, practical dashboards, SOP priorities, and execution plans.</p>
+    <p>Email: <a href="mailto:richardsy.028@gmail.com">richardsy.028@gmail.com</a></p>
+  </section>
+
+  <footer>
+    © 2026 Clarity System. Powered by FLOW.
+  </footer>
+</body>
+</html>

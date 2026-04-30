@@ -285,7 +285,7 @@
       </div>
 
       <div class="hero-image logo-hero">
-        <img src="/clarity_systems.png" alt="Clarity Systems Logo" />
+        <img src="./clarity-logo.png" alt="Clarity Systems Logo" />
       </div>
     </section>
 

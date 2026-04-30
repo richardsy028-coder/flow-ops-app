@@ -1,0 +1,435 @@
+MASTER OVERRIDE PROMPT — CLARITY SYSTEM × FLOW FINAL BASH
+
+Update the existing one-page Clarity System × FLOW landing page into one powerful, premium, affordable, Netlify-ready static website.
+
+Do not change the overall one-page structure. Keep it as a landing page with sections. Use plain HTML, CSS, and JavaScript only. No backend. No external libraries. Must work on Netlify as a static site.
+
+BRAND IDENTITY
+
+Brand name:
+Clarity System × FLOW
+
+Positioning:
+An affordable AI-supported operations clarity system for small businesses, freelancers, solo founders, beginner business owners, and small teams.
+
+Core promise:
+Clarity System × FLOW helps small business owners escape business chaos one simple workflow at a time.
+
+Main hook:
+The master key for turning business chaos into measurable growth.
+
+Tone:
+Premium but affordable.
+Serious but beginner-friendly.
+Simple business language.
+No jargon without explanation.
+No “Synergy English” wording anywhere.
+Remove all old English coaching traces.
+This is not English coaching. This is business operations clarity.
+
+HERO SECTION
+
+Use this hero copy:
+
+Eyebrow:
+Clarity System × FLOW
+
+Headline:
+The master key for turning business chaos into measurable growth.
+
+Subheadline:
+FLOW helps small business owners find bottlenecks, track the right numbers, build simple SOPs, and turn scattered work into clear business action.
+
+Primary CTA:
+Run Free FLOW Preview
+
+Secondary CTA:
+View Affordable Plans
+
+Add short trust line:
+Built for solo founders, freelancers, small teams, and beginner business owners who need clarity without expensive consulting.
+
+FREE DIAGNOSIS PREVIEW SECTION
+
+Replace the current free diagnosis section with an interactive dropdown-based preview tool.
+
+Section title:
+Free FLOW Diagnosis Preview
+
+Intro:
+Choose your business type, main problem, and goal. FLOW will show a simple preview of your likely bottleneck, one KPI to track, one workflow fix, and the best upgrade option.
+
+Required dropdowns:
+
+1. Business Type:
+- Online store
+- Food business
+- Salon or beauty service
+- Coaching or consulting
+- Local service business
+- Freelancer or solo founder
+- Small team business
+- Not sure yet
+
+2. Main Problem:
+- Unclear ownership — nobody knows who is responsible
+- Missed follow-ups — leads or customers are forgotten
+- No KPI tracking — business numbers are unclear
+- Messy workflow — tasks are scattered and repeated manually
+- Low sales conversion — people inquire but do not pay
+- Slow operations — work takes too long to finish
+- No SOPs — team does not have clear step-by-step instructions
+- Weak reporting — owner cannot see what is working
+- Too many tools — business is spread across apps
+- Founder overload — owner is doing everything alone
+
+3. Goal:
+- Get more sales
+- Save time
+- Organize the team
+- Create SOPs
+- Track KPIs
+- Improve customer follow-up
+- Build a clearer workflow
+- Prepare for scaling
+- Understand what to fix first
+
+Button:
+Generate Free FLOW Preview
+
+When the user clicks the button, show a result box with:
+
+- Likely Bottleneck
+- KPI to Track
+- Suggested Workflow Fix
+- Recommended Upgrade
+- Upgrade CTA buttons
+
+Use JavaScript conditionals based on the selected Main Problem.
+
+DIAGNOSIS LOGIC
+
+If Main Problem is “Unclear ownership — nobody knows who is responsible”:
+Likely Bottleneck:
+Your business may not have clear task ownership, so work gets delayed because no one knows who should act next.
+KPI to Track:
+Task owner completion rate and delayed handoffs per week.
+Suggested Workflow Fix:
+Create a simple role map showing who owns inquiries, follow-ups, delivery, payment, and reporting.
+Recommended Upgrade:
+FLOW Clarity Report for a full ownership map, KPI guide, and SOP priorities.
+
+If Main Problem is “Missed follow-ups — leads or customers are forgotten”:
+Likely Bottleneck:
+Your lead follow-up system may be leaking opportunities because inquiries are not tracked consistently.
+KPI to Track:
+Inquiry-to-follow-up time and lead-to-payment conversion rate.
+Suggested Workflow Fix:
+Create a follow-up board with status labels: new lead, contacted, waiting, paid, lost.
+Recommended Upgrade:
+FLOW Business Builder Kit for follow-up workflow, SOP guide, and revenue leak analysis.
+
+If Main Problem is “No KPI tracking — business numbers are unclear”:
+Likely Bottleneck:
+You may be making decisions without clear numbers, making growth feel like guesswork.
+KPI to Track:
+Weekly sales, inquiries, conversion rate, average order value, and repeat customers.
+Suggested Workflow Fix:
+Build a simple weekly dashboard with only five core numbers.
+Recommended Upgrade:
+FLOW Clarity Report for KPI map and PDF reporting structure.
+
+If Main Problem is “Messy workflow — tasks are scattered and repeated manually”:
+Likely Bottleneck:
+Your work process may not be documented, so tasks repeat, stall, or depend too much on memory.
+KPI to Track:
+Time spent per task and number of repeated manual steps.
+Suggested Workflow Fix:
+Write one step-by-step SOP for your most repeated task.
+Recommended Upgrade:
+FLOW Business Builder Kit for workflow map, SOP draft, and automation suggestions.
+
+If Main Problem is “Low sales conversion — people inquire but do not pay”:
+Likely Bottleneck:
+People may be interested, but the path from inquiry to payment is not clear enough.
+KPI to Track:
+Inquiries, offers sent, payments completed, and lost leads.
+Suggested Workflow Fix:
+Create a clear offer flow: inquiry → problem check → offer → payment link → follow-up.
+Recommended Upgrade:
+FLOW Clarity Report for conversion analysis and revenue opportunity notes.
+
+If Main Problem is “Slow operations — work takes too long to finish”:
+Likely Bottleneck:
+Your process may have too many manual steps or unclear approvals.
+KPI to Track:
+Turnaround time and delayed tasks per week.
+Suggested Workflow Fix:
+Identify the three slowest tasks and simplify or assign them clearly.
+Recommended Upgrade:
+FLOW Business Builder Kit for operations flow and priority fixes.
+
+If Main Problem is “No SOPs — team does not have clear step-by-step instructions”:
+Likely Bottleneck:
+Your team may be relying on verbal instructions instead of repeatable systems.
+KPI to Track:
+Repeated questions, errors, and rework.
+Suggested Workflow Fix:
+Start with one SOP video or checklist for the task that causes the most confusion.
+Recommended Upgrade:
+FLOW Business Builder Kit for SOP guide, video script, and task checklist.
+
+If Main Problem is “Weak reporting — owner cannot see what is working”:
+Likely Bottleneck:
+You may not have a simple way to see business performance, so decisions feel reactive.
+KPI to Track:
+Weekly revenue, lead sources, conversion rate, delivery status, and customer issues.
+Suggested Workflow Fix:
+Create a one-page weekly report template.
+Recommended Upgrade:
+FLOW Clarity Report for reporting framework and downloadable PDF report.
+
+If Main Problem is “Too many tools — business is spread across apps”:
+Likely Bottleneck:
+Your tools may not connect into one clear operating flow.
+KPI to Track:
+Duplicate entries, missed updates, and time spent switching tools.
+Suggested Workflow Fix:
+Choose one main source of truth for leads, tasks, and reports.
+Recommended Upgrade:
+FLOW Guided Sprint for tool cleanup and workflow setup.
+
+If Main Problem is “Founder overload — owner is doing everything alone”:
+Likely Bottleneck:
+The owner is carrying too many roles without enough systems or delegation.
+KPI to Track:
+Owner hours, repeated tasks, and tasks that can be delegated or automated.
+Suggested Workflow Fix:
+List all weekly tasks, then mark each as keep, delegate, automate, or remove.
+Recommended Upgrade:
+FLOW Guided Sprint for owner workload map and execution plan.
+
+After the result box, show these CTA buttons:
+- Get FLOW Clarity Report
+- Get Business Builder Kit
+- Book Guided Sprint
+- Print / Save Preview as PDF
+
+The print button should use:
+window.print()
+
+PRICING SECTION
+
+Use affordable pricing.
+
+Section title:
+Affordable FLOW Plans
+
+Intro:
+Start free. Upgrade only when you want a deeper report, clearer workflow, or guided implementation.
+
+Plan 1:
+FLOW Free Preview
+₱0 / $0
+Includes:
+- Dropdown-based bottleneck preview
+- One KPI suggestion
+- One workflow fix
+- Recommended next step
+
+Plan 2:
+FLOW Clarity Report
+₱1,499 / $29
+Includes:
+- Bottleneck analysis
+- KPI suggestions
+- Basic workflow map
+- SOP priorities
+- PDF-style report
+- Revenue opportunity notes
+
+Plan 3:
+FLOW Business Builder Kit
+₱3,999 / $79
+Includes:
+- Full FLOW analysis
+- KPI map
+- Workflow improvement plan
+- SOP checklist
+- SOP video/script guide
+- Revenue leak review
+- Step-by-step action plan
+
+Plan 4:
+FLOW Guided Sprint
+Starts at ₱9,999 / $199
+Includes:
+- Guided implementation planning
+- Owner workload map
+- Tool cleanup suggestions
+- Priority workflow fixes
+- KPI review
+- SOP and reporting direction
+
+Add CTA buttons for each paid plan using mailto links:
+richardsy.028@gmail.com
+
+Use subjects:
+FLOW Clarity Report Order
+FLOW Business Builder Kit Order
+FLOW Guided Sprint Inquiry
+
+PAYMENT SECTION
+
+Add section title:
+Payment Options
+
+Copy:
+Payment instructions are sent after order confirmation.
+
+Philippines:
+- GCash
+- Maya
+- Bank transfer
+
+Global:
+- PayPal
+- Wise
+- Card invoice when available
+
+Add note:
+Prices may be adjusted for scope, urgency, and custom requests.
+
+BUSINESS TERMS SECTION
+
+Add simple explanations:
+
+KPI:
+A KPI is a number you track to know if your business is improving. Example: sales, inquiries, conversion rate, or response time.
+
+SOP:
+An SOP is a step-by-step guide for doing a task correctly. Example: how to reply to inquiries, process orders, or send reports.
+
+Workflow:
+A workflow is the path a task follows from start to finish. Example: inquiry → reply → offer → payment → delivery → follow-up.
+
+Bottleneck:
+A bottleneck is the part of the business that slows everything down. Example: delayed follow-ups or unclear task ownership.
+
+Revenue leak:
+A revenue leak is where potential money is lost. Example: interested customers who never receive a follow-up.
+
+CASE STUDY SECTION
+
+Add title:
+Mini Case Study: From Scattered Work to Clear Flow
+
+Scenario:
+A small online service business gets inquiries through messages, but many leads are forgotten. The owner handles sales, delivery, payment, and follow-up alone.
+
+Pain Points:
+- Missed follow-ups
+- No clear owner for each step
+- No KPI tracking
+- Repeated manual tasks
+- Owner feels overloaded
+
+FLOW Analysis:
+The business does not only need more marketing. It needs a clearer operating flow from inquiry to payment.
+
+Suggested FLOW Fix:
+- Create a lead tracker
+- Set a follow-up schedule
+- Track inquiry-to-payment conversion
+- Write one SOP for handling new leads
+- Create a weekly report showing sales, leads, and lost opportunities
+
+Possible Outcome:
+Clearer follow-up, fewer forgotten leads, faster owner decisions, and better visibility of revenue opportunities.
+
+Add small visual metric bars:
+Lead Follow-Up Clarity: 30% → 80%
+Owner Workload Visibility: 20% → 70%
+Sales Conversion Awareness: 25% → 75%
+Reporting Clarity: 10% → 85%
+
+These are illustrative sample metrics only, not guaranteed results.
+
+SOP VIDEO SOLUTIONS SECTION
+
+Add title:
+SOP Videos and Simple Business Systems
+
+Copy:
+For business owners who do not want complicated manuals, FLOW can help turn repeated tasks into simple SOP videos, checklists, and workflow guides.
+
+Examples:
+- How to reply to a new inquiry
+- How to process an order
+- How to follow up with unpaid leads
+- How to prepare a weekly report
+- How to assign tasks to team members
+- How to track KPIs every week
+
+REPORT DOWNLOAD / PRINT SECTION
+
+Add a button:
+Print or Save as PDF
+
+Use JavaScript:
+window.print()
+
+Add copy:
+After generating a preview, you can print or save the page as a PDF using your browser.
+
+FOUNDER SECTION
+
+Title:
+Built by Richard Sy
+
+Copy:
+Richard Sy created Clarity System × FLOW to help small business owners turn scattered operations into simple, understandable systems. FLOW is designed for people who want practical clarity, not complicated consulting language.
+
+Founder positioning:
+AI operations clarity builder for small businesses, solo founders, and beginner business owners.
+
+LEGAL SAFETY SECTION
+
+Add title:
+Important Notes
+
+Copy:
+FLOW provides business education, workflow suggestions, and operational guidance. It does not guarantee income, revenue, legal compliance, tax results, financial outcomes, or business success. Results depend on the client’s market, implementation, offer, operations, and customer behavior.
+
+Clients remain responsible for business decisions, data accuracy, implementation, legal compliance, payment processing, taxes, accounting, and financial review.
+
+For Philippine and international clients, consult qualified legal, tax, accounting, or financial professionals when needed.
+
+Privacy note:
+Do not submit sensitive passwords, bank details, private customer records, or confidential documents through the free preview tool.
+
+FOOTER
+
+Use:
+© 2026 Clarity System × FLOW. Built by Richard Sy.
+
+TECHNICAL REQUIREMENTS
+
+- Single index.html file
+- Plain HTML, CSS, JavaScript
+- No backend
+- No external libraries
+- Netlify-ready
+- Mobile responsive
+- Luxury dark tech design
+- Use cards, rounded corners, glowing buttons, clean sections
+- Keep text readable
+- Add dropdown diagnosis functionality
+- Add print/save PDF button
+- All buttons should work
+- Paid buttons should open email to richardsy.028@gmail.com
+- The page should feel like one powerful final launch page
+
+DELIVERABLE
+
+Return the complete final index.html code.
