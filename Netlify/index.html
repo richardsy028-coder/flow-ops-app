@@ -1,29 +1,32 @@
+cd ~/Desktop/websites
+
+cat > index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clarity Systems — FLOW AI Operating System</title>
+  <title>Clarity Systems — FLOW</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-[#050b14] text-white font-sans">
 
 <header class="sticky top-0 z-50 bg-[#050b14]/90 backdrop-blur border-b border-white/10">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     <div class="flex items-center gap-4">
       <div class="w-12 h-12 rounded-xl bg-emerald-300 text-black font-black flex items-center justify-center">CS</div>
       <div>
-        <h1 class="font-black text-lg">Clarity Systems</h1>
+        <h1 class="font-black">Clarity Systems</h1>
         <p class="text-sm text-slate-400">FLOW AI Operating System</p>
       </div>
     </div>
 
     <nav class="hidden md:flex gap-6 text-sm text-slate-300">
-      <a href="#ai">AI Diagnosis</a>
+      <a href="#bottlenecks">Bottlenecks</a>
       <a href="#pricing">Pricing</a>
       <a href="#founder">Founder</a>
-      <a href="#legal">Legal</a>
+      <a href="#contact">Contact</a>
     </nav>
 
     <a href="https://calendly.com/richardsy-028" target="_blank"
@@ -49,63 +52,54 @@
     </p>
 
     <div class="mt-8 flex flex-wrap gap-4">
-      <a href="#ai" class="bg-emerald-300 text-black px-6 py-4 rounded-xl font-black">
-        Run Free Diagnosis →
+      <a href="mailto:richardsy.028@gmail.com?subject=FLOW Free Diagnosis Inquiry"
+        class="bg-emerald-300 text-black px-6 py-4 rounded-xl font-black">
+        Request Free Diagnosis →
       </a>
-      <a href="mailto:richardsy.028@gmail.com" class="border border-white/20 px-6 py-4 rounded-xl font-bold">
-        Email Richard
+
+      <a href="#founder" class="border border-white/20 px-6 py-4 rounded-xl font-bold">
+        Meet Founder
       </a>
     </div>
   </div>
 
-  <img src="founder-richard.png" alt="Richard Sy"
-    class="rounded-3xl border border-white/10 shadow-2xl" />
+  <img src="founder-richard.jpg" alt="Richard Sy"
+    class="rounded-3xl border border-white/10 shadow-2xl w-full" />
 </section>
 
-<section class="max-w-7xl mx-auto px-6 py-16">
+<section id="bottlenecks" class="max-w-7xl mx-auto px-6 py-16">
   <h2 class="text-4xl font-black">Common Bottlenecks FLOW Finds</h2>
+  <p class="text-slate-400 mt-4">Simple language. Clear fixes. No complicated jargon.</p>
 
   <div class="grid md:grid-cols-3 gap-6 mt-10">
     <div class="bg-[#08111f] p-6 rounded-2xl border border-white/10">
       <h3 class="font-black text-xl">Sales Bottlenecks</h3>
       <p class="text-slate-400 mt-3">Slow follow-ups, unclear pipeline, weak proposals, lost leads, no close-rate tracking.</p>
     </div>
+
     <div class="bg-[#08111f] p-6 rounded-2xl border border-white/10">
       <h3 class="font-black text-xl">Marketing Bottlenecks</h3>
       <p class="text-slate-400 mt-3">Unclear offer, weak USP, scattered content, poor targeting, inconsistent campaigns.</p>
     </div>
+
     <div class="bg-[#08111f] p-6 rounded-2xl border border-white/10">
       <h3 class="font-black text-xl">Operations Bottlenecks</h3>
       <p class="text-slate-400 mt-3">Messy workflows, unclear roles, missing SOPs, poor handoffs, founder doing too much.</p>
     </div>
-  </div>
-</section>
 
-<section id="ai" class="max-w-7xl mx-auto px-6 py-20">
-  <div class="grid lg:grid-cols-2 gap-8">
-    <div class="bg-[#08111f] border border-white/10 rounded-3xl p-8">
-      <h2 class="text-4xl font-black">Free FLOW Diagnosis</h2>
-      <p class="text-slate-400 mt-4">Describe your agency chaos. FLOW will create a simple operating diagnosis.</p>
-
-      <input id="apiKey" type="password"
-        class="mt-6 w-full bg-black/30 border border-white/10 rounded-xl p-4 text-slate-200 outline-none"
-        placeholder="Paste OpenAI API key here" />
-
-      <textarea id="businessInput"
-        class="mt-4 w-full h-72 bg-black/30 border border-white/10 rounded-2xl p-5 text-slate-200 outline-none"
-        placeholder="Example: We have 14 clients. Content approvals are slow. Sales follow-ups are inconsistent. Reporting takes too long..."
-      ></textarea>
-
-      <button onclick="generateFLOW()" class="mt-5 bg-emerald-300 text-black px-7 py-4 rounded-xl font-black">
-        Generate AI Analysis →
-      </button>
+    <div class="bg-[#08111f] p-6 rounded-2xl border border-white/10">
+      <h3 class="font-black text-xl">Production Bottlenecks</h3>
+      <p class="text-slate-400 mt-3">Delayed content, slow approvals, missed deadlines, revision loops, no checklist.</p>
     </div>
 
-    <div class="bg-[#08111f] border border-emerald-300/30 rounded-3xl p-8">
-      <p class="text-emerald-300 font-black uppercase tracking-widest text-sm">AI Output</p>
-      <div id="aiOutput" class="mt-6 whitespace-pre-wrap text-slate-300 leading-relaxed bg-black/30 rounded-2xl p-6 min-h-[520px]">
-        Your FLOW diagnosis will appear here.
-      </div>
+    <div class="bg-[#08111f] p-6 rounded-2xl border border-white/10">
+      <h3 class="font-black text-xl">Reporting Bottlenecks</h3>
+      <p class="text-slate-400 mt-3">Manual reports, unclear KPIs, no profit view, no client health score, no weekly dashboard.</p>
+    </div>
+
+    <div class="bg-[#08111f] p-6 rounded-2xl border border-white/10">
+      <h3 class="font-black text-xl">Team Bottlenecks</h3>
+      <p class="text-slate-400 mt-3">No ownership, too many messages, unclear priorities, low accountability, capacity overload.</p>
     </div>
   </div>
 </section>
@@ -144,7 +138,11 @@
     <div class="bg-[#08111f] p-8 rounded-3xl border border-white/10">
       <h3 class="text-2xl font-black">FLOW Diagnosis</h3>
       <p class="text-emerald-300 text-4xl font-black mt-4">FREE</p>
-      <p class="text-slate-400 mt-4">AI diagnosis for bottlenecks, SOP gaps, KPIs, workflows, SWOT, positioning, and COO notes.</p>
+      <p class="text-slate-400 mt-4">Simple bottleneck review for SOP gaps, workflows, KPIs, positioning, and operations issues.</p>
+      <a href="mailto:richardsy.028@gmail.com?subject=FLOW Free Diagnosis Inquiry"
+        class="mt-6 inline-block bg-emerald-300 text-black px-6 py-3 rounded-xl font-black">
+        Request Diagnosis
+      </a>
     </div>
 
     <div class="bg-emerald-300/10 p-8 rounded-3xl border border-emerald-300/40">
@@ -166,11 +164,13 @@
 </section>
 
 <section id="founder" class="max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-10 items-center">
-  <img src="founder-richard.png" alt="Richard Sy Founder" class="rounded-3xl border border-white/10 shadow-xl" />
+  <img src="founder-richard.jpg" alt="Richard Sy Founder"
+    class="rounded-3xl border border-white/10 shadow-xl w-full" />
 
   <div class="bg-[#08111f] p-8 rounded-3xl border border-white/10">
     <p class="text-emerald-300 font-black uppercase tracking-widest text-sm">Founder</p>
     <h2 class="text-5xl font-black mt-4">Hi, I’m Richard Sy.</h2>
+
     <p class="mt-6 text-slate-300 leading-relaxed">
       Founder of Clarity Systems. I build FLOW as an AI-powered operating system for marketing agencies that need clarity, structure, and execution.
     </p>
@@ -180,9 +180,10 @@
         <h3 class="font-black">Systems Thinker</h3>
         <p class="text-slate-400 mt-2">I turn messy work into simple steps people can follow.</p>
       </div>
+
       <div class="bg-black/30 p-5 rounded-2xl">
-        <h3 class="font-black">AI Operations Builder</h3>
-        <p class="text-slate-400 mt-2">I use AI to speed up diagnosis, SOP creation, KPI thinking, and workflow design.</p>
+        <h3 class="font-black">Operations Builder</h3>
+        <p class="text-slate-400 mt-2">I help teams organize workflows, SOPs, KPIs, delivery, and approvals.</p>
       </div>
     </div>
   </div>
@@ -198,7 +199,21 @@
 </section>
 
 <section class="max-w-7xl mx-auto px-6 py-16">
+  <div class="bg-[#08111f] border border-emerald-300/30 rounded-3xl p-8">
+    <h2 class="text-3xl font-black">How Payment Works</h2>
+    <p class="mt-4 text-slate-300">FLOW Diagnosis is free. For FLOW System Build, payment is handled manually after confirmation with Richard.</p>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
+      <div class="bg-black/30 p-6 rounded-2xl"><h3 class="font-black text-emerald-300">1. Request Diagnosis</h3><p class="text-slate-400 mt-2">Send your agency situation.</p></div>
+      <div class="bg-black/30 p-6 rounded-2xl"><h3 class="font-black text-emerald-300">2. Request Build</h3><p class="text-slate-400 mt-2">Email Richard or book a discovery call.</p></div>
+      <div class="bg-black/30 p-6 rounded-2xl"><h3 class="font-black text-emerald-300">3. Pay Manually</h3><p class="text-slate-400 mt-2">GCash, Maya, bank transfer, Wise, PayPal, or USD options may be arranged.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="max-w-7xl mx-auto px-6 py-16">
   <h2 class="text-3xl font-black">Connect with Richard</h2>
+
   <div class="mt-6 flex flex-wrap gap-4">
     <a href="https://calendly.com/richardsy-028" target="_blank" class="bg-emerald-300 text-black px-6 py-3 rounded-xl font-black">Book Discovery Call</a>
     <a href="https://www.linkedin.com/in/richard-sy-9b57b8242/" target="_blank" class="border border-white/20 px-6 py-3 rounded-xl font-bold">LinkedIn</a>
@@ -207,98 +222,18 @@
 </section>
 
 <section id="legal" class="max-w-7xl mx-auto px-6 py-16 text-sm text-slate-400">
-  <h2 class="text-2xl font-black text-white">Terms, Disclaimer & Legal Protection</h2>
-  <p class="mt-4">Clarity Systems and FLOW provide AI-generated operational, marketing, sales, workflow, KPI, SOP, and business process guidance only.</p>
+  <h2 class="text-2xl font-black text-white">Terms & Disclaimer</h2>
+  <p class="mt-4">Clarity Systems and FLOW provide operational, marketing, sales, workflow, KPI, SOP, and business process guidance only.</p>
   <p class="mt-4">FLOW does not provide legal, financial, tax, accounting, investment, employment, or compliance advice.</p>
-  <p class="mt-4">AI outputs may contain errors or incomplete recommendations. Users are responsible for reviewing and validating all outputs before implementation.</p>
   <p class="mt-4">Results are not guaranteed. Business outcomes depend on execution, market conditions, team capacity, offer quality, pricing, client demand, and other external factors.</p>
 </section>
 
 <footer class="text-center text-slate-500 py-10 border-t border-white/10">
-  © 2026 Clarity Systems — FLOW AI Operating System
+  © 2026 Clarity Systems — FLOW
 </footer>
-
-<script>
-async function generateFLOW() {
-  const apiKey = document.getElementById("apiKey").value.trim();
-  const business = document.getElementById("businessInput").value.trim();
-  const output = document.getElementById("aiOutput");
-
-  if (!apiKey) {
-    output.innerText = "Please paste your OpenAI API key first.";
-    return;
-  }
-
-  if (!business) {
-    output.innerText = "Please describe your agency situation first.";
-    return;
-  }
-
-  output.innerText = "Generating FLOW AI analysis...";
-
-  const prompt = `
-You are FLOW, an AI-powered operating system by Clarity Systems.
-
-Founder: Richard Sy.
-Company: Clarity Systems.
-Target client: scaling marketing agencies with 5–20 clients.
-
-Analyze this agency situation:
-${business}
-
-Use simple language.
-
-Return:
-1. Executive Summary
-2. Top Bottlenecks
-3. Root Cause
-4. Sales System Fix
-5. Marketing System Fix
-6. Operations System Fix
-7. Production Workflow
-8. SOP Recommendations
-9. KPI Dashboard
-10. Profit & Loss Notes
-11. SWOT Analysis
-12. Target Market
-13. Segmentation
-14. Positioning
-15. USP
-16. COO Approval Notes
-17. 7-Day Action Plan
-18. 30-Day System Build Plan
-19. Risks To Watch
-20. Final Recommendation
-
-End with:
-Disclaimer: This is operational guidance only, not legal, financial, tax, accounting, or compliance advice.
-`;
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/responses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + apiKey
-      },
-      body: JSON.stringify({
-        model: "gpt-4.1-mini",
-        input: prompt,
-        temperature: 0.4
-      })
-    });
-
-    const data = await response.json();
-
-    output.innerText =
-      data.output?.[0]?.content?.[0]?.text ||
-      data.output_text ||
-      "No output generated.";
-  } catch (error) {
-    output.innerText = "Request failed. Use backend later for production.";
-  }
-}
-</script>
 
 </body>
 </html>
+EOF
+
+netlify deploy --prod --dir=.

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clarity System | FLOW AI Operations Companion</title>
+<style>
+:root{
+  --bg:#050b10;--panel:rgba(255,255,255,.075);--panel2:rgba(255,255,255,.045);--line:rgba(255,255,255,.14);
+  --text:#f8fafc;--muted:#a8bac6;--soft:#d8e7ef;--gold:#d9c16b;--cyan:#47dce8;--green:#8ee3bd;--red:#ff8f8f;
+  --shadow:0 28px 90px rgba(0,0,0,.38);--radius:28px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 18% 6%,rgba(71,220,232,.18),transparent 30%),radial-gradient(circle at 82% 18%,rgba(217,193,107,.14),transparent 32%),linear-gradient(135deg,#061016,#101716,#050606);color:var(--text)}
+a{text-decoration:none;color:inherit}.wrap{padding-left:7vw;padding-right:7vw}.nav{height:78px;display:flex;align-items:center;justify-content:space-between;background:rgba(3,8,12,.88);position:sticky;top:0;z-index:20;border-bottom:1px solid var(--line);backdrop-filter:blur(18px)}
+.brand{font-weight:950;text-transform:uppercase;letter-spacing:.08em}.brand span{color:var(--cyan)}.navlinks{display:flex;align-items:center;gap:10px}.navlinks a:not(.btn){color:var(--muted);font-weight:750;font-size:.92rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 22px;border-radius:999px;font-weight:950;border:0;cursor:pointer;margin:6px;transition:.18s ease;white-space:nowrap}.btn:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,var(--gold),var(--cyan));color:#061016}.ghost{background:rgba(255,255,255,.075);border:1px solid var(--line);color:white}.darkbtn{background:#071216;border:1px solid var(--line);color:white}
+.hero{min-height:88vh;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center;padding-top:84px;padding-bottom:70px}.section{padding-top:78px;padding-bottom:78px}.badge{display:inline-flex;padding:9px 14px;border-radius:999px;background:rgba(217,193,107,.13);border:1px solid rgba(217,193,107,.35);color:var(--gold);font-size:.75rem;font-weight:950;text-transform:uppercase;letter-spacing:.06em}
+h1{font-size:clamp(3.15rem,7vw,7.5rem);line-height:.91;letter-spacing:-.08em;margin:22px 0}h2{font-size:clamp(2.2rem,5vw,4.8rem);line-height:1;letter-spacing:-.07em;margin:18px 0 20px}h3{margin:0 0 12px;font-size:1.25rem}.lead{font-size:1.16rem;color:var(--soft);max-width:760px}p,li{color:var(--muted);line-height:1.7}.tiny{font-size:.88rem;color:var(--muted)}.strong{color:white;font-weight:900}.gold{color:var(--gold)}.cyan{color:var(--cyan)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);backdrop-filter:blur(18px)}.softcard{background:var(--panel2);border:1px solid var(--line);border-radius:24px;padding:23px}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.hero-card h2{font-size:clamp(2rem,4vw,4rem)}.pain-list{display:grid;gap:12px;margin-top:24px}.pain{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:18px;padding:15px}.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--gold),var(--cyan));margin-top:8px;flex:0 0 auto}
+.cta-strip{background:linear-gradient(135deg,rgba(217,193,107,.13),rgba(71,220,232,.10));border:1px solid rgba(217,193,107,.28);border-radius:30px;padding:32px;display:flex;align-items:center;justify-content:space-between;gap:18px;box-shadow:var(--shadow)}.cta-strip h3{font-size:clamp(1.5rem,3vw,2.4rem);letter-spacing:-.04em}.num{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,var(--gold),var(--cyan));display:grid;place-items:center;color:#061016;font-weight:950;margin-bottom:15px}
+select,textarea,input{width:100%;padding:15px;margin:8px 0 14px;border-radius:16px;background:#071216;color:white;border:1px solid var(--line);font:inherit}textarea{min-height:135px}label{font-weight:850;color:white;font-size:.9rem}pre{white-space:pre-wrap;color:#d9e8ee;line-height:1.65;font-family:Inter,Arial,sans-serif}
+.result-box{background:#061116;border:1px solid rgba(71,220,232,.22);border-radius:24px;padding:24px;min-height:360px}.locked{border:1px dashed rgba(217,193,107,.55);background:rgba(217,193,107,.08);border-radius:18px;padding:18px;margin-top:16px}.price-card{position:relative;overflow:hidden}.price-card.featured{border-color:rgba(217,193,107,.55);background:linear-gradient(135deg,rgba(217,193,107,.13),rgba(71,220,232,.08))}.price{font-size:2.2rem;font-weight:950;color:white;margin:12px 0}.pill{display:inline-flex;border:1px solid var(--line);padding:6px 10px;border-radius:999px;color:var(--green);font-weight:850;font-size:.78rem}.feature-list{padding-left:18px}.feature-list li{margin-bottom:7px}.paybox{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}.payoption{padding:14px;border-radius:16px;background:rgba(0,0,0,.23);border:1px solid var(--line)}
+.founder{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px;align-items:center}.portrait{height:420px;border-radius:24px;background:linear-gradient(135deg,rgba(71,220,232,.16),rgba(217,193,107,.12));display:grid;place-items:center;border:1px solid var(--line);color:var(--muted);text-align:center;padding:30px}.faq details{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:17px 19px;margin-bottom:12px}.faq summary{cursor:pointer;font-weight:900;color:white}.footer{padding:35px 7vw;border-top:1px solid var(--line);color:var(--muted);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.sticky-cta{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:30;background:rgba(3,8,12,.92);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:999px;padding:8px;display:none;gap:6px;backdrop-filter:blur(16px)}
+.report-paper{background:white;color:#111;border-radius:20px;padding:34px}.report-paper p,.report-paper li,.report-paper pre{color:#222}.report-paper h1,.report-paper h2,.report-paper h3{color:#111;letter-spacing:normal}.report-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:980px){.hero,.grid-2,.grid-3,.grid-4,.founder{grid-template-columns:1fr}.cta-strip{display:block}.navlinks a:not(.btn){display:none}.paybox{grid-template-columns:1fr}.sticky-cta{display:flex}.hero{padding-top:54px} }
+@media(max-width:620px){.wrap{padding-left:24px;padding-right:24px}.section{padding-top:54px;padding-bottom:54px}.nav{height:72px}.brand{font-size:.83rem}.btn{padding:13px 16px}.sticky-cta .ghost{display:none}h1{font-size:3.1rem}.card{padding:22px}}
+@media print{body{background:white;color:#111}.nav,.hero,.section:not(#premium-report),.footer,.sticky-cta,.report-actions{display:none!important}#premium-report{display:block!important;padding:0}.report-paper{box-shadow:none;border:0;border-radius:0}.wrap{padding:0}}
+</style>
+</head>
+<body>
+<nav class="nav wrap">
+  <div class="brand">Clarity System <span>× FLOW</span></div>
+  <div class="navlinks">
+    <a href="#problem">Problem</a><a href="#diagnosis">Diagnosis</a><a href="#pricing">Pricing</a><a href="#founder">Founder</a>
+    <a class="btn primary" href="#diagnosis">Run Free Diagnosis</a>
+  </div>
+</nav>
+
+<section class="hero wrap" id="top">
+  <div>
+    <span class="badge">AI Operations Companion · COO-level clarity</span>
+    <h1>See what’s breaking in your business before it costs you more.</h1>
+    <p class="lead">FLOW helps founders, operations teams, and business owners identify bottlenecks, hidden risks, messy workflows, revenue leakage, and unclear execution paths—without starting with expensive consulting.</p>
+    <div>
+      <a class="btn primary" href="#diagnosis">Run Free Diagnosis</a>
+      <a class="btn ghost" href="#pricing">View Report Options</a>
+    </div>
+    <p class="tiny">Built for people who feel the pressure of growth, delays, unclear ownership, and repeated operational problems.</p>
+  </div>
+  <div class="card hero-card">
+    <span class="badge">Founder/operator reality</span>
+    <h2>Busy is not the same as clear.</h2>
+    <p>If your team is working hard but results still feel inconsistent, the problem may not be effort. It may be the way work flows, decisions are made, and responsibilities are tracked.</p>
+    <div class="locked"><b class="strong">FLOW gives you a first read:</b><br>What is slowing you down? What is likely breaking? What should you fix first?</div>
+  </div>
+</section>
+
+<section class="section wrap" id="problem">
+  <span class="badge">The problem</span>
+  <h2>This is what unclear operations feel like.</h2>
+  <div class="grid-2">
+    <div class="pain-list">
+      <div class="pain"><span class="dot"></span><p>You keep fixing the same problems every week.</p></div>
+      <div class="pain"><span class="dot"></span><p>People are busy, but priorities keep changing.</p></div>
+      <div class="pain"><span class="dot"></span><p>Revenue comes in, but profit feels unclear or unstable.</p></div>
+      <div class="pain"><span class="dot"></span><p>Tasks move slowly because ownership, SOPs, or handoffs are not clear.</p></div>
+    </div>
+    <div class="card">
+      <h3>The truth</h3>
+      <p class="lead">Most businesses do not need more random advice. They need to understand what is actually happening inside the operation.</p>
+      <p><b class="strong">Clarity System</b> uses FLOW to turn messy business inputs into a structured diagnosis, report, and decision path.</p>
+      <a class="btn primary" href="#diagnosis">Find What’s Slowing You Down</a>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap">
+  <div class="cta-strip">
+    <div>
+      <h3>Most businesses don’t need more effort. They need to see what’s broken.</h3>
+      <p>Run the free diagnosis first. Upgrade only when you need a detailed report.</p>
+    </div>
+    <div><a class="btn primary" href="#diagnosis">Run Free Diagnosis</a><a class="btn ghost" href="#pricing">Unlock Report</a></div>
+  </div>
+</section>
+
+<section class="section wrap" id="who">
+  <span class="badge">Who this is for</span>
+  <h2>For operators who need clarity urgently.</h2>
+  <div class="grid-4">
+    <div class="softcard"><div class="num">1</div><h3>Small business owners</h3><p>When the business depends too much on you and daily decisions feel reactive.</p></div>
+    <div class="softcard"><div class="num">2</div><h3>Startup founders</h3><p>When growth is happening, but systems are not ready to support it.</p></div>
+    <div class="softcard"><div class="num">3</div><h3>Operations teams</h3><p>When delays, handoffs, SOPs, and accountability need better structure.</p></div>
+    <div class="softcard"><div class="num">4</div><h3>Admin-heavy teams</h3><p>Healthcare admin, pharmacy coordination, training, onboarding, agencies, sales, and service operations.</p></div>
+  </div>
+</section>
+
+<section class="section wrap" id="diagnosis">
+  <span class="badge">Step 1 · Free diagnosis</span>
+  <h2>Tell FLOW what feels broken.</h2>
+  <p class="lead">You’ll get an immediate operations summary. The free result is designed to create awareness. The paid report gives deeper analysis, revenue/profit/growth review, SWOT, and executive action steps.</p>
+  <div class="grid-2">
+    <div class="card">
+      <label>Industry / Operating Area</label>
+      <select id="industry">
+        <option>Operations & Production</option><option>Sales & Marketing</option><option>Healthcare & Pharmacy Admin</option><option>Training & Onboarding</option><option>Agency / Professional Services</option><option>E-commerce / Retail</option><option>Startup / SaaS</option><option>General Small Business</option>
+      </select>
+      <label>Main Problem</label>
+      <select id="pain">
+        <option>unclear ownership</option><option>weak onboarding</option><option>manual workflows</option><option>inconsistent execution</option><option>undocumented SOPs</option><option>no KPI visibility</option><option>profit leakage</option><option>growth feels messy</option>
+      </select>
+      <label>Business Complexity</label>
+      <select id="complexity"><option value="light">Light: one team or workflow</option><option value="medium" selected>Medium: multiple workflows</option><option value="complex">Complex: multiple teams or regulated work</option></select>
+      <label>Describe your situation</label>
+      <textarea id="situation" placeholder="Example: We have repeated delays, unclear task ownership, and revenue is growing but profit still feels unstable."></textarea>
+      <button class="btn primary" onclick="generateFreeDiagnosis()">Generate Free Diagnosis</button>
+      <button class="btn ghost" onclick="generatePremiumPreview()">Preview Premium COO Report</button>
+    </div>
+    <div class="result-box">
+      <h3>FLOW AI Summary Output</h3>
+      <pre id="freeOutput">Your free diagnosis will appear here.</pre>
+      <div class="locked" id="upgradePrompt" style="display:none">
+        <b class="strong">Want the full picture?</b>
+        <p>The Premium COO-Level Analysis expands this into a PDF with revenue, profit, growth, market survey, SWOT, risks, and execution priorities.</p>
+        <a class="btn primary" href="#pricing">Unlock Full COO-Level Analysis</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="reports">
+  <span class="badge">What you receive</span>
+  <h2>Reports built for decisions, not decoration.</h2>
+  <div class="grid-3">
+    <div class="card"><h3>Free Summary</h3><p>Quick diagnosis, likely bottleneck, first action step, and upgrade direction.</p></div>
+    <div class="card"><h3>Snapshot Report</h3><p>Focused PDF with key operational fracture, 3–5 action steps, and a concise COO-style summary.</p></div>
+    <div class="card"><h3>Premium COO-Level Analysis</h3><p>Detailed PDF with operations, revenue, profit, growth, market survey, SWOT, risk, and execution roadmap.</p></div>
+  </div>
+</section>
+
+<section class="section wrap" id="pricing">
+  <span class="badge">Step 2 · Choose depth</span>
+  <h2>Simple pricing. Clear upgrade path.</h2>
+  <div class="grid-3">
+    <div class="card price-card">
+      <span class="pill">Start here</span><h3>FLOW Free Diagnosis</h3><div class="price">₱0 / $0</div>
+      <ul class="feature-list"><li>Immediate diagnosis</li><li>Main bottleneck signal</li><li>First action direction</li></ul>
+      <a class="btn ghost" href="#diagnosis">Start Free</a>
+    </div>
+    <div class="card price-card">
+      <span class="pill">Low-friction upgrade</span><h3>Snapshot Report</h3><div class="price">₱1,999</div>
+      <ul class="feature-list"><li>1–2 key operational fractures</li><li>Quick KPI/workflow scan</li><li>3–5 action steps</li><li>PDF summary</li></ul>
+      <button class="btn primary" onclick="startCheckout('snapshot')">Unlock Snapshot</button>
+      <p class="tiny">Best for quick decisions.</p>
+    </div>
+    <div class="card price-card featured">
+      <span class="pill">Best value</span><h3>Premium COO-Level Analysis</h3><div class="price">₱4,999</div>
+      <ul class="feature-list"><li>Full operational fracture analysis</li><li>Revenue & profit insights</li><li>Growth/scalability assessment</li><li>Market survey + SWOT</li><li>Risk and execution roadmap</li><li>Premium PDF report</li></ul>
+      <button class="btn primary" onclick="startCheckout('premium')">Unlock COO Analysis</button>
+      <p class="tiny">Best for serious operators preparing to fix or scale.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:22px">
+    <h3>Payment options</h3>
+    <p>Use one clear payment instruction per tier. For now, you can route buyers to email or manual payment while your checkout is being finalized.</p>
+    <div class="paybox">
+      <div class="payoption"><b class="strong">Full payment</b><p class="tiny">Best for instant report processing.</p></div>
+      <div class="payoption"><b class="strong">50/50 payment</b><p class="tiny">Available for premium reports upon approval.</p></div>
+      <div class="payoption"><b class="strong">Custom arrangement</b><p class="tiny">For selected premium clients only.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="premium-report">
+  <span class="badge">Premium PDF preview</span>
+  <h2>Your COO-level report preview.</h2>
+  <div class="report-paper">
+    <h1>Clarity System · Premium COO-Level Analysis</h1>
+    <p><b>Prepared by:</b> FLOW AI Operations Companion</p>
+    <p><b>Founder:</b> Richard Sy</p>
+    <hr>
+    <pre id="premiumOutput">Generate a premium preview from the diagnosis section.</pre>
+  </div>
+  <div class="report-actions">
+    <button class="btn primary" onclick="window.print()">Download / Print PDF Preview</button>
+    <a class="btn ghost" href="#pricing">Unlock Full Report</a>
+  </div>
+</section>
+
+<section class="section wrap" id="journey">
+  <span class="badge">Buyer journey</span>
+  <h2>What your buyer thinks before paying.</h2>
+  <div class="grid-3">
+    <div class="softcard"><h3>1. “Something feels off.”</h3><p>The hero validates their pressure and gives them a low-risk first step.</p></div>
+    <div class="softcard"><h3>2. “This is my problem.”</h3><p>The problem section names their daily frustrations: delays, unclear ownership, profit leakage, messy growth.</p></div>
+    <div class="softcard"><h3>3. “Let me try free.”</h3><p>The diagnosis gives enough value to create trust, but leaves the deeper report as the logical next step.</p></div>
+    <div class="softcard"><h3>4. “I need the full picture.”</h3><p>The upgrade prompt explains what is locked: revenue, profit, growth, market, SWOT, and execution priorities.</p></div>
+    <div class="softcard"><h3>5. “₱1,999 feels safe.”</h3><p>The Snapshot tier catches cautious buyers who are not ready for the premium PDF yet.</p></div>
+    <div class="softcard"><h3>6. “₱4,999 feels serious.”</h3><p>The Premium tier feels like an executive report, not just an AI answer.</p></div>
+  </div>
+</section>
+
+<section class="section wrap" id="founder">
+  <span class="badge">Why I built this</span>
+  <div class="founder card">
+    <div class="portrait"><img src="founder.jpg" alt="Founder Richard Sy" style="width:100%;height:100%;object-fit:cover;border-radius:24px;"></div>
+    <div>
+      <h2>Built for people carrying the pressure of operations.</h2>
+      <p>I kept seeing the same pattern across different businesses: teams were working hard, but systems were unclear. Founders were tired, operators were overloaded, and decisions were being made from urgency instead of clarity.</p>
+      <p>Clarity System exists to help people see what is actually happening inside their business before they spend more time, money, and energy fixing the wrong thing.</p>
+      <a class="btn primary" href="mailto:richardsy.028@gmail.com?subject=Clarity System Inquiry">Contact Richard</a>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap faq" id="legal">
+  <span class="badge">Important note</span>
+  <h2>Clear expectations build trust.</h2>
+  <details open><summary>Is this consulting?</summary><p>No. FLOW is an AI Operations Companion that provides AI-assisted operational insights and report-style guidance. Premium consulting or implementation support can be offered later for selected clients.</p></details>
+  <details><summary>Is this legal, financial, or compliance advice?</summary><p>No. Reports are for decision support only. They are not legal, financial, accounting, medical, or compliance advice. For regulated industries, users should consult qualified professionals before implementation.</p></details>
+  <details><summary>Are results guaranteed?</summary><p>No. The report can provide clarity, structure, and recommendations. Results depend on leadership, execution, adoption, market conditions, and available resources.</p></details>
+</section>
+
+<section class="section wrap">
+  <div class="cta-strip">
+    <div>
+      <h3>You don’t need more ideas. You need to understand what is already happening.</h3>
+      <p>Start with the free diagnosis. Upgrade when you want the full COO-level view.</p>
+    </div>
+    <div><a class="btn primary" href="#diagnosis">Run Free Diagnosis</a><a class="btn ghost" href="#pricing">Get COO Report</a></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div>© 2026 Clarity System. Powered by FLOW.</div>
+  <div>richardsy.028@gmail.com</div>
+</footer>
+
+<div class="sticky-cta"><a class="btn primary" href="#diagnosis">Run Free Diagnosis</a><a class="btn ghost" href="#pricing">Unlock Report</a></div>
+
+<script>
+function getVal(id){return document.getElementById(id)?.value || ''}
+function reportData(){return {industry:getVal('industry'),pain:getVal('pain'),complexity:getVal('complexity'),situation:getVal('situation') || 'Not provided'}}
+function complexityLabel(v){return v==='light'?'Light: one team or workflow':v==='complex'?'Complex: multiple teams or regulated work':'Medium: multiple workflows'}
+function generateFreeDiagnosis(){
+ const d=reportData();
+ const owner = d.pain.includes('ownership') ? 'ownership is not clearly assigned' : 'the operating system is not clearly structured around the recurring problem';
+ const output = `EXECUTIVE OPERATIONS SUMMARY\n\nIndustry / Area: ${d.industry}\nPrimary Issue: ${d.pain}\nComplexity: ${complexityLabel(d.complexity)}\n\nWhat FLOW sees:\nYour business may not be struggling because people are not trying hard enough. The stronger signal is an operations clarity gap: ${owner}.\n\nLikely bottleneck:\n1. Work depends on memory instead of a repeatable process.\n2. KPI visibility is limited or inconsistent.\n3. Handoffs may be unclear between planning, ownership, and execution.\n4. The same issues may keep returning because the root process has not been documented or measured.\n\nFirst action step:\nRun a 7-day clarity reset. List the top 3 recurring delays, assign one owner per workflow, choose 3 KPIs to track weekly, and document the most repeated process as a simple SOP.\n\nUpgrade trigger:\nIf this issue affects revenue, profit, team output, customer experience, or growth decisions, unlock the paid report for deeper analysis.`;
+ document.getElementById('freeOutput').textContent=output;
+ document.getElementById('upgradePrompt').style.display='block';
+ document.getElementById('premiumOutput').textContent='A premium preview is ready to generate based on your diagnosis. Click “Preview Premium COO Report.”';
+}
+function generatePremiumPreview(){
+ const d=reportData();
+ const timeline = d.complexity==='light'?'5–7 business days':d.complexity==='complex'?'14–21 business days':'10–14 business days';
+ const report = `EXECUTIVE SUMMARY\n\nThis business shows signs of an operational fracture around ${d.pain}. The issue is not only tactical. It affects how work is owned, measured, repeated, and improved.\n\nFOUNDER / OPERATOR INSIGHT\n\nThe pressure point is human as much as operational. When clarity is missing, owners carry more mental load, teams wait for direction, and the business becomes reactive. The goal is not to add complexity. The goal is to make the business easier to run.\n\n1. OPERATIONAL FRACTURE ANALYSIS\n\nPrimary fracture: ${d.pain}\nOperating area: ${d.industry}\nComplexity level: ${complexityLabel(d.complexity)}\n\nLikely causes:\n- Unclear ownership or decision rights\n- Weak KPI visibility\n- SOPs that are missing, outdated, or not used\n- Workflow handoffs that depend on individual memory\n\n2. REVENUE REPORT SIGNALS\n\nFLOW would review where revenue is created, delayed, lost, or inconsistently followed up. Common revenue leaks include weak lead follow-up, delayed fulfillment, unclear customer handoffs, and slow internal approvals.\n\n3. PROFIT ANALYSIS SIGNALS\n\nProfit may be affected by rework, manual tasks, excess coordination time, unclear pricing support, underused team capacity, or repeated operational mistakes.\n\n4. GROWTH ANALYSIS\n\nThe business may be able to grow, but scaling without fixing the current fracture may increase pressure. Growth readiness depends on clear workflows, measurable KPIs, repeatable SOPs, and leadership visibility.\n\n5. MARKET SURVEY SNAPSHOT\n\nThe full report should compare the business against general market expectations for speed, reliability, customer experience, operational consistency, and positioning clarity.\n\n6. SWOT ANALYSIS PREVIEW\n\nStrengths: Existing demand, effort, and willingness to improve.\nWeaknesses: Operational clarity gaps and inconsistent execution.\nOpportunities: Better systems, clearer reporting, faster decisions, stronger margins.\nThreats: Burnout, missed revenue, customer dissatisfaction, scaling too early.\n\n7. COO PRIORITY ACTION PLAN\n\nFirst 7 days: Map recurring delays and assign owners.\nNext 14 days: Build KPI tracker and SOP priority list.\nNext 30 days: Review revenue/profit friction and create execution rhythm.\n\nEstimated report/design window: ${timeline}.\n\nLEGAL / BUSINESS NOTE\n\nThis is AI-assisted operational guidance for decision support only. It is not legal, financial, accounting, medical, or compliance advice. Business results are not guaranteed and depend on execution, leadership, market conditions, and team adoption.`;
+ document.getElementById('premiumOutput').textContent=report;
+ location.hash='premium-report';
+}
+function startCheckout(plan){
+ const d=reportData();
+ const label = plan==='snapshot'?'Snapshot Report - ₱1,999':'Premium COO-Level Analysis - ₱4,999';
+ const subject=encodeURIComponent(`Clarity System Payment Request: ${label}`);
+ const body=encodeURIComponent(`Hello Richard,\n\nI would like to unlock: ${label}\n\nIndustry / Area: ${d.industry}\nMain Problem: ${d.pain}\nComplexity: ${complexityLabel(d.complexity)}\nSituation: ${d.situation}\n\nPreferred payment option:\n[ ] Full payment\n[ ] 50/50 arrangement\n[ ] Custom arrangement\n\nThank you.`);
+ window.location.href=`mailto:richardsy.028@gmail.com?subject=${subject}&body=${body}`;
+}
+</script>
+
+<section id="founder" style="padding:60px 20px; max-width:1000px; margin:auto; display:flex; gap:30px; align-items:center; flex-wrap:wrap;">
+  <div style="flex:1; min-width:260px;">
+    <img src="assets/founder.jpg" alt="Richard, founder of Learn With Richard" style="width:100%; max-width:360px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.18);">
+  </div>
+  <div style="flex:2; min-width:280px;">
+    <h2 style="font-size:36px; margin-bottom:15px;">Meet the Founder</h2>
+    <p style="font-size:18px; line-height:1.7;">
+      Hi, I’m <strong>Richard</strong>, founder of Learn With Richard.
+      I created this platform to help learners build real skills with confidence,
+      clarity, and practical guidance.
+    </p>
+  </div>
+</section>
+</body>
+</html>

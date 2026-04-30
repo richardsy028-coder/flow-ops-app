@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Clarity Systems — FLOW AI Operating System</title>
+
+  <style>
+    :root {
+      --bg: #07111d;
+      --card: #0d1a2b;
+      --card2: #102820;
+      --text: #f7f7f7;
+      --muted: #9fb0c3;
+      --accent: #66f0b4;
+      --border: rgba(255,255,255,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+    }
+
+    .logo-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #04120c;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 20px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #03120c;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .hero {
+      padding: 80px 0;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 0.95;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+    }
+
+    h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    h3 { margin-bottom: 10px; }
+
+    p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    section { padding: 56px 0; }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .hero-image {
+      width: 100%;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    .hero-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .logo-hero {
+      background: #020b14;
+      padding: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-hero img {
+      border-radius: 16px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .highlight {
+      background: var(--card2);
+      border-color: rgba(102,240,180,0.35);
+    }
+
+    .small { font-size: 14px; }
+
+    ul {
+      color: var(--muted);
+      padding-left: 20px;
+      margin: 16px 0;
+    }
+
+    li { margin-bottom: 8px; }
+
+    .price {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 12px 0;
+    }
+
+    .diagnosis {
+      background: linear-gradient(135deg, rgba(102,240,180,0.12), rgba(43,211,230,0.06));
+      border: 1px solid rgba(102,240,180,0.25);
+      border-radius: 22px;
+      padding: 34px;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #071421;
+      color: var(--text);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 850px) {
+      .hero, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      h1 { font-size: 48px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <div class="logo-box">CS</div>
+          <div>
+            <div>Clarity Systems</div>
+            <small style="color: var(--muted);">FLOW AI Operating System</small>
+          </div>
+        </div>
+
+        <div class="nav-links">
+          <a href="#bottlenecks">Bottlenecks</a>
+          <a href="#diagnosis">Free Diagnosis</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#founder">Founder</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <a class="btn" href="https://calendly.com/richardsy-028/new-meeting">Book Call</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div>
+        <div class="eyebrow">For Scaling Marketing Agencies</div>
+        <h1>Find bottlenecks. Fix systems. Scale with control.</h1>
+        <p>
+          I help marketing agencies with 5–20 clients organize sales, campaigns,
+          SOPs, KPIs, workflows, approvals, reporting, and delivery — so growth becomes controlled.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn" href="#diagnosis">Request Free Diagnosis</a>
+          <a class="btn secondary" href="#founder">Meet Founder</a>
+        </div>
+      </div>
+
+      <div class="hero-image logo-hero">
+        <img src="clarity-logo.png" alt="Clarity Systems Logo" />
+      </div>
+    </section>
+
+    <section id="bottlenecks" class="container">
+      <h2>Common Bottlenecks FLOW Finds</h2>
+      <p>Simple language. Clear fixes. No complicated jargon.</p>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Sales Bottlenecks</h3>
+          <p class="small">Slow follow-ups, unclear pipeline, weak proposals, lost leads, no tracking.</p>
+        </div>
+
+        <div class="card">
+          <h3>Marketing Bottlenecks</h3>
+          <p class="small">Unclear offer, weak USP, scattered content, poor targeting, inconsistent campaigns.</p>
+        </div>
+
+        <div class="card">
+          <h3>Operations Bottlenecks</h3>
+          <p class="small">Messy workflows, unclear roles, missing SOPs, poor handoffs, founder doing too much.</p>
+        </div>
+
+        <div class="card">
+          <h3>Production Bottlenecks</h3>
+          <p class="small">Delayed content, slow approvals, missed deadlines, revision loops, no checklist.</p>
+        </div>
+
+        <div class="card">
+          <h3>Reporting Bottlenecks</h3>
+          <p class="small">Manual reports, unclear KPIs, no profit view, no client health score.</p>
+        </div>
+
+        <div class="card">
+          <h3>Team Bottlenecks</h3>
+          <p class="small">No ownership, too many messages, unclear priorities, low accountability.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="diagnosis" class="container">
+      <div class="diagnosis">
+        <div class="eyebrow">Free Business Diagnosis</div>
+        <h2>Tell me what feels messy in your agency.</h2>
+        <p>
+          Send your current problem, bottleneck, workflow issue, or delivery concern.
+          I’ll review your details and email back a simple diagnosis.
+        </p>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Your diagnosis may include:</h3>
+            <ul>
+              <li>Suggested bottlenecks</li>
+              <li>Possible KPIs to track</li>
+              <li>SOP gaps</li>
+              <li>Workflow issues</li>
+              <li>Approval or process problems</li>
+              <li>Suggested improvement window</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Request Diagnosis</h3>
+            <p class="small">
+              Fill out the details below. This will open your email app so you can send the request directly to me.
+            </p>
+
+            <form action="mailto:richardsy.028@gmail.com?subject=Free Business Diagnosis Request" method="post" enctype="text/plain">
+              <input type="text" name="Name" placeholder="Your name" required />
+              <input type="email" name="Email" placeholder="Your email" required />
+
+              <select name="Agency Size" required>
+                <option value="">Agency size</option>
+                <option value="1-5 clients">1–5 clients</option>
+                <option value="5-20 clients">5–20 clients</option>
+                <option value="20+ clients">20+ clients</option>
+              </select>
+
+              <select name="Main Bottleneck" required>
+                <option value="">Main bottleneck</option>
+                <option value="Sales">Sales</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Operations">Operations</option>
+                <option value="Production">Production</option>
+                <option value="Reporting">Reporting</option>
+                <option value="Team">Team</option>
+              </select>
+
+              <textarea name="Problem" placeholder="Describe the problem you want diagnosed..." required></textarea>
+
+              <button class="btn" type="submit">Email My Diagnosis Request</button>
+            </form>
+
+            <p class="small" style="margin-top: 14px;">
+              Prefer to talk? <a href="https://calendly.com/richardsy-028/new-meeting" style="color: var(--accent); font-weight: 800;">Book a free discovery call.</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="container">
+      <h2>Products & Pricing</h2>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>FLOW Diagnosis</h3>
+          <div class="price">FREE</div>
+          <p class="small">
+            Simple bottleneck review for SOP gaps, workflows, KPIs, positioning, and operations issues.
+          </p>
+          <a class="btn" href="#diagnosis">Request Diagnosis</a>
+        </div>
+
+        <div class="card highlight">
+          <h3>FLOW System Build</h3>
+          <div class="price">$49 / ₱2,499</div>
+          <p class="small">
+            One simple custom system based on your diagnosis.
+          </p>
+          <ul>
+            <li>SOP workflow</li>
+            <li>KPI tracker</li>
+            <li>Approval process</li>
+            <li>Delivery workflow</li>
+            <li>Reporting structure</li>
+            <li>Bottleneck improvement plan</li>
+          </ul>
+          <a class="btn" href="mailto:richardsy.028@gmail.com?subject=FLOW System Build Terms and Conditions">Email to Discuss Terms</a>
+        </div>
+
+        <div class="card">
+          <h3>Premium FLOW</h3>
+          <div class="price" style="color: #f8dc5b;">Coming Soon</div>
+          <p class="small">
+            Dashboard, saved reports, automations, client portal, COO approvals, and team scorecards.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="card">
+        <div class="eyebrow">How FLOW System Build Works</div>
+        <h2>No payment center. Discuss terms first.</h2>
+        <p>
+          After your free diagnosis, you can email me to discuss the system build, scope,
+          terms, conditions, timeline, and manual payment options.
+        </p>
+
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>1. Request Diagnosis</h3>
+            <p class="small">Send your agency problem, bottleneck, or workflow concern.</p>
+          </div>
+
+          <div class="card">
+            <h3>2. Review Terms</h3>
+            <p class="small">We discuss scope, deliverables, timeline, and conditions by email or call.</p>
+          </div>
+
+          <div class="card">
+            <h3>3. Start Build</h3>
+            <p class="small">Once confirmed, I build the agreed FLOW system for your agency.</p>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn" href="mailto:richardsy.028@gmail.com?subject=FLOW System Build Terms and Conditions">Email to Discuss Terms</a>
+          <a class="btn secondary" href="https://calendly.com/richardsy-028/new-meeting">Book Discovery Call</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="founder" class="container">
+      <div class="grid grid-2">
+        <div class="hero-image">
+          <img src="founder.jpg" alt="Richard Sy" />
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">Founder</div>
+          <h2>Hi, I’m Richard Sy.</h2>
+          <p>
+            Founder of Clarity Systems. I build FLOW as an AI-powered operating system
+            for marketing agencies that need clarity, structure, and execution.
+          </p>
+
+          <div class="card">
+            <h3>Systems Thinker</h3>
+            <p class="small">I turn messy work into simple steps people can follow.</p>
+          </div>
+
+          <br />
+
+          <div class="card">
+            <h3>Operations Builder</h3>
+            <p class="small">I help teams organize workflows, SOPs, KPIs, delivery, and approvals.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <div class="diagnosis">
+        <h2>Unique Selling Proposition</h2>
+        <p>
+          FLOW by Clarity Systems helps scaling marketing agencies find bottlenecks
+          and turn messy sales, campaigns, SOPs, KPIs, workflows, approvals, and delivery
+          into one simple operating system.
+        </p>
+      </div>
+    </section>
+
+    <section id="contact" class="container">
+      <h2>Connect with Richard</h2>
+      <div class="hero-actions">
+        <a class="btn" href="https://calendly.com/richardsy-028/new-meeting">Book Discovery Call</a>
+        <a class="btn secondary" href="https://www.linkedin.com/in/richard-sy-9b57b8242/">LinkedIn</a>
+        <a class="btn secondary" href="mailto:richardsy.028@gmail.com">Email Richard</a>
+      </div>
+    </section>
+
+    <section class="container">
+      <h3>Terms & Disclaimer</h3>
+      <p class="small">
+        Clarity Systems and FLOW provide operational marketing, sales, workflow,
+        KPI, SOP, and business process guidance only.
+      </p>
+      <p class="small">
+        FLOW does not provide legal, financial, tax, accounting, investment,
+        employment, or compliance advice.
+      </p>
+      <p class="small">
+        Results are not guaranteed. Business outcomes depend on execution, market conditions,
+        team capacity, offer quality, pricing, client demand, and other external factors.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Clarity Systems — FLOW
+  </footer>
+</body>
+</html>
